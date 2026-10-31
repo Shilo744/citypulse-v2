@@ -1,0 +1,189 @@
+/* Mode N shell: font, base, side menu, top bar, page frame, town search, footer, help sheet, print and accessibility blocks. Prefix n-shell-.
+   Old class names (.side, .nav, .top, .crumbs, .searchbox) are re-valued here under html[data-ui="n"]; new classes start with n-shell-. */
+
+/* ── the font: Heebo, variable 100-900, served from this site (SIL OFL, assets/fonts/OFL.txt). Two files: Hebrew, and Latin with the digits and the direction marks ── */
+@font-face {
+  font-family: "Heebo CP"; font-style: normal; font-weight: 100 900; font-display: swap;
+  src: url("../../assets/fonts/heebo-hebrew.woff2") format("woff2");
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+@font-face {
+  font-family: "Heebo CP"; font-style: normal; font-weight: 100 900; font-display: swap;
+  src: url("../../assets/fonts/heebo-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ── base ── */
+html[data-ui="n"] { scroll-behavior: auto; scroll-padding-top: calc(var(--top-h) + var(--space-4)); }
+html[data-ui="n"] body { font-family: var(--font); font-size: 1rem; line-height: 1.6; background: var(--bg); color: var(--ink); }
+html[data-ui="n"] :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 6px; }
+html[data-ui="n"] [tabindex="-1"]:focus { outline: none; }
+html[data-ui="n"] a { color: var(--teal-ink); }
+html[data-ui="n"] .h1, html[data-ui="n"] .h2, html[data-ui="n"] .h3, html[data-ui="n"] .crumbs b { color: var(--ink); }
+html[data-ui="n"] a.sr:focus { background: var(--nav); color: var(--on-nav); }
+/* a hidden data table cannot shrink under the width of its content and widened the page (4 px sideways at 320 px on #/c/99/overview); scaled to nothing it adds no scroll width and stays in the tree for a screen reader (position: fixed was tried and broke the indicator pages) */
+html[data-ui="n"] table.sr { transform: scale(0); transform-origin: 0 0; }
+html[data-ui="n"] .btn { color: var(--ink); }
+html[data-ui="n"] .btn.primary, html[data-ui="n"] .searchbox .go { background: var(--teal-dark); border-color: var(--teal-dark); color: var(--on-primary); }
+html[data-ui="n"] .btn.primary:hover { background: var(--nav); border-color: var(--nav); color: var(--on-nav); }
+html[data-ui="n"] .toast { background: var(--nav); color: var(--on-nav); }
+
+/* ── page frame: #view has no padding; a band is its direct child and runs edge to edge, the body keeps the column ── */
+html[data-ui="n"] .main { min-width: 0; }
+html[data-ui="n"] .page { max-width: none; padding: 0; margin: 0; flex: 1 0 auto; }
+html[data-ui="n"] .n-shell-body { padding: var(--space-6) var(--n-gutter) var(--space-8); min-width: 0; overflow-wrap: break-word; }          /* a long word or a long link breaks instead of pushing the page sideways at 320 px and 200 percent text */
+html[data-ui="n"] body.landing .n-shell-body { padding: 0; }
+
+/* ── top bar ── */
+html[data-ui="n"] .crumbs a { display: inline-flex; align-items: center; min-height: 32px; }
+html[data-ui="n"] .top { height: auto; min-height: var(--top-h); flex-wrap: wrap; padding: 0 var(--pg); background: color-mix(in srgb, var(--bg) 82%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom-color: transparent; }
+html[data-ui="n"] .top.n-shell-scrolled { border-bottom-color: var(--line); }
+html[data-ui="n"] #quick { width: min(320px, 40vw); min-width: 0; position: relative; }
+html[data-ui="n"] #quick .n-shell-search { min-width: 0; }
+html[data-ui="n"] .top .searchbox { background: transparent; border: 1px solid var(--line-strong); min-height: 40px; border-radius: 10px; box-shadow: none; }
+html[data-ui="n"] .top .searchbox:focus-within { background: var(--surface); border-color: var(--focus); box-shadow: none; }
+@media (max-width: 860px) {
+  html[data-ui="n"] #quick { width: auto !important; flex: 1; }
+}
+/* on the city home the loud field is the ask field, so the town search is only an icon until it gets focus */
+html[data-ui="n"] body[data-route="home"] .crumbs { display: none; }
+html[data-ui="n"] body[data-route="home"] #quick { width: 44px !important; flex: none; }
+html[data-ui="n"] body[data-route="home"] #quick .n-shell-search { width: 44px; padding: 0 10px; cursor: pointer; }
+html[data-ui="n"] body[data-route="home"] #quick .n-shell-search input { width: 0; padding: 0; flex: none; opacity: 0; }
+html[data-ui="n"] body[data-route="home"] #quick .n-shell-search:focus-within { position: absolute; inset-inline-end: 0; top: 0; z-index: 30; width: min(320px, calc(100vw - 2 * var(--pg))); padding: 0 14px; background: var(--surface); cursor: text; }
+html[data-ui="n"] body[data-route="home"] #quick .n-shell-search:focus-within input { width: auto; flex: 1; opacity: 1; }
+
+/* ── town search (top bar, menu panel, not-found states) ── */
+/* the open list of the top bar is never narrower than 260 px, whatever the state of the bar; under 861 px it is as wide as the page, under the bar, from the start edge (R-05) */
+html[data-ui="n"] .top .searchbox .results { min-width: min(260px, calc(100vw - 2 * var(--pg))); }
+@media (max-width: 860px) {
+  html[data-ui="n"] body:not([data-route="home"]) #quick, html[data-ui="n"] body:not([data-route="home"]) #quick .searchbox { position: static; }
+  html[data-ui="n"] body:not([data-route="home"]) .top .searchbox .results { top: calc(100% - 4px); inset-inline: var(--pg); }
+}
+html[data-ui="n"] .n-shell-search input { color: var(--ink); width: 100%; }
+html[data-ui="n"] .searchbox .results { background: var(--surface); border-color: var(--line-strong); }
+html[data-ui="n"] .searchbox .results a { color: var(--ink); min-height: 40px; align-items: center; }
+html[data-ui="n"] .searchbox .results a:hover, html[data-ui="n"] .searchbox .results a.on { background: var(--surface-2); }
+html[data-ui="n"] .n-shell-sgroup { padding: var(--space-2) 12px 2px; font-size: var(--fs-micro); font-weight: 700; color: var(--ink-3); }
+html[data-ui="n"] .n-shell-inline .results { position: static; max-height: 240px; margin-top: var(--space-2); box-shadow: none; inset-inline: auto; }
+html[data-ui="n"] .n-shell-inline { background: var(--surface); }
+
+/* ── side menu: navy in both themes ── */
+html[data-ui="n"] .side { background: var(--nav); color: var(--on-nav); padding-bottom: calc(18px + env(safe-area-inset-bottom)); }
+html[data-ui="n"] .nav { color: var(--on-nav); min-height: 40px; }
+html[data-ui="n"] .nav:hover, html[data-ui="n"] .nav[aria-current="page"] { color: var(--on-nav-strong); }
+html[data-ui="n"] .navgroup { font-size: var(--fs-micro); }
+html[data-ui="n"] .navgroup, html[data-ui="n"] .sidefoot, html[data-ui="n"] .brand small, html[data-ui="n"] .cityswitch small { color: var(--on-nav-dim); }
+html[data-ui="n"] .nav .dot { background: var(--attn-bar); }
+html[data-ui="n"] .nav .dot.none { background: color-mix(in srgb, var(--on-nav) 28%, transparent); }
+html[data-ui="n"] .dotkey { font-size: var(--fs-micro); color: var(--on-nav-dim); gap: 4px 14px; }
+html[data-ui="n"] .dotkey i { background: var(--attn-bar); }
+html[data-ui="n"] .dotkey i.none { background: color-mix(in srgb, var(--on-nav) 28%, transparent); }
+html[data-ui="n"] button.cityswitch { width: 100%; font: inherit; text-align: start; cursor: pointer; color: var(--on-nav-strong); }
+html[data-ui="n"] .cityswitch .loc { color: var(--teal); }
+html[data-ui="n"] .cityswitch .loc svg { width: 22px; height: 22px; }
+html[data-ui="n"] .cityswitch[aria-expanded="true"] > svg:last-child { transform: rotate(180deg); }
+html[data-ui="n"] .n-shell-switch { display: grid; gap: var(--space-2); padding: 0 0 var(--space-3); }
+html[data-ui="n"] .n-shell-switch[hidden] { display: none; }
+html[data-ui="n"] .n-shell-switch-top { display: flex; justify-content: flex-end; padding-inline: var(--space-2); }
+html[data-ui="n"] .n-shell-star { display: inline-flex; align-items: center; gap: var(--space-2); min-height: 44px; padding: 0 var(--space-2); border: 0; background: none; color: inherit; font-weight: 600; font-size: var(--fs-small); }
+html[data-ui="n"] .n-shell-star:hover { text-decoration: underline; }
+html[data-ui="n"] .n-shell-star svg { fill: none; stroke: currentColor; }
+html[data-ui="n"] .n-shell-star[aria-pressed="true"] svg { fill: currentColor; }
+html[data-ui="n"] .scrim { background: var(--scrim); }
+
+/* ── footer ── */
+html[data-ui="n"] .n-shell-foot { border-top: 1px solid var(--line); padding: var(--space-6) var(--n-gutter) calc(var(--space-6) + env(safe-area-inset-bottom)); color: var(--ink-3); font-size: var(--fs-small); }
+html[data-ui="n"] .n-shell-foot-in { min-width: 0; overflow-wrap: break-word; display: grid; gap: var(--space-3); max-width: var(--page-max); margin-inline: auto; }
+html[data-ui="n"] .n-shell-foot-statement { color: var(--ink-2); font-weight: 500; max-width: 62ch; }
+html[data-ui="n"] .n-shell-links { display: flex; flex-wrap: wrap; gap: 0 var(--space-5); list-style: none; padding: 0; }
+html[data-ui="n"] .n-shell-links a, html[data-ui="n"] .n-shell-link { display: inline-flex; align-items: center; min-height: 32px; color: var(--teal-ink); font-weight: 500; }          /* a target of at least 24 px with room around it (WCAG 2.5.8) */
+html[data-ui="n"] .n-shell-link { border: 0; background: none; padding: 0; font-size: inherit; cursor: pointer; text-decoration: none; }
+html[data-ui="n"] .n-shell-link:hover { text-decoration: underline; }
+
+/* ── keyboard help (a native dialog) ── */
+html[data-ui="n"] .n-shell-help { width: min(460px, calc(100vw - 2 * var(--pg))); padding: var(--space-5); border: 1px solid var(--line-strong); border-radius: 14px; background: var(--surface); color: var(--ink); box-shadow: var(--shadow-up); }
+html[data-ui="n"] .n-shell-help::backdrop { background: var(--scrim); }
+html[data-ui="n"] .n-shell-help form { display: grid; gap: var(--space-3); }
+html[data-ui="n"] .n-shell-help-t { font-size: var(--fs-section); font-weight: 800; }
+html[data-ui="n"] .n-shell-help-note { color: var(--ink-3); font-size: var(--fs-small); }
+html[data-ui="n"] .n-shell-keys { display: grid; grid-template-columns: auto 1fr; gap: var(--space-2) var(--space-4); align-items: baseline; margin: 0; }
+html[data-ui="n"] .n-shell-keys dd { margin: 0; }
+html[data-ui="n"] .n-shell-keys kbd { font: inherit; font-weight: 700; font-size: var(--fs-small); direction: ltr; unicode-bidi: isolate; display: inline-block; min-width: 2.2em; text-align: center; padding: 1px 8px; border: 1px solid var(--line-strong); border-radius: 6px; background: var(--surface-2); }
+html[data-ui="n"] .n-shell-toggle { justify-self: start; min-height: 44px; padding: 0; border: 0; background: none; color: var(--teal-ink); font-weight: 700; text-decoration: underline; cursor: pointer; }
+
+/* ── touch ── */
+@media (pointer: coarse) {
+  html[data-ui="n"] .nav, html[data-ui="n"] .n-shell-links a, html[data-ui="n"] .n-shell-link { min-height: 44px; display: inline-flex; align-items: center; }
+  html[data-ui="n"] .nav { display: flex; }
+}
+
+/* ── more contrast / forced colours (SPEC 3.11) ── */
+@media (forced-colors: active) {
+  html[data-ui="n"] .nav[aria-current="page"] { outline: 2px solid Highlight; }
+  html[data-ui="n"] .searchbox, html[data-ui="n"] .n-shell-help { border: 1px solid CanvasText; }
+  html[data-ui="n"] .n-shell-star[aria-pressed="true"] svg { fill: Highlight; stroke: Highlight; }
+  html[data-ui="n"] .nav .dot { forced-color-adjust: none; }
+}
+
+/* ── the closed drawer of a phone (the width where css/app.css moves .side off the screen) is not a place for the keyboard: its 15 links were 15 invisible Tab stops before the page, and a screen reader read them out;
+      hidden while closed, shown again by .open (js/product/shell.js openDrawer puts the focus on its first link) ── */
+@media (max-width: 860px) {
+  html[data-ui="n"] .side:not(.open) { visibility: hidden; }
+}
+
+/* ── print: the page without its frame ── */
+@media print {
+  html[data-ui="n"] .side, html[data-ui="n"] .top, html[data-ui="n"] .scrim, html[data-ui="n"] .n-shell-links { display: none !important; }
+  html[data-ui="n"] .n-shell-body { padding: 0; }
+  html[data-ui="n"] .n-shell-foot { border-top: 1px solid var(--line); padding: var(--space-3) 0 0; }
+}
+
+/* ── old pages at 320 px: the one grid whose minimum is wider than a 320 px column (P5's overview.css may replace this) ── */
+@media (max-width: 400px) {
+  html[data-ui="n"] .ov-brief-pts { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ── reflow (WCAG 1.4.10): a 320 px window, also with the text enlarged to 200 percent, needs no sideways scroll. Below 340 px a long run of figures or words may break anywhere, and the groups of words
+   that the old page and chart modules keep together with white-space: nowrap wrap like the rest. Wider windows keep every rule as it was. The page-specific cases are at the end of each page's css. ── */
+@media (max-width: 340px) {
+  html[data-ui="n"] #view, html[data-ui="n"] #view .n-shell-body { overflow-wrap: anywhere; }
+  html[data-ui="n"] #view :is(.nw, .ltr, .pill, .btn, .tag):not(svg *) { white-space: normal; }
+  html[data-ui="n"] #view :is(.split, .split.even) { grid-template-columns: minmax(0, 1fr); }          /* the one column may be narrower than its widest line */
+}
+
+/* ── the footer waits while the page is still a skeleton, so that it does not jump down when the content arrives (layout shift) ── */
+html[data-ui="n"] .page:has([data-skeleton]) ~ .n-shell-foot { visibility: hidden; }
+
+/* ── the town page names the sources of its own figures, with their years, in its foot: the footer's general line would say it twice ── */
+html[data-ui="n"] body[data-route="home"] .n-shell-foot-prov { display: none; }
+
+/* ── the word mark in the side menu: the link colour (dark teal) was 2.3:1 on the navy menu in the light theme (r2) ── */
+html[data-ui="n"] .side .brand b { color: var(--on-nav-strong); }
+
+/* ── the badge of a category in the menu: bigger than a line icon, so it takes a little of the icon's margin ── */
+html[data-ui="n"] .side .nav .n-shell-cat { margin-inline: -4px; background: var(--cat-nav-tile); color: var(--cat-nav-ink); }
+
+/* the town search draws its focus once, around the whole box (the field inside it has no ring of its own); the list of the menu panel opens under the field, inside the box */
+html[data-ui="n"] .searchbox input:focus-visible { outline: none; }
+html[data-ui="n"] .top .searchbox:focus-within { outline: 2px solid var(--focus); outline-offset: 2px; }
+html[data-ui="n"] .n-shell-inline:focus-within { outline: 2px solid var(--on-nav-strong); outline-offset: 2px; }
+html[data-ui="n"] .n-shell-inline { flex-wrap: wrap; align-content: flex-start; }
+html[data-ui="n"] .n-shell-inline .results { flex: 1 0 100%; min-width: 0; }
+
+/* ── the menu as a rail of icons (wide windows only; the phone drawer is unchanged): the three bars sit at the top, beside the name, and stay at the top of the rail ── */
+html[data-ui="n"] .n-shell-sidetop { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); }
+html[data-ui="n"] .n-shell-rail { display: none; flex: none; align-items: center; justify-content: center; width: 36px; height: 36px; border: 0; border-radius: 8px; background: transparent; color: var(--on-nav); cursor: pointer; }
+html[data-ui="n"] .n-shell-rail:hover { background: rgba(255, 255, 255, .1); color: var(--on-nav-strong); }
+html[data-ui="n"] .n-shell-rail svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+@media (min-width: 861px) {
+  html[data-ui="n"] .n-shell-rail { display: inline-flex; }
+  html[data-ui="n"][data-side="rail"] { --side-w: 76px; }
+  html[data-ui="n"][data-side="rail"] .side { padding-inline: 10px; align-items: center; overflow-x: hidden; }
+  html[data-ui="n"][data-side="rail"] .n-shell-sidetop { flex-direction: column-reverse; }
+  html[data-ui="n"][data-side="rail"] .side :is(.brand div, .navgroup, .dotkey, .n-shell-switch, .sidefoot > :not(div), .theme-btn, .cityswitch .t, .cityswitch > svg:last-child) { display: none; }
+  html[data-ui="n"][data-side="rail"] .side .nav, html[data-ui="n"][data-side="rail"] .side .cityswitch { font-size: 0; justify-content: center; gap: 0; padding-inline: 0; width: 100%; position: relative; }
+  html[data-ui="n"][data-side="rail"] .side .nav svg, html[data-ui="n"][data-side="rail"] .side .cityswitch svg { margin: 0; }
+  html[data-ui="n"][data-side="rail"] .side .nav .dot { position: absolute; inset-block-start: 6px; inset-inline-end: 8px; }
+  html[data-ui="n"][data-side="rail"] .side .sidefoot { display: none; }
+}

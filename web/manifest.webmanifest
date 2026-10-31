@@ -1,0 +1,17 @@
+{
+  "name": "CityPulse",
+  "short_name": "CityPulse",
+  "description": "תמונת מצב של בריאות הציבור לכל יישוב בישראל מנתונים רשמיים",
+  "lang": "he",
+  "dir": "rtl",
+  "display": "standalone",
+  "start_url": "/n.html",
+  "scope": "/",
+  "theme_color": "#F5F7FA",
+  "background_color": "#F5F7FA",
+  "icons": [
+    { "src": "assets/product/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/product/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "assets/logo/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" }
+  ]
+}

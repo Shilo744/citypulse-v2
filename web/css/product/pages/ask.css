@@ -1,0 +1,44 @@
+/* The ask page in the product (js/product/pages/ask.js, prefix n-pg-ask-): the title zone holds the shared question field, six sample questions are hairline rows, the old module's
+   answers keep their own styles (css/pages/ask.css). Colour only through tokens; no boxes. */
+
+html[data-ui="n"] .as-hero[hidden] { display: none; }          /* the old opening stays in the page (its form runs the request) but is not shown */
+html[data-ui="n"] .n-pg-ask-field { min-width: 0; margin-top: var(--space-3); }
+
+/* the sample questions: one line each, a hairline between, the whole row is the button */
+html[data-ui="n"] .n-pg-ask-ex { max-width: 840px; padding-top: var(--space-6); }
+html[data-ui="n"] .is-asked .n-pg-ask-ex { display: none; }
+html[data-ui="n"] .n-pg-ask-ex-t { margin: 0 0 var(--space-2); font-size: var(--fs-small); font-weight: 700; color: var(--ink-3); }
+html[data-ui="n"] .n-pg-ask-ex ul { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+html[data-ui="n"] .n-pg-ask-ex li { border-bottom: 1px solid var(--line); }
+html[data-ui="n"] .n-pg-ask-ex li button { display: block; width: 100%; min-height: 52px; padding: var(--space-3) var(--space-1); border: 0; border-radius: 0; background: none; color: var(--ink); font: inherit; font-size: var(--fs-row); font-weight: 600; text-align: start; cursor: pointer; }
+html[data-ui="n"] .n-pg-ask-ex li button:hover { color: var(--teal-ink); background: var(--surface-2); }
+html[data-ui="n"] .n-pg-ask-ex li button:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+html[data-ui="n"] .is-busy .n-pg-ask-ex li button { opacity: .55; cursor: progress; }
+html[data-ui="n"] .n-pg-ask-vocab { margin: var(--space-4) 0 0; max-width: 62ch; color: var(--ink-2); font-size: var(--fs-small); line-height: 1.6; }
+html[data-ui="n"] .n-pg-ask-vocab a { color: var(--teal-ink); text-decoration: underline; }
+html[data-ui="n"] .n-pg-ask-msg { margin: var(--space-2) 0 0; color: var(--ink); font-size: var(--fs-small); font-weight: 700; }
+html[data-ui="n"] .n-pg-ask-msg:empty { display: none; }
+
+/* the field under the newest answer (the old module's own): the surface and the button of the product */
+html[data-ui="n"] .as-field.is-compact { border-radius: 30px; border: 1px solid var(--line-strong); }
+html[data-ui="n"] .as-field.is-compact:focus-within { border-color: var(--focus); box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus) 24%, transparent); }
+html[data-ui="n"] .as-field.is-compact .as-send { min-height: 44px; border-radius: 12px; background: var(--teal-dark); color: var(--on-primary); }
+html[data-ui="n"] .as-field.is-compact .as-send:hover { background: var(--nav); color: var(--on-nav-strong); }
+
+/* the comparison of named towns inside an answer (pages/asktowns.js): a tally, then a plain table; no boxes */
+html[data-ui="n"] .n-pg-ask-towns { margin: var(--space-5) 0; }
+html[data-ui="n"] .n-pg-ask-towns-t { margin: 0 0 var(--space-2); font-size: var(--fs-h3, 1.15rem); color: var(--ink); }
+html[data-ui="n"] .n-pg-ask-tally { margin: 0 0 var(--space-3); padding: 0; list-style: none; color: var(--ink); font-weight: 700; }
+html[data-ui="n"] .n-pg-ask-tally li { padding: 2px 0; }
+html[data-ui="n"] .n-pg-ask-tally a, html[data-ui="n"] .n-pg-ask-towns-go a { color: var(--teal-ink); }
+html[data-ui="n"] .n-pg-ask-note { margin: 0 0 var(--space-2); color: var(--ink-2); font-size: var(--fs-small); }
+html[data-ui="n"] .n-pg-ask-tbl { width: 100%; border-collapse: collapse; margin-top: var(--space-2); }
+html[data-ui="n"] .n-pg-ask-tbl th, html[data-ui="n"] .n-pg-ask-tbl td { padding: var(--space-2) var(--space-2); border-bottom: 1px solid var(--line); text-align: start; vertical-align: top; }
+html[data-ui="n"] .n-pg-ask-tbl thead th { color: var(--ink-3); font-size: var(--fs-small); }
+html[data-ui="n"] .n-pg-ask-tbl tbody th { font-weight: 600; color: var(--ink); }
+html[data-ui="n"] .n-pg-ask-tbl small { display: block; color: var(--ink-3); font-size: var(--fs-small); font-weight: 400; }
+html[data-ui="n"] .n-pg-ask-tv b { color: var(--ink); }
+html[data-ui="n"] .n-pg-ask-tv .n-pg-ask-best { color: var(--teal-ink); font-weight: 700; }
+html[data-ui="n"] .n-pg-ask-more { margin-top: var(--space-3); }
+html[data-ui="n"] .n-pg-ask-more summary { cursor: pointer; color: var(--teal-ink); min-height: 32px; }
+html[data-ui="n"] .n-pg-ask-towns-go { margin: var(--space-3) 0 0; }

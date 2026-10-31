@@ -1,0 +1,36 @@
+/* Method and sources in the product (js/product/pages/method.js, prefix n-pg-method-): the added section (glossary, privacy, licence, open data) as hairline rows,
+   the contents list under the top bar of the product, and the road of a number with plain numerals instead of round badges. */
+
+html[data-ui="n"] .n-pg-method-rows { max-width: 840px; border-top: 1px solid var(--line); }
+html[data-ui="n"] .n-pg-method-row { padding: var(--space-4) 0; border-bottom: 1px solid var(--line); }
+html[data-ui="n"] .n-pg-method-row h3 { margin: 0 0 var(--space-1); font-size: var(--fs-row); font-weight: 700; color: var(--ink); }
+html[data-ui="n"] .n-pg-method-row p { margin: 0; color: var(--ink-2); line-height: 1.7; }
+html[data-ui="n"] .n-pg-method-row p + p { margin-top: var(--space-3); }
+html[data-ui="n"] .n-pg-method-row a { color: var(--teal-ink); text-decoration: underline; text-underline-offset: 3px; }
+html[data-ui="n"] .n-pg-method-row code { font-size: var(--fs-small); color: var(--ink); }
+html[data-ui="n"] .n-pg-method-go { font-weight: 700; }
+
+html[data-ui="n"] .n-pg-method-road { margin-bottom: var(--space-7); }
+html[data-ui="n"] .n-pg-method-road .mt-flow { margin: 0; padding-top: var(--space-1); border-top: 0; }
+html[data-ui="n"] .n-pg-method-back { margin-bottom: var(--space-2); }
+
+/* the end tick of the scale figure sits 1 px outside its box (a sideways scroll on a phone); the long button of a town with a long name wraps instead of leaving the band */
+html[data-ui="n"] .mt-rule-fig { overflow-x: clip; }
+html[data-ui="n"] .mt-hero .hero-actions .btn { max-width: 100%; white-space: normal; text-align: center; }
+
+html[data-ui="n"] .mt-toc { top: calc(var(--top-h) + var(--space-2)); }
+@media (min-width: 1240px) {
+  html[data-ui="n"] .mt-toc { top: calc(var(--top-h) + var(--space-6)); }
+}
+html[data-ui="n"] .mt-fl-n { width: auto; height: auto; border: 0; border-radius: 0; box-shadow: none; background: none; color: var(--ink-3); font-size: 1.5rem; font-weight: 700; line-height: 1; }
+
+/* the official targets (guidesSection): the list of documents and of the figures only shown for orientation, plain lines */
+html[data-ui="n"] .n-pg-method-glist { margin: var(--space-2) 0 0; padding: 0; list-style: none; display: grid; gap: var(--space-2); color: var(--ink-2); line-height: 1.7; }
+html[data-ui="n"] .n-pg-method-glist li b { color: var(--ink); }
+html[data-ui="n"] .n-pg-method-row + .n-pg-method-row .n-pg-method-more { margin-top: 0; }
+html[data-ui="n"] .n-pg-method-more summary { cursor: pointer; color: var(--teal-ink); font-weight: 700; min-height: 32px; }
+html[data-ui="n"] .n-pg-method-more p { margin-top: var(--space-2); }
+html[data-ui="n"] .n-pg-method-more summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+/* targets (WCAG 2.5.8): a link alone on its line (the data sets, the way back to the coverage) is at least 24 px high; the negative margin keeps every line where it was */
+html[data-ui="n"] .mt-nm a, html[data-ui="n"] .mt-foot a { padding-block: 2px; margin-block: -2px; }

@@ -1,0 +1,92 @@
+/* spatial: the dot map of the country and the small locator (class prefix .v-map-).
+   Colours are tokens only. The map's two private colours are built from tokens right here, with a dark twin:
+   --m-mid   the quiet middle of the diverging scale (a locality in the middle of the pack)
+   --m-lo    the light end of the sequential scale (a background figure, low value)
+   The strong end is var(--good-bar), the weak end var(--attn-bar), the full end of the sequential scale var(--c-city). */
+
+/* on :root, not on .v-map: the tooltip is a child of body and uses the same colours */
+:root { --m-mid: color-mix(in srgb, var(--none-bar) 55%, var(--surface)); --m-lo: color-mix(in srgb, var(--c-city) 14%, var(--surface)); --m-ctx: var(--line-2); }
+:root[data-theme="dark"] { --m-mid: color-mix(in srgb, var(--none-bar) 72%, var(--surface)); --m-lo: color-mix(in srgb, var(--c-city) 26%, var(--surface)); --m-ctx: var(--line-strong); }
+.v-map { display: grid; grid-template-columns: auto minmax(0, 232px); grid-template-rows: auto 1fr; grid-template-areas: "stage sum" "stage legend"; justify-content: center; align-items: start; gap: 0 12px; }
+.v-map-stage { grid-area: stage; }
+.v-map-sum { grid-area: sum; }
+.v-map-legend { grid-area: legend; }
+/* the legend moves under the map when the container is too narrow for both (the class is set from the container's width, see spatial.js) */
+.v-map.narrow, .v-map.solo { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; grid-template-areas: "sum" "stage" "legend"; justify-items: center; row-gap: 16px; }
+.viz svg text.v-map-empty { fill: var(--ink-3); font: 600 13px var(--font); }
+
+.v-map-stage { line-height: 0; max-width: 100%; }
+.v-map-svg { height: auto; touch-action: pan-y pinch-zoom; }
+.v-map-svg.pick { cursor: pointer; }
+
+/* the dots: 0.9 fill and a surface ring that sits outside the radius (paint-order: stroke, so the stroke is twice as wide as the ring you see);
+   the largest are drawn first so small ones stay on top */
+.v-map-ctx { fill: none; stroke: var(--m-ctx); stroke-width: 2.2; stroke-linecap: round; }
+.viz .v-map-places text { fill: var(--ink-3); font: 600 11px var(--font); paint-order: stroke; stroke: var(--surface); stroke-width: 3px; stroke-linejoin: round; }
+.v-map-dot { stroke: var(--surface); stroke-width: 2; paint-order: stroke; fill-opacity: .9; }
+.v-map-dot.hollow, .v-map-self.hollow { fill: var(--surface); fill-opacity: 1; stroke: var(--none-bar); stroke-width: 1.4; paint-order: normal; }
+.v-map-dot.peer { stroke: var(--c-peer); stroke-width: 3; }
+
+/* hover and focus: the whole field of dots dims at once (one opacity, no per-dot work) and the dot under the pointer is redrawn above it */
+.v-map-field { transition: opacity .16s var(--ease); }
+.v-map-svg.dim .v-map-field { opacity: .28; }
+.v-map-hot { opacity: 0; transition: opacity .12s var(--ease); pointer-events: none; }
+.v-map-hot.on { opacity: 1; }
+.v-map-hot .ring { fill: none; stroke: var(--ink); stroke-width: 1.6; }
+.v-map-hot .dot { stroke: var(--surface); stroke-width: 4; paint-order: stroke; }
+.v-map-hot .dot.hollow { fill: var(--surface); stroke: var(--none-bar); stroke-width: 1.4; paint-order: normal; }
+
+/* the city: a halo, a pulse, the dot inside a white ring and a blue ring, a leader line and the label chip */
+.viz svg .v-map-me[tabindex]:focus-visible, .viz svg .v-map-frame[tabindex]:focus-visible { outline: none; }
+.v-map-me { cursor: default; }
+.v-map-halo { fill: var(--c-city); fill-opacity: .13; }
+.v-map-ping { fill: none; stroke: var(--c-city); stroke-width: 2; stroke-opacity: .8; }
+.v-map-ring { fill: none; stroke: var(--c-city); stroke-width: 1.9; }
+.v-map-self { stroke: var(--surface); stroke-width: 6; paint-order: stroke; fill-opacity: 1; }
+.v-map-self.hollow { stroke: var(--ink-3); stroke-width: 2.4; }
+.v-map-focus { fill: none; stroke: var(--teal); stroke-width: 3; opacity: 0; pointer-events: none; }
+.v-map-me:focus-visible .v-map-focus { opacity: 1; }
+.v-map-frame { fill: transparent; stroke: none; pointer-events: none; }
+.v-map-frame:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; }
+.v-map-lead { stroke: var(--c-city); stroke-width: 1.3; stroke-linecap: round; opacity: .85; }
+.v-map-chip rect { fill: var(--surface); stroke: var(--c-city); stroke-width: 1.5; filter: drop-shadow(0 2px 5px color-mix(in srgb, var(--ink) 16%, transparent)); }
+.v-map-chip text { text-anchor: middle; }
+.v-map-chip .n { fill: var(--ink-2); font: 600 12px var(--font); }
+.v-map-chip .v { fill: var(--ink); font: 800 15px var(--font); font-variant-numeric: tabular-nums; }
+
+/* the legend: colour scale, size key and the few extra keys the map needs */
+.v-map-legend { display: grid; gap: 22px; width: 100%; max-width: 232px; }
+.v-map.narrow .v-map-legend { max-width: 320px; }
+.v-map-sum { display: grid; gap: 1px; width: 100%; max-width: 232px; padding: 6px 0 18px; margin-bottom: 22px; border-bottom: 1px solid var(--line); }
+.v-map.narrow .v-map-sum, .v-map.solo .v-map-sum { max-width: 320px; margin-bottom: 0; padding-bottom: 14px; }
+.v-map-sum .nm, .v-map-sum small { font-size: 12px; color: var(--ink-3); }
+.v-map-sum b { font-size: 15.5px; line-height: 1.35; font-weight: 700; color: var(--ink); }
+.v-map-lt { margin: 0 0 9px; font-size: 12.5px; font-weight: 600; line-height: 1.4; color: var(--ink-2); }
+.v-map-bar { height: 10px; border-radius: 6px; background: linear-gradient(to right, var(--attn-bar), var(--m-mid), var(--good-bar)); }
+.v-map-bar.seq { background: linear-gradient(to right, var(--m-lo), var(--c-city)); }
+.v-map-ends { display: flex; justify-content: space-between; direction: ltr; margin-top: 6px; font-size: 11.5px; color: var(--ink-3); }
+.v-map-sizes { display: flex; align-items: flex-end; justify-content: flex-end; gap: 18px; direction: ltr; }
+.v-map-sizes > span { display: grid; justify-items: center; gap: 5px; }
+.v-map-sizes svg { display: block; overflow: visible; }
+.v-map-sizes circle { fill: none; stroke: var(--ink-3); stroke-width: 1.2; }
+.v-map-sizes small { font-size: 11px; line-height: 1.2; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.v-map-keys { list-style: none; padding: 0; margin: 0; display: grid; gap: 9px; font-size: 12.5px; color: var(--ink-2); }
+.v-map-keys li { display: flex; align-items: center; gap: 9px; }
+.v-map-keys i { flex: none; display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin: 1.5px; }
+.v-map-keys .k-peer { background: var(--m-mid); box-shadow: 0 0 0 1.6px var(--c-peer); }
+.v-map-keys .k-small { background: var(--surface); box-shadow: 0 0 0 1.3px var(--none-bar); }
+.v-map-keys .k-none { width: 5px; height: 5px; margin: 4px; background: var(--m-ctx); }
+.v-map-nat { margin: 0; font-size: 12.5px; color: var(--ink-3); }
+.v-map-nat b { color: var(--ink); font-variant-numeric: tabular-nums; }
+
+/* the tooltip lives in the page body, so these classes carry their own look */
+.tt .tr .k i.v-map-sw { width: 10px; height: 10px; border-radius: 50%; }
+.tt .tr .k i.v-map-sw.hollow { background: var(--surface); box-shadow: inset 0 0 0 1.5px var(--none-bar); }
+.v-map-tts { margin-top: 2px; font-size: .8rem; color: var(--ink-3); }
+
+/* the locator: dots take the colour of the text around them (a hero is white on navy), the city is teal with a ring */
+.v-map-loc { display: inline-block; max-width: 100%; line-height: 0; }
+.v-map-loc-svg { height: auto; }
+.v-map-loc-dots { fill: none; stroke: currentColor; stroke-opacity: .5; stroke-linecap: round; }
+.v-map-loc-city { fill: var(--teal); stroke: currentColor; stroke-width: 1.5; }
+.v-map-loc-ping { fill: none; stroke: currentColor; stroke-width: 1.4; stroke-opacity: .9; }

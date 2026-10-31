@@ -1,0 +1,14 @@
+/* The design lab (see js/lab/index.js): new directions built next to the real pages, one file and one class prefix each. */
+@import url("lab/base.css");
+@import url("lab/map.css");
+@import url("lab/report.css");
+@import url("lab/bloom.css");
+@import url("lab/entry.css");
+@import url("lab/questions.css");
+@import url("lab/wall.css");
+@import url("lab/standing.css");
+@import url("lab/story.css");
+@import url("lab/combo.css");
+@import url("lab/questions2.css");
+@import url("lab/questions3.css");
+@import url("lab/questions4.css");

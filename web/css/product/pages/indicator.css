@@ -1,0 +1,83 @@
+/* One indicator in mode N (prefix n-pg-indicator-): the figure and its chart on the pale band, the way back to the answer, the previous and next figure, the row of actions. Colour only through tokens. */
+html[data-ui="n"] .hero.in-hero { padding-block: var(--space-5); }
+html[data-ui="n"] .hero.in-hero .hero-grid { gap: 0 var(--space-7); }
+html[data-ui="n"] .hero.in-hero .in-fig { margin-top: var(--space-4); }
+html[data-ui="n"] .hero.in-hero .in-verdict { margin-top: var(--space-3); }
+html[data-ui="n"] .hero.in-hero .in-crumb { margin-bottom: var(--space-2); }
+html[data-ui="n"] .n-pg-indicator-top { display: flex; flex-wrap: wrap; align-items: center; gap: 0 var(--space-5); margin-bottom: var(--space-2); }
+html[data-ui="n"] .n-pg-indicator-top .in-crumb { margin-bottom: 0; }
+html[data-ui="n"] .n-pg-indicator-back { display: inline-flex; align-items: center; gap: var(--space-1); min-height: 32px; color: var(--teal-ink); font-size: var(--fs-small); font-weight: 600; }
+html[data-ui="n"] .n-pg-indicator-back svg { fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+html[data-ui="n"] .n-pg-indicator-actions { margin-top: var(--space-3); }
+html[data-ui="n"] .n-pg-indicator-terms { margin-top: var(--space-1); font-size: var(--fs-small); }
+
+/* the previous and the next figure of the domain: two text links with the position between them, a hairline under */
+html[data-ui="n"] .n-pg-indicator-steps { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2) var(--space-5); margin-top: var(--space-4); padding-bottom: var(--space-3); border-bottom: 1px solid var(--line); }
+html[data-ui="n"] .n-pg-indicator-step { display: inline-flex; align-items: center; gap: var(--space-2); max-width: 40%; min-height: 44px; color: var(--ink); text-decoration: none; }
+html[data-ui="n"] .n-pg-indicator-step svg { flex: none; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; color: var(--teal-ink); }
+html[data-ui="n"] .n-pg-indicator-step span { display: grid; min-width: 0; }
+html[data-ui="n"] .n-pg-indicator-step small { color: var(--ink-3); font-size: var(--fs-small); }
+html[data-ui="n"] .n-pg-indicator-step b { font-weight: 700; overflow-wrap: anywhere; }
+html[data-ui="n"] .n-pg-indicator-step:hover b { text-decoration: underline; text-underline-offset: 4px; }
+html[data-ui="n"] .n-pg-indicator-pos { color: var(--ink-3); font-size: var(--fs-small); text-align: center; }
+
+/* chart text is never smaller than 12 px, the tooltip included */
+html[data-ui="n"] .tt { font-size: max(12px, .85rem); }
+html[data-ui="n"] .tt .tr .k { font-size: max(12px, .85rem); }
+
+@media (max-width: 860px) {
+  html[data-ui="n"] .hero.in-hero .hero-grid { gap: var(--space-4) 0; }
+}
+@media (max-width: 560px) {
+  html[data-ui="n"] .hero.in-hero { padding-block: var(--space-4); }
+  html[data-ui="n"] .hero.in-hero .in-num { font-size: clamp(3rem, 15vw, 3.7rem); }
+  html[data-ui="n"] .hero.in-hero .in-visual { gap: var(--space-3); }
+  html[data-ui="n"] .hero.in-hero .in-loc svg { width: auto; max-width: 100%; height: 130px; }
+  html[data-ui="n"] .n-pg-indicator-step { max-width: 46%; }
+  html[data-ui="n"] .n-pg-indicator-pos { order: 3; flex-basis: 100%; }
+}
+@media print {
+  html[data-ui="n"] .n-pg-indicator-steps, html[data-ui="n"] .n-pg-indicator-actions, html[data-ui="n"] .viewtoggle { display: none; }          /* the switch between chart and table does nothing on paper */
+}
+
+/* a small group: the figure is never drawn big or outlined (it looks like a verdict); it is plain muted text, and the words under it say it is not judged */
+html[data-ui="n"] .in-num.is-hollow, html[data-ui="n"] .in-num.is-hollow small { color: var(--ink-3); -webkit-text-stroke: 0; font-weight: 700; }
+html[data-ui="n"] .hero.in-hero .in-num.is-hollow { font-size: clamp(2.25rem, 6vw, 3rem); letter-spacing: 0; }
+html[data-ui="n"] .in-num.is-hollow small { font-size: .5em; }
+@media print {
+  html[data-ui="n"] .in-num.is-hollow { -webkit-text-stroke: 0; }
+}
+
+/* the "group too small" note is plain text between two hairlines, not a dashed rounded box */
+html[data-ui="n"] .in-small { max-width: 46ch; justify-items: start; gap: var(--space-2); padding: var(--space-4) 0; text-align: start; border: 0; border-block: 1px solid var(--line-strong); border-radius: 0; background: none; }
+html[data-ui="n"] .in-small > svg { width: 22px; height: 22px; }
+html[data-ui="n"] .in-small-p { max-width: none; }
+
+/* a background figure of a very small town: one plain line where the comparisons were; its own values by year in a plain table */
+html[data-ui="n"] .n-pg-indicator-nocmp { margin: var(--space-3) 0 0; color: var(--ink-2); font-size: var(--fs-small); }
+html[data-ui="n"] .n-pg-indicator-own { max-width: 32rem; }
+
+/* the official reference of the figure (kit/guide.js): a small label, the target and where the figure stands, the caveat in small type, the link to the document. Between hairlines, no box, no stripe. */
+html[data-ui="n"] .n-pg-indicator-guide { max-width: 46rem; margin-top: var(--space-4); padding-block: var(--space-3); border-block: 1px solid var(--line); }
+html[data-ui="n"] .n-pg-indicator-guide-h { margin: 0 0 var(--space-1); color: var(--ink-3); font-size: var(--fs-small); font-weight: 700; letter-spacing: 0; }
+html[data-ui="n"] .n-pg-indicator-guide-l { margin: 0; color: var(--ink-2); font-size: var(--fs-body); line-height: 1.6; }
+html[data-ui="n"] .n-pg-indicator-guide-l.is-main { color: var(--ink); font-size: 1.0625rem; font-weight: 600; }
+html[data-ui="n"] .n-pg-indicator-guide-l.is-state { color: var(--ink); font-weight: 700; }
+html[data-ui="n"] .n-pg-indicator-guide-l + .n-pg-indicator-guide-l { margin-top: var(--space-1); }
+html[data-ui="n"] .n-pg-indicator-guide-note { margin: var(--space-2) 0 0; color: var(--ink-3); font-size: var(--fs-small); line-height: 1.55; }
+html[data-ui="n"] .n-pg-indicator-guide-src { margin: var(--space-2) 0 0; font-size: var(--fs-small); overflow-wrap: anywhere; }
+html[data-ui="n"] .n-pg-indicator-guide-src a { padding-block: 2px; margin-block: -2px; }          /* a link that fits one line is still 24 px for a pointer (WCAG 2.5.8); the negative margin keeps every line where it was */
+@media (pointer: coarse) {
+  html[data-ui="n"] .n-pg-indicator-guide-src a { display: inline-flex; align-items: center; min-height: 44px; padding-block: 0; margin-block: 0; }
+}
+@media print {
+  html[data-ui="n"] .n-pg-indicator-guide { break-inside: avoid; }
+}
+
+/* reflow at 320 px (WCAG 1.4.10, also with the text at 200 percent): the link of a recommendation card may take two lines */
+@media (max-width: 340px) {
+  html[data-ui="n"] .in-rec-go { white-space: normal; }
+}
+
+/* targets (WCAG 2.5.8): the link to the source under the figure's title is alone on its line; the negative margin keeps every line where it was */
+html[data-ui="n"] .srcline a { padding-block: 2px; margin-block: -2px; }

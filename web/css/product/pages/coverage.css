@@ -1,0 +1,31 @@
+/* Coverage in the product (js/product/pages/coverage.js, prefix n-pg-coverage-): the numerals sit in the title zone, the first three are buttons that filter the list. */
+
+html[data-ui="n"] .n-pg-coverage-band .cv-figs { margin-top: var(--space-4); padding-top: var(--space-3); border-top: 1px solid var(--line); }
+html[data-ui="n"] .n-pg-coverage-band .keyfig { padding: var(--space-1) var(--space-5); }
+html[data-ui="n"] .n-pg-coverage-band .kf-num { font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 800; }
+html[data-ui="n"] .n-pg-coverage-fig { appearance: none; border-top: 0; border-inline: 0; border-bottom: 3px solid transparent; border-radius: 0; background: none; font: inherit; text-align: start; cursor: pointer; }
+html[data-ui="n"] .n-pg-coverage-band .keyfig { border-bottom: 3px solid transparent; }          /* a numeral that is not a button keeps the same height as one that is */
+html[data-ui="n"] .n-pg-coverage-band .keyfig + .keyfig { border-inline-start: 1px solid var(--line); }
+html[data-ui="n"] .n-pg-coverage-fig:hover .kf-label { color: var(--teal-ink); text-decoration: underline; }
+html[data-ui="n"] .n-pg-coverage-band .n-pg-coverage-fig[aria-pressed="true"] { border-bottom-color: var(--teal-dark); }
+html[data-ui="n"] .n-pg-coverage-fig[aria-pressed="true"] .kf-label { color: var(--ink); font-weight: 800; }
+html[data-ui="n"] .n-pg-coverage-fig:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+html[data-ui="n"] .n-pg-coverage-filter { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-4); min-height: 24px; margin-top: var(--space-2); color: var(--ink-2); font-size: var(--fs-small); }
+html[data-ui="n"] .n-pg-coverage-status { margin: 0; }
+html[data-ui="n"] .n-pg-coverage-reset { padding: 0; border: 0; background: none; color: var(--teal-ink); font: inherit; font-weight: 700; text-decoration: underline; cursor: pointer; }
+html[data-ui="n"] .n-pg-coverage-reset[hidden] { display: none; }
+html[data-ui="n"] .n-pg-coverage-off { display: none; }
+@media (max-width: 860px) {
+  html[data-ui="n"] .n-pg-coverage-band .cv-figs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  html[data-ui="n"] .n-pg-coverage-band .keyfig { padding: var(--space-2); }
+  html[data-ui="n"] .n-pg-coverage-band .keyfig + .keyfig { border-top: 0; border-inline-start: 0; }
+}
+html[data-ui="n"] .n-pg-coverage-back { margin-bottom: var(--space-1); }
+
+/* the official targets of the town's figures: one heading and one paragraph under the list */
+html[data-ui="n"] .n-pg-coverage-guides { margin-top: var(--space-6); padding-top: var(--space-4); border-top: 1px solid var(--line); max-width: 46rem; }
+html[data-ui="n"] .n-pg-coverage-guides-h { margin: 0 0 var(--space-2); color: var(--ink); font-size: var(--fs-row); font-weight: 700; }
+html[data-ui="n"] .n-pg-coverage-guides p { margin: 0; color: var(--ink-2); line-height: 1.7; }
+
+/* targets (WCAG 2.5.8): the link to the source of a figure is alone on its line; padding above and below an inline link moves nothing */
+html[data-ui="n"] .cv-src a { padding-block: 2px; }

@@ -1,0 +1,170 @@
+/* Lab direction "questions2" (prefix .lk-): the "questions first" page again. A compact illustrated banner, a warm paper page, five large numbered questions on the start side,
+   and the selected answer: ONE huge sentence in heavy navy, then a visual (the bloom for the weakest answer) and airy hairline evidence.
+   No card, no capsule, no side stripe; colour only through tokens (the paper is a local mix, dark mode follows); motion only through css/motion.css.
+   The evidence blocks come from the questions page (.lq- classes, css/lab/questions.css): they are restyled here under the root .lk. */
+
+.lk { --lk-paper: color-mix(in srgb, var(--attn-soft) 40%, var(--bg)); --lk-px: 28px; --lk-rail: 226px; --lk-gap: 36px; --lk-hair: color-mix(in srgb, var(--line-2) 80%, var(--ink-3));
+  --lb-sheen: color-mix(in srgb, var(--surface) 28%, transparent); --lb-vein: color-mix(in srgb, var(--surface) 62%, transparent);
+  container: lk / inline-size; display: block; margin: -20px -28px -72px; padding: 0 var(--lk-px) 72px; background: var(--lk-paper); color: var(--ink); }
+:root[data-theme="dark"] .lk { --lk-paper: color-mix(in srgb, var(--attn-soft) 14%, var(--bg)); --lk-hair: var(--line-2); --lb-sheen: color-mix(in srgb, var(--ink) 11%, transparent); --lb-vein: color-mix(in srgb, var(--ink) 30%, transparent); }
+
+/* ── the banner: a slim band of the town, dissolving into the paper; the text sits on the calm sky behind a soft paper veil ── */
+.lk-head { position: relative; isolation: isolate; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(260px, 340px); gap: 8px 26px; align-items: center; margin-inline: calc(var(--lk-px) * -1); padding: 18px var(--lk-px) 16px; min-height: 160px; }
+.lk-art { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, var(--ink) 0, var(--ink) 58%, transparent 100%); mask-image: linear-gradient(to bottom, var(--ink) 0, var(--ink) 58%, transparent 100%); }
+.lk-art-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 34%; display: block; }
+.lk-art-dusk { display: none; transform: scaleX(-1); }
+:root[data-theme="dark"] .lk-art-day { display: none; }
+:root[data-theme="dark"] .lk-art-dusk { display: block; }
+.lk-art::after { content: ""; position: absolute; inset: 0;
+  background: linear-gradient(to left, color-mix(in srgb, var(--lk-paper) 94%, transparent) 0, color-mix(in srgb, var(--lk-paper) 90%, transparent) 64%, color-mix(in srgb, var(--lk-paper) 52%, transparent) 84%, transparent 100%); }
+.lk-id { min-width: 0; }
+.lk-eyebrow { display: flex; align-items: center; gap: 8px; margin: 0; font-size: .95rem; font-weight: 800; color: var(--teal-dark); }
+:root[data-theme="dark"] .lk-eyebrow { color: var(--teal-ink); }
+.lk-eyebrow .lb-sw { flex: none; width: 11px; height: 17px; }
+.lk-town { margin: 2px 0 0; font-size: clamp(2.1rem, 3.6vw, 2.9rem); line-height: 1.04; font-weight: 900; letter-spacing: -.028em; color: var(--head); overflow-wrap: break-word; }
+.lk-facts { margin: 8px 0 0; font-size: .96rem; color: var(--ink-2); }
+.lk-basis { margin: 3px 0 0; font-size: .96rem; }
+.lk-basis a { display: inline-flex; align-items: center; gap: 6px; min-height: 28px; font-weight: 700; color: var(--teal-dark); text-decoration: underline; text-decoration-color: var(--teal-line); text-underline-offset: 5px; }
+.lk-basis a:hover { text-decoration-color: currentColor; }
+.lk-basis svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+:root[data-theme="dark"] .lk-basis a { color: var(--teal-ink); }
+.lk .lq-loc { flex: none; line-height: 0; min-height: 0; color: var(--ink-3); }
+.lk .lq-loc svg { height: 96px; width: auto; }
+
+.lk-askwrap { min-width: 0; }
+.lk-ask { display: flex; align-items: center; gap: 8px; padding: 0 0 4px; border-bottom: 1.5px solid var(--lk-hair); transition: border-color .18s, box-shadow .18s; }
+.lk-ask:focus-within { border-bottom-color: var(--teal-dark); box-shadow: 0 1.5px 0 0 var(--teal-dark); }
+.lk-ask > svg { flex: none; width: 22px; height: 22px; color: var(--ink-3); fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+.lk-ask-in { flex: 1; min-width: 0; padding: 8px 0; border: 0; outline: 0; background: transparent; font: 600 1.05rem var(--font); color: var(--head); caret-color: var(--teal-dark); }
+.lk-ask-in::placeholder { color: var(--ink-3); font-weight: 500; opacity: 1; }
+.lk-ask-go { flex: none; display: grid; place-items: center; width: 44px; height: 44px; border: 0; border-radius: 50%; background: none; color: var(--teal-dark); transition: background .16s; }
+.lk-ask-go:hover { background: var(--teal-soft); }
+.lk-ask-go svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+:root[data-theme="dark"] .lk-ask-go { color: var(--teal-ink); }
+.lk-ask-note { margin: 6px 0 0; font-size: .8rem; color: var(--ink-2); }
+
+/* ── the questions on the start side, the answer beside them ── */
+.lk-main { display: grid; grid-template-columns: var(--lk-rail) minmax(0, 1fr); gap: 0 var(--lk-gap); margin-top: 20px; align-items: start; }
+.lk-rail { position: sticky; top: 84px; }
+@media (max-height: 640px) { .lk-rail { position: static; } }
+.lk-tabs { display: grid; }
+.lk-tab { display: grid; grid-template-columns: 2.1rem minmax(0, 1fr); align-items: baseline; width: 100%; min-height: 54px; padding: 13px 0; border: 0; border-top: 1px solid var(--lk-hair); background: none; text-align: start; color: var(--ink-2); font: 700 1.1rem/1.3 var(--font); cursor: pointer; transition: color .16s; }
+.lk-tab:last-child { border-bottom: 1px solid var(--lk-hair); }
+.lk-tab-n { font-size: .82rem; font-weight: 800; color: var(--ink-3); font-variant-numeric: tabular-nums; transition: color .16s; }
+.lk-tab-t { text-decoration: underline; text-decoration-color: transparent; text-decoration-thickness: 3px; text-underline-offset: 7px; transition: text-decoration-color .18s; }
+.lk-tab:hover { color: var(--head); }
+.lk-tab:hover .lk-tab-t { text-decoration-color: var(--lk-hair); }
+.lk-tab[aria-selected="true"] { color: var(--head); font-weight: 900; }
+.lk-tab[aria-selected="true"] .lk-tab-n { color: var(--teal-dark); }
+.lk-tab[aria-selected="true"] .lk-tab-t { text-decoration-color: var(--teal-dark); }
+:root[data-theme="dark"] .lk-tab[aria-selected="true"] .lk-tab-n { color: var(--teal-ink); }
+:root[data-theme="dark"] .lk-tab[aria-selected="true"] .lk-tab-t { text-decoration-color: var(--teal); }
+
+/* the status row: five numerals in one line, hairlines between them (parts.js ledger, restyled) */
+.lk .lq-ledger { margin-top: 20px; }
+.lk .lq-rail-h { margin: 0 0 8px; font-size: .8rem; font-weight: 700; color: var(--muted); }
+.lk .lq-ledger ul { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.lk .lq-ledger li { display: grid; justify-items: center; align-content: start; gap: 3px; padding: 2px 1px; border-top: 0; text-align: center; }
+.lk .lq-ledger li + li { border-inline-start: 1px solid var(--lk-hair); }
+.lk .lq-ln { min-width: 0; font-size: 1.45rem; line-height: 1.05; }
+.lk .lq-ledger .is-concern .lq-ln { font-size: 1.95rem; }
+.lk .lq-ledger li span { font-size: .72rem; font-weight: 700; line-height: 1.2; }
+
+/* ── the answer ── */
+.lk-panel { container: lkp / inline-size; min-width: 0; outline: none; padding-top: 4px; }
+.lk-top { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px 32px; align-items: center; }
+.lk-lead { min-width: 0; }
+.lk .lq-ql { margin: 0 0 8px; font-size: .95rem; font-weight: 800; color: var(--teal-dark); }
+:root[data-theme="dark"] .lk .lq-ql { color: var(--teal-ink); }
+.lk .lq-sentence { margin: 0; font-size: clamp(2.2rem, 7.1cqw, 3.5rem); line-height: 1.07; font-weight: 900; letter-spacing: -.028em; color: var(--head); text-wrap: balance; overflow-wrap: break-word; }
+.lk .lq-sentence.is-title { font-size: clamp(1.9rem, 5.6cqw, 2.8rem); line-height: 1.14; }
+.lk .lq-n { font-variant-numeric: tabular-nums; }
+.lk .lq-n.t-attn { color: var(--attn-bar); font-size: 1.22em; letter-spacing: -.04em; }
+.lk .lq-sdom { color: inherit; text-decoration: none; background: linear-gradient(to top, color-mix(in srgb, var(--attn-bar) 30%, transparent) 0, color-mix(in srgb, var(--attn-bar) 30%, transparent) .34em, transparent .34em); padding-inline: .06em; border-radius: 2px; transition: background-color .16s; }
+.lk .lq-sdom:hover { background: linear-gradient(to top, color-mix(in srgb, var(--attn-bar) 46%, transparent) 0, color-mix(in srgb, var(--attn-bar) 46%, transparent) .5em, transparent .5em); }
+.lk .lq-lede { margin: 16px 0 0; max-width: 54ch; font-size: clamp(1.02rem, 2.9cqw, 1.2rem); line-height: 1.6; color: var(--ink-2); }
+.lk .lq-lede a, .lk .lq-acts a, .lk .lq-linkbtn { text-underline-offset: 5px; }
+
+.lk .lq-block { margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--lk-hair); }
+.lk .lq-bh { font-size: 1.3rem; }
+.lk .lq-bs { font-size: .95rem; line-height: 1.6; }
+.lk .lq-foot { border-top-color: var(--lk-hair); }
+.lk .lq-lr a, .lk .lq-ch li, .lk .lq-kpi, .lk .lq-next li, .lk .lq-sm li, .lk .lq-mg li, .lk .lq-pr li, .lk .lq-learn li, .lk .lq-steps li { border-top-color: var(--lk-hair); }
+
+/* ── the bloom: the visual under the weakest sentence (labels around the leaves; on a narrow column the bloom's own list names them) ── */
+.lk-bloom { min-width: 0; }
+.lk-bloom .lb-fig { container: lkb / inline-size; max-width: none; }
+.lk-bloom .lb-lab { max-width: 72px; }
+.lk-bloom .lb-lab-in { font-size: .74rem; gap: 1px; }
+.lk-bloom .lb-lab svg { width: 17px; height: 17px; }
+.lk-bloom .lb-bloom.is-init.has-hot .lb-pl:not(.is-hot) { opacity: .72; }
+.lk-how { display: grid; justify-items: start; gap: 4px; margin-top: 16px; }
+.lk-how .lb-enc { max-width: 46ch; margin: 0; font-size: .88rem; font-weight: 600; line-height: 1.5; text-align: start; color: var(--ink-2); text-wrap: pretty; }
+.lk-how .lb-enc.is-sub { display: none; }
+.lk-how .lb-key { justify-content: flex-start; gap: 4px 14px; margin: 4px 0 0; font-size: .8rem; }
+
+@container lk (min-width: 861px) {
+  .lk .lq-ql { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .lk .lq-block { margin-top: 30px; }
+}
+@container lkp (min-width: 640px) {
+  .lk-bloom .lb-clip { overflow: visible; padding-inline: 6px; }
+  .lk-top.has-vis { grid-template-columns: minmax(0, 1fr) minmax(300px, 330px); }
+  .lk-top.has-vis .lq-sentence { font-size: clamp(2rem, 5.5cqw, 2.75rem); }
+  .lk-top.has-vis .lq-lede { font-size: 1.04rem; }
+}
+@container lkp (max-width: 639px) {
+  .lk-bloom .lb-fig { container: lbf / inline-size; }
+  .lk-how .lb-enc.is-sub { display: block; }
+}
+
+/* ── the evidence of question 1: airy rows, the same three columns in every row (number, name with its reason, the dumbbell on its own axis) ── */
+.lk .lq-wr { grid-template-columns: 44px minmax(0, 1fr) minmax(210px, 280px); gap: 6px 26px; padding: 24px 0; border-top-color: var(--lk-hair); }
+.lk .lq-wr-n { font-size: 2.1rem; }
+.lk .lq-wr-name { font-size: 1.1rem; }
+.lk .lq-why { margin-top: 6px; }
+.lk .lq-db-knock { fill: var(--lk-paper); }
+.lk .lq-lr-dot { box-shadow: 0 0 0 3px var(--lk-paper); }
+.lk .lq-tri + .lq-tri { border-inline-start-color: var(--lk-hair); }
+.lk .lq-tri-n { color: var(--head); }
+
+/* ── a window narrower than the desktop shell, and the phone: the questions are one row of underlined tabs that scrolls ── */
+@container lk (max-width: 860px) {
+  .lk-main { display: flex; flex-direction: column; align-items: stretch; margin-top: 12px; }
+  .lk-rail { display: contents; }
+  .lk-tabs { order: 1; position: sticky; top: 64px; z-index: 12; display: flex; gap: 0 26px; overflow-x: auto; box-sizing: border-box; margin-inline: calc(var(--lk-px) * -1); padding-inline: var(--lk-px); background: var(--lk-paper); border-bottom: 1px solid var(--lk-hair); scrollbar-width: none; }
+  .lk-tabs::-webkit-scrollbar { display: none; }
+  .lk-tab { flex: none; display: block; width: auto; min-height: 50px; padding: 12px 0 9px; border: 0; border-bottom: 3px solid transparent; white-space: nowrap; font-size: 1.02rem; }
+  .lk-tab:last-child { border-bottom: 3px solid transparent; }
+  .lk-tab-n { display: none; }
+  .lk-tab-t, .lk-tab:hover .lk-tab-t, .lk-tab[aria-selected="true"] .lk-tab-t { text-decoration: none; }
+  .lk-tab[aria-selected="true"], .lk-tab[aria-selected="true"]:last-child { border-bottom-color: var(--teal-dark); }
+  :root[data-theme="dark"] .lk-tab[aria-selected="true"], :root[data-theme="dark"] .lk-tab[aria-selected="true"]:last-child { border-bottom-color: var(--teal); }
+  .lk-panel { order: 2; margin-top: 22px; }
+  .lk .lq-ledger { order: 3; margin-top: 44px; }
+  .lk .lq-ledger ul { grid-template-columns: repeat(auto-fit, minmax(66px, 1fr)); }
+  .lk .lq-ledger li span { font-size: .8rem; }
+  .lk-head { grid-template-columns: minmax(0, 1fr) auto; min-height: 0; padding-block: 16px 14px; }
+  .lk-askwrap { grid-column: 1 / -1; grid-row: 2; }
+  .lk .lq-loc svg { height: 76px; }
+}
+@container lk (max-width: 600px) {
+  .lk-town { font-size: 2rem; }
+  .lk-facts, .lk-basis { font-size: .9rem; }
+  .lk-ask-note { display: none; }
+  .lk .lq-loc svg { height: 64px; }
+  .lk .lq-wr { grid-template-columns: 34px minmax(0, 1fr); gap: 4px 12px; align-items: start; padding: 20px 0; }
+  .lk .lq-wr-n { font-size: 1.7rem; }
+  .lk .lq-wr-c { grid-column: 2; margin-top: 8px; }
+  .lk .lq-block { margin-top: 38px; }
+  .lk .lq-sentence { font-size: clamp(1.95rem, 9.4cqw, 2.4rem); }
+}
+@media (max-width: 860px) { .lk { --lk-px: 16px; margin: -20px -16px -64px; } }
+@media print {
+  .lk { margin: 0; background: none; }
+  .lk-rail { position: static; }
+  .lk-main { display: block; }
+  .lk-tabs { display: none; }
+  .lk-art { display: none; }
+}

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="he" dir="rtl" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CityPulse · בריאות הציבור ברמת היישוב</title>
+<meta name="description" content="תמונת מצב של בריאות הציבור לכל יישוב בישראל מנתונים רשמיים: השוואה, מגמות, פערים והמלצות לפעולה.">
+<meta name="theme-color" content="#0f2a4d">
+<link rel="icon" type="image/png" href="assets/logo/favicon-64.png">
+<link rel="apple-touch-icon" href="assets/logo/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/motion.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/viz.css">
+<link rel="stylesheet" href="css/pages.css">
+<script>
+  /* light unless the person chose dark; set before first paint so the page never flashes */
+  try { var t = localStorage.getItem("cp2-theme"); if (t === "dark" || t === "light") document.documentElement.dataset.theme = t; } catch (e) { /* private mode */ }
+  /* motion unless the system asks for less: the hidden start states of css/motion.css exist only under this class */
+  try { if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("js-motion"); } catch (e) { /* old browser */ }
+</script>
+</head>
+<body>
+<a class="sr" href="#view">דלגו לתוכן</a>
+<div class="app">
+  <aside class="side" id="side" aria-label="תפריט ראשי"></aside>
+  <div class="main">
+    <header class="top" id="top">
+      <button class="btn sm ghost menu-btn" id="menu" type="button" aria-label="תפריט" aria-expanded="false"></button>
+      <nav class="crumbs" id="crumbs" aria-label="מיקום"></nav>
+      <span class="spacer"></span>
+      <div id="quick" class="no-print" style="width:min(320px,40vw)"></div>
+    </header>
+    <main class="page" id="view" tabindex="-1"></main>
+  </div>
+</div>
+<div class="scrim" id="scrim"></div>
+<noscript><p style="padding:24px;font-family:sans-serif">האתר דורש JavaScript כדי להציג את הנתונים.</p></noscript>
+<script type="module" src="js/motion.js"></script>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

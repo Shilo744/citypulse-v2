@@ -1,0 +1,168 @@
+/* n-brief-: the briefing "דוח ליישוב" (SPEC 5.3, 6.2): a paper column of 820 px on the screen, an A4 sheet in print. Rules start with html[data-ui="n"]. No colour literal: tokens only. */
+
+/* ── the screen: actions above the sheet, then the sheet ── */
+html[data-ui="n"] .n-brief { max-width: 820px; margin-inline: auto; page: brief; }
+html[data-ui="n"] .n-brief-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-1) var(--space-5); margin-bottom: var(--space-4); }
+html[data-ui="n"] .n-brief-back { display: inline-flex; align-items: center; gap: var(--space-1); min-height: 32px; color: var(--teal-ink); font-weight: 600; font-size: var(--fs-small); text-decoration: none; }
+html[data-ui="n"] .n-brief-back svg { width: 16px; height: 16px; fill: none; stroke: currentColor; }
+html[data-ui="n"] .n-brief-back:hover { color: var(--ink); text-decoration: underline; text-underline-offset: .25em; }
+html[data-ui="n"] .n-brief-bar > [role="group"] { gap: var(--space-1) var(--space-5); }
+html[data-ui="n"] .n-brief-paper { min-width: 0; padding: var(--space-7) var(--space-7) var(--space-6); background: var(--surface); border: 1px solid var(--line); border-radius: 4px; color: var(--ink); }
+
+/* ── header: the mark, the title, who the numbers are about, how much they rest on ── */
+html[data-ui="n"] .n-brief-head { padding-bottom: var(--space-5); border-bottom: 1px solid var(--line-strong); }
+html[data-ui="n"] .n-brief-brand { display: flex; align-items: center; gap: var(--space-2); }
+html[data-ui="n"] .n-brief-brand .brand-logo { display: block; width: auto; height: 34px; }
+html[data-ui="n"] .n-brief-wordmark { font-weight: 800; font-size: var(--fs-body); color: var(--ink); letter-spacing: .01em; }
+html[data-ui="n"] .n-brief-kind { margin-inline-start: auto; color: var(--teal-ink); font-size: var(--fs-small); font-weight: 700; }
+html[data-ui="n"] .n-brief-title { margin: var(--space-5) 0 0; font-size: clamp(1.75rem, 4vw, 2.4rem); line-height: 1.15; font-weight: 800; letter-spacing: -.015em; color: var(--ink); text-wrap: balance; overflow-wrap: break-word; outline: none; }
+html[data-ui="n"] .n-brief-facts { display: flex; flex-wrap: wrap; gap: 2px var(--space-2); margin: var(--space-3) 0 0; color: var(--ink-2); font-size: var(--fs-small); font-weight: 500; }
+html[data-ui="n"] .n-brief-dot { color: var(--ink-3); }
+html[data-ui="n"] .n-brief-basis { margin: var(--space-1) 0 0; color: var(--ink-3); font-size: var(--fs-small); }
+html[data-ui="n"] .n-brief-nb { white-space: nowrap; }
+@media (max-width: 560px) {
+  /* a wrapped line must not start or end with a lone dot: on a phone the facts are separated by space */
+  html[data-ui="n"] .n-brief-dot { display: none; }
+  html[data-ui="n"] .n-brief-facts { column-gap: var(--space-4); }
+  html[data-ui="n"] .n-brief-basis > span:not(.n-brief-dot) { display: block; }
+}
+
+/* ── sections: a hairline, a heading, the sentence, the evidence ── */
+html[data-ui="n"] .n-brief-sec { margin-top: var(--space-7); padding-top: var(--space-5); border-top: 1px solid var(--line); }
+html[data-ui="n"] .n-brief-sec.n-brief-lead { margin-top: var(--space-6); padding-top: 0; border-top: 0; }
+html[data-ui="n"] .n-brief-h { margin: 0; font-size: var(--fs-section); line-height: 1.25; font-weight: 800; color: var(--ink); }
+html[data-ui="n"] .n-brief-h3 { margin: 0; font-size: var(--fs-row); font-weight: 700; color: var(--ink); }
+html[data-ui="n"] .n-brief-sub { margin: var(--space-1) 0 0; max-width: 66ch; color: var(--ink-2); font-size: var(--fs-small); line-height: 1.55; }
+html[data-ui="n"] .n-brief-say { margin: var(--space-3) 0 0; font-size: var(--fs-lede); line-height: 1.4; font-weight: 700; color: var(--ink); text-wrap: pretty; overflow-wrap: break-word; }
+html[data-ui="n"] .n-brief-lead .n-brief-say { margin: 0; font-size: var(--fs-nonanswer); line-height: 1.15; font-weight: 800; letter-spacing: -.015em; text-wrap: balance; }
+html[data-ui="n"] .n-brief-say.is-calm, html[data-ui="n"] .n-brief-say.is-nodata { color: var(--ink-2); }
+html[data-ui="n"] .n-brief-lead .n-brief-say.is-calm, html[data-ui="n"] .n-brief-lead .n-brief-say.is-nodata { font-weight: 700; line-height: 1.25; }
+html[data-ui="n"] .n-brief-sec .n-brief-say.n-brief-small { font-size: var(--fs-row); font-weight: 600; }
+html[data-ui="n"] .n-brief-lede { margin: var(--space-3) 0 0; max-width: 62ch; color: var(--ink-2); font-size: var(--fs-body); line-height: 1.6; }
+html[data-ui="n"] .n-brief-link { color: var(--teal-ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .22em; }
+html[data-ui="n"] .n-brief-link:hover { color: var(--ink); }
+html[data-ui="n"] .n-brief-note { margin: var(--space-3) 0 0; max-width: 66ch; color: var(--ink-3); font-size: var(--fs-small); line-height: 1.55; }
+
+/* the status row: the five counts of the home, side by side */
+html[data-ui="n"] .n-brief-status { margin-top: var(--space-5); padding-top: var(--space-4); border-top: 1px solid var(--line); }
+html[data-ui="n"] .n-brief-status ul { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 0; }
+html[data-ui="n"] .n-brief-status li { border-top: 0; }
+html[data-ui="n"] .n-brief-status li + li { border-inline-start: 1px solid var(--line); padding-inline-start: var(--space-4); }
+html[data-ui="n"] .n-brief-status li > * { flex-direction: column; align-items: flex-start; gap: var(--space-1); }
+html[data-ui="n"] .n-brief-status li > a:hover span { text-decoration: none; }
+
+/* ── the table of the weakest figures ── */
+html[data-ui="n"] .n-brief-table { width: 100%; margin-top: var(--space-4); border-collapse: collapse; font-size: var(--fs-small); }
+html[data-ui="n"] .n-brief-table th, html[data-ui="n"] .n-brief-table td { padding: var(--space-3) var(--space-2); text-align: start; vertical-align: top; border-top: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+html[data-ui="n"] .n-brief-table thead th { padding-block: var(--space-2); border-top: 0; border-bottom: 1px solid var(--line-strong); color: var(--ink-3); font-size: var(--fs-micro); font-weight: 700; }
+html[data-ui="n"] .n-brief-table th:first-child, html[data-ui="n"] .n-brief-table td:first-child { padding-inline-start: 0; }
+html[data-ui="n"] .n-brief-table th:last-child, html[data-ui="n"] .n-brief-table td:last-child { padding-inline-end: 0; }
+html[data-ui="n"] .n-brief-table tbody th { font-weight: 600; font-size: var(--fs-body); }
+html[data-ui="n"] .n-brief-table tbody th a { color: var(--ink); text-decoration: none; }
+html[data-ui="n"] .n-brief-table tbody th a:hover { text-decoration: underline; text-underline-offset: .22em; }
+html[data-ui="n"] .n-brief-c-figure { width: 34%; }
+html[data-ui="n"] .n-brief-st { display: block; margin-top: 2px; font-size: var(--fs-micro); font-weight: 500; color: var(--ink-3); }
+html[data-ui="n"] .n-brief-st b { font-size: var(--fs-micro); }
+html[data-ui="n"] .n-brief-val { font-weight: 800; color: var(--ink); }
+html[data-ui="n"] .n-brief-dir { display: inline-flex; align-items: center; gap: 4px; color: var(--ink-2); white-space: nowrap; }
+html[data-ui="n"] .n-brief-dir svg { flex: none; fill: none; stroke: currentColor; }
+
+/* ── what changed, what is missing: one block per figure or per group ── */
+html[data-ui="n"] .n-brief-changes, html[data-ui="n"] .n-brief-miss, html[data-ui="n"] .n-brief-marks { list-style: none; margin: var(--space-4) 0 0; padding: 0; }
+html[data-ui="n"] .n-brief-changes li, html[data-ui="n"] .n-brief-miss li { padding: var(--space-3) 0; border-top: 1px solid var(--line); }
+html[data-ui="n"] .n-brief-changes li > a { color: var(--ink); font-weight: 600; text-decoration: none; }
+html[data-ui="n"] .n-brief-changes li > a:hover { text-decoration: underline; text-underline-offset: .22em; }
+html[data-ui="n"] .n-brief-changes p, html[data-ui="n"] .n-brief-miss p { margin: 2px 0 0; color: var(--ink-2); font-size: var(--fs-small); line-height: 1.55; }
+html[data-ui="n"] .n-brief-miss .n-brief-miss-names { color: var(--ink); font-weight: 600; }
+html[data-ui="n"] .n-brief-move.t-good { color: var(--good-ink); }
+html[data-ui="n"] .n-brief-move.t-attn { color: var(--attn-ink); }
+
+/* ── next to similar localities: the three marks of the figure that differs most ── */
+html[data-ui="n"] .n-brief-tell { margin-top: var(--space-5); }
+html[data-ui="n"] .n-brief-tell-name { margin: var(--space-1) 0 0; color: var(--ink-2); font-size: var(--fs-small); }
+html[data-ui="n"] .n-brief-marks { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); margin-top: var(--space-3); }
+html[data-ui="n"] .n-brief-marks li { display: grid; gap: 2px; padding-inline-end: var(--space-4); }
+html[data-ui="n"] .n-brief-marks li + li { padding-inline-start: var(--space-4); border-inline-start: 1px solid var(--line); }
+html[data-ui="n"] .n-brief-marks b { font-size: 1.5rem; line-height: 1.1; font-weight: 800; color: var(--ink); font-variant-numeric: tabular-nums; }
+html[data-ui="n"] .n-brief-mark-l { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-2); font-size: var(--fs-small); font-weight: 600; }
+html[data-ui="n"] .n-brief-mark-l i { flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--c-nat); }
+html[data-ui="n"] .n-brief-marks .k-city .n-brief-mark-l i { background: var(--c-city); }
+html[data-ui="n"] .n-brief-marks .k-peer .n-brief-mark-l i { background: var(--c-peer); }
+
+/* ── the first step ── */
+html[data-ui="n"] .n-brief-prepare { display: flex; align-items: flex-start; gap: var(--space-2); margin: var(--space-4) 0 0; max-width: 66ch; color: var(--ink-2); font-size: var(--fs-small); line-height: 1.55; }
+html[data-ui="n"] .n-brief-prepare svg { flex: none; width: 16px; height: 16px; margin-top: 3px; fill: none; stroke: currentColor; }
+html[data-ui="n"] .n-brief-kv { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--space-3) var(--space-5); margin: var(--space-4) 0 0; }
+html[data-ui="n"] .n-brief-kv dt { color: var(--ink-3); font-size: var(--fs-micro); font-weight: 700; }
+html[data-ui="n"] .n-brief-kv dd { margin: 2px 0 0; color: var(--ink); font-size: var(--fs-small); font-weight: 600; line-height: 1.45; }
+html[data-ui="n"] .n-brief-why { margin: var(--space-4) 0 0; max-width: 66ch; color: var(--ink-2); font-size: var(--fs-small); line-height: 1.6; }
+html[data-ui="n"] .n-brief-why b { color: var(--ink); }
+
+/* ── how to read: small type ── */
+html[data-ui="n"] .n-brief-howto ul { list-style: none; margin: var(--space-3) 0 0; padding: 0; display: grid; gap: var(--space-2); max-width: 70ch; color: var(--ink-2); font-size: var(--fs-micro); line-height: 1.55; }
+html[data-ui="n"] .n-brief-howto b { color: var(--ink); }
+
+/* ── the foot ── */
+html[data-ui="n"] .n-brief-foot { margin-top: var(--space-7); padding-top: var(--space-4); border-top: 1px solid var(--line-strong); color: var(--ink-3); font-size: var(--fs-micro); line-height: 1.6; }
+html[data-ui="n"] .n-brief-foot p { margin: 0 0 var(--space-1); }
+html[data-ui="n"] .n-brief-foot .n-brief-statement { color: var(--ink-2); font-weight: 600; }
+html[data-ui="n"] .n-brief-url { word-break: break-all; text-align: end; }
+html[data-ui="n"] .n-brief-foot .n-brief-printed { display: none; }
+
+/* ── a phone: the sheet is the page, the table becomes one block per figure ── */
+@media (max-width: 640px) {
+  html[data-ui="n"] .n-brief-paper { margin-inline: calc(var(--pg) * -1); padding: var(--space-5) var(--pg); border-inline: 0; border-radius: 0; }
+  html[data-ui="n"] .n-brief-sec { margin-top: var(--space-6); }
+  html[data-ui="n"] .n-brief-table, html[data-ui="n"] .n-brief-table tbody, html[data-ui="n"] .n-brief-table th, html[data-ui="n"] .n-brief-table td { display: block; }
+  html[data-ui="n"] .n-brief-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  html[data-ui="n"] .n-brief-table tr { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-2) var(--space-4); padding: var(--space-3) 0; border-top: 1px solid var(--line); }
+  html[data-ui="n"] .n-brief-table th, html[data-ui="n"] .n-brief-table td { padding: 0; border: 0; }
+  html[data-ui="n"] .n-brief-table tbody th { grid-column: 1 / -1; }
+  html[data-ui="n"] .n-brief-table td::before { content: attr(data-label); display: block; color: var(--ink-3); font-size: var(--fs-micro); font-weight: 700; }
+  html[data-ui="n"] .n-brief-table td:last-child { grid-column: 1 / -1; }
+  html[data-ui="n"] .n-brief-marks li, html[data-ui="n"] .n-brief-marks li + li { padding-inline: 0; border-inline-start: 0; }
+  html[data-ui="n"] .n-brief-status ul { grid-template-columns: repeat(auto-fit, minmax(76px, 1fr)); }
+  html[data-ui="n"] .n-brief-status li + li { padding-inline-start: var(--space-3); }
+}
+@media (pointer: coarse) {
+  html[data-ui="n"] .n-brief-back, html[data-ui="n"] .n-brief-link { min-height: 44px; display: inline-flex; align-items: center; }
+}
+@media (forced-colors: active) {
+  html[data-ui="n"] .n-brief-paper { border-color: CanvasText; }
+  html[data-ui="n"] .n-brief-mark-l i { forced-color-adjust: none; }
+}
+
+/* ── print: A4, margins 14 mm, two pages. The sheet only: no menu, no top bar, no shell footer, no actions. Colours stay and every one comes with its word. ── */
+@media print {
+  @page brief { size: A4; margin: 14mm; @bottom-center { content: counter(page) " / " counter(pages); font-size: 9pt; } }
+  html[data-ui="n"]:has(.n-brief) #foot, html[data-ui="n"]:has(.n-brief) .n-brief-bar, html[data-ui="n"]:has(.n-brief) .n-brief .no-print { display: none !important; }
+  html[data-ui="n"] body { background: none; }
+  html[data-ui="n"] .n-brief { max-width: none; zoom: .74; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html[data-ui="n"] .n-brief-paper { padding: 0; border: 0; border-radius: 0; background: none; }
+  html[data-ui="n"] .n-brief-head { padding-bottom: var(--space-3); }
+  html[data-ui="n"] .n-brief-brand .brand-logo { height: 28px; }
+  html[data-ui="n"] .n-brief-title { margin-top: var(--space-3); font-size: 1.6rem; }
+  html[data-ui="n"] .n-brief-sec.n-brief-lead { margin-top: var(--space-4); }
+  html[data-ui="n"] .n-brief-lead .n-brief-say { font-size: 1.5rem; }
+  html[data-ui="n"] .n-brief-say { font-size: 1.05rem; }
+  html[data-ui="n"] .n-brief-sec .n-brief-say.n-brief-small { font-size: 1rem; }
+  html[data-ui="n"] .n-brief-lede { margin-top: var(--space-2); font-size: var(--fs-small); }
+  html[data-ui="n"] .n-brief-status { margin-top: var(--space-3); padding-top: var(--space-2); }
+  html[data-ui="n"] .n-brief-sec { margin-top: var(--space-3); padding-top: var(--space-2); }
+  html[data-ui="n"] .n-brief-h { font-size: 1.15rem; break-after: avoid; }
+  html[data-ui="n"] .n-brief-sub { break-after: avoid; }
+  html[data-ui="n"] .n-brief-table { margin-top: var(--space-2); font-size: var(--fs-micro); }
+  html[data-ui="n"] .n-brief-table th, html[data-ui="n"] .n-brief-table td { padding: 4px var(--space-2); }
+  html[data-ui="n"] .n-brief-table tbody th { font-size: var(--fs-small); }
+  html[data-ui="n"] .n-brief-changes li, html[data-ui="n"] .n-brief-miss li { padding-block: 4px; }
+  html[data-ui="n"] .n-brief-changes li { display: grid; grid-template-columns: minmax(0, 11rem) minmax(0, 1fr); gap: var(--space-3); }
+  html[data-ui="n"] .n-brief-changes p { margin: 0; }
+  html[data-ui="n"] .n-brief-changes, html[data-ui="n"] .n-brief-miss { margin-top: var(--space-2); }
+  html[data-ui="n"] .n-brief-marks b { font-size: 1.25rem; }
+  html[data-ui="n"] .n-brief-howto ul { margin-top: var(--space-2); gap: var(--space-1); font-size: 8.5pt; }
+  html[data-ui="n"] .n-brief-foot { margin-top: var(--space-4); padding-top: var(--space-2); }
+  html[data-ui="n"] .n-brief-foot .n-brief-printed { display: block; }
+  html[data-ui="n"] .n-brief tr, html[data-ui="n"] .n-brief-changes li, html[data-ui="n"] .n-brief-miss li, html[data-ui="n"] .n-brief-tell, html[data-ui="n"] .n-brief-kv, html[data-ui="n"] .n-brief-prepare,
+  html[data-ui="n"] .n-brief-why, html[data-ui="n"] .n-brief-status, html[data-ui="n"] .n-brief-foot, html[data-ui="n"] .n-brief-howto li, html[data-ui="n"] .n-brief-head { break-inside: avoid; }
+  html[data-ui="n"] .n-brief a { color: inherit; text-decoration: none; }
+}

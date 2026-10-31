@@ -1,0 +1,11 @@
+/* Page styles of the old pages, for n.html: the ten css/pages/*.css files, without lab.css (the lab is not part of the product). */
+@import url("pages/home.css");
+@import url("pages/overview.css");
+@import url("pages/domain.css");
+@import url("pages/indicator.css");
+@import url("pages/trends.css");
+@import url("pages/compare.css");
+@import url("pages/actions.css");
+@import url("pages/ask.css");
+@import url("pages/method.css");
+@import url("pages/coverage.css");

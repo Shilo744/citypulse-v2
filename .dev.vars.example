@@ -1,0 +1,14 @@
+# LLM used for summaries and the ask-agent (any OpenAI-compatible endpoint). Never commit the real file.
+LLM_API_KEY=
+LLM_BASE_URL=https://openrouter.ai/api/v1
+# two roles: "search" finds and filters (a fast model), "reason" writes the conclusions people read (defaults shown)
+LLM_MODEL_SEARCH=anthropic/claude-haiku-5.5
+LLM_MODEL_REASON=anthropic/claude-sonnet-5.5
+# calls stop while the key has less than this left (USD), and never more than this many calls in an hour
+LLM_RESERVE_USD=0.3
+LLM_MAX_PER_HOUR=40
+PORT=8800
+# optional, for a real host: the public address that robots.txt, sitemap.xml and the share pages /s/<key> use instead of the Host header,
+# and the page that a share link opens (default /n.html)
+# PUBLIC_BASE_URL=https://citypulse.example.com
+# SHARE_TARGET=/n.html

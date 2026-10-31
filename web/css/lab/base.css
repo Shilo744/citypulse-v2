@@ -1,0 +1,39 @@
+/* The design lab (prefix .lab-): a slim bar above each experimental page and the list page. Plain on purpose: it is not part of the product's look. */
+.lab-bar { display: flex; align-items: center; gap: 10px 22px; flex-wrap: wrap; padding: 6px 0 14px; margin-bottom: 20px; border-bottom: 1px solid var(--line); font-size: .9rem; color: var(--muted); }
+.lab-bar-l { display: inline-flex; gap: 6px; align-items: center; font-weight: 700; color: var(--teal-dark); }
+.lab-bar-l svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+.lab-tabs { display: flex; gap: 2px 20px; flex-wrap: wrap; }
+.lab-tab { color: var(--ink-2); padding: 6px 0; border-bottom: 2px solid transparent; text-decoration: none; }
+.lab-tab:hover { color: var(--teal-dark); text-decoration: none; }
+.lab-tab[aria-current="page"] { color: var(--head, var(--ink)); font-weight: 700; border-bottom-color: var(--teal); }
+.lab-bar-sp { flex: 1; }
+.lab-bar-a { color: var(--muted); text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 4px; }
+.lab-bar-a:hover { color: var(--teal-dark); text-decoration-color: var(--teal-dark); }
+.lab-full > .lab-bar { padding: 10px clamp(16px, 4vw, 48px); margin: 0; background: var(--surface); }
+.lab-missing { display: flex; gap: 12px; align-items: flex-start; padding: 56px 0; color: var(--ink-2); max-width: 60ch; }
+.lab-missing svg { width: 22px; height: 22px; flex: none; margin-top: 3px; fill: none; stroke: var(--teal-dark); stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.lab-missing p { color: var(--muted); font-size: .92rem; overflow-wrap: anywhere; }
+
+/* the list */
+.lab-top { display: flex; align-items: center; gap: 16px; padding: 18px clamp(16px, 4vw, 56px); }
+.lab-brand { color: var(--head, var(--ink)); padding: 0; }
+.lab-brand small { color: var(--muted); }
+.lab-intro { max-width: 1100px; margin: 28px auto 0; padding-inline: clamp(16px, 4vw, 32px); }
+.lab-intro h1 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; letter-spacing: -.02em; color: var(--head, var(--ink)); line-height: 1.1; }
+.lab-intro > p { color: var(--ink-2); max-width: 62ch; margin-top: 12px; font-size: 1.05rem; }
+.lab-pick { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-top: 22px; color: var(--ink-2); }
+.lab-pick b { color: var(--head, var(--ink)); }
+.lab-search { width: min(380px, 100%); }
+.lab-rows { max-width: 1100px; margin: 28px auto 96px; padding-inline: clamp(16px, 4vw, 32px); }
+.lab-row { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 28px 44px; align-items: center; padding: 36px 0; border-top: 1px solid var(--line); }
+.lab-thumbs { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 14px; }
+.lab-thumbs img { width: 100%; height: auto; display: block; border-radius: 10px; box-shadow: var(--shadow-card); }
+.lab-name { font-size: 1.7rem; font-weight: 800; color: var(--head, var(--ink)); letter-spacing: -.01em; }
+.lab-info p { color: var(--ink-2); margin: 8px 0 16px; max-width: 46ch; }
+.lab-open { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; }
+.lab-go { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--teal-dark); }
+.lab-go svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.lab-also { color: var(--muted); font-size: .9rem; }
+.lab-also-a { font-size: .9rem; color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 4px; }
+@media (max-width: 860px) { .lab-row { grid-template-columns: 1fr; } }
+.lab-state { color: var(--muted); font-size: .95rem; }

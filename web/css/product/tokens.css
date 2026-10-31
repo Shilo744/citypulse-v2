@@ -1,0 +1,87 @@
+/* Mode N tokens (SPEC 3.2). The old token names are kept, the values change only under html[data-ui="n"]: one cool family (paper, ink, one brand teal, one attention orange).
+   This is the only file in web/css/product with colour literals; everything else asks a token. Dark is a second block with the extra attribute, so it also beats the old :root[data-theme="dark"]. */
+
+html[data-ui="n"] {
+  color-scheme: light;
+  --bg: #F5F7FA; --surface: #FFFFFF; --surface-2: #EDF1F6;
+  --line: #DFE5EC; --line-2: #D3DDE7; --line-strong: #C7D1DC; --track: #E6ECF2;
+  --ink: #14233A; --ink-2: #34465C; --ink-3: #566679; --muted: #566679; --head: #14233A;
+  --navy: #0F2A4D; --nav: #0F2A4D;
+  --on-nav: #D6E2F0; --on-nav-strong: #FFFFFF; --on-nav-dim: #9FB4CC;
+  --teal: #1F9A9A; --teal-ink: #0F6B6C; --teal-dark: #15787A; --teal-soft: #E6F2F2; --teal-line: #BFDEDD;
+  --on-primary: #FFFFFF;
+  --focus: #15787A;
+  --attn-bar: #D9702E; --attn-ink: #A8481A; --attn-soft: #FBEBDF;
+  --good-bar: #1F9A9A; --good-ink: #0F6B6C; --good-soft: #E3F2F1;
+  --none-bar: #7F8FA3; --none-ink: #566679; --none-soft: #EDF1F6;
+  --c-city: #2A78D6; --c-city-ink: #2570C8; --c-nat: #7B8A9C; --c-peer: #C94F86; --c-target: #0F2A4D; --c-band: #E8EFF6; --c-bin: #B8C7D8;
+  --sky-a: #F1F5FA; --sky-b: #E7EEF6; --sky-c: #F5F7FA;
+  --cat-tile: var(--teal-soft); --cat-ink: var(--teal-ink);                   /* the pictogram of a category: a quiet tile and one line colour (the dark theme re-values --teal-soft and --teal-ink) */
+  --cat-nav-tile: rgba(255, 255, 255, .10); --cat-nav-ink: var(--on-nav);       /* the same on the navy menu */
+  --shadow: none; --shadow-up: 0 6px 22px rgba(15, 42, 77, .10); --shadow-card: none;
+  --font: "Heebo CP", "Heebo", "Segoe UI", Arial, sans-serif;
+  --scrim: rgba(8, 20, 38, .5);
+
+  /* layout */
+  --pg: 28px;                                   /* the page gutter: every negative-margin trick uses it */
+  --top-h: 64px;                                /* the sticky top bar: every sticky offset uses it */
+  --page-max: 1560px;
+  --rail-w: 252px;
+  --n-gutter: max(clamp(24px, 5vw, 96px), var(--pg), calc((100% - var(--page-max)) / 2));   /* inline padding of a full-bleed block whose parent is #view */
+  --n-art-h: 190px;                             /* the picture window of a hero */
+
+  /* type scale (SPEC 3.4) */
+  --fs-name: clamp(2.5rem, 5vw, 3.75rem);
+  --fs-answer: clamp(2rem, 3.6vw, 3.25rem);
+  --fs-nonanswer: clamp(1.75rem, 3vw, 2.4rem);
+  --fs-lede: clamp(1.1rem, 1.6vw, 1.25rem);
+  --fs-section: 1.5rem;
+  --fs-row: 1.125rem;
+  --fs-body: 1rem;
+  --fs-small: .875rem;
+  --fs-micro: .8125rem;
+
+  /* space, 4 px base */
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 24px; --space-6: 32px; --space-7: 48px; --space-8: 72px;
+  --band-title-h: 108px;                        /* the title zone of an ordinary page: 96 to 120 */
+}
+html[data-ui="n"][data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0B1626; --surface: #122238; --surface-2: #0F1D31;
+  --line: #223853; --line-2: #2A4262; --line-strong: #35527A; --track: #1B3150;
+  --ink: #E9EFF6; --ink-2: #C5D2E0; --ink-3: #9DB0C6; --muted: #9DB0C6; --head: #E9EFF6;
+  --navy: #07182C; --nav: #07182C;
+  --teal: #34B3AD; --teal-ink: #7FD8D2; --teal-dark: #34B3AD; --teal-soft: #12353A; --teal-line: #1F5A5C;
+  --on-primary: #07182C;
+  --focus: #34B3AD;
+  --attn-bar: #E0824A; --attn-ink: #F2A67A; --attn-soft: #3A2418;
+  --good-bar: #34B3AD; --good-ink: #7FD8D2; --good-soft: #12353A;
+  --none-bar: #6F86A3; --none-ink: #9DB0C6; --none-soft: #1A2D47;
+  --c-city: #5AA0F0; --c-city-ink: #5AA0F0; --c-nat: #9DB0C6; --c-peer: #F08AB0; --c-target: #CFE0F3; --c-band: #17304D; --c-bin: #3A5675;
+  --sky-a: #0C2038; --sky-b: #102A47; --sky-c: #0B1626;
+  --shadow-up: 0 6px 22px rgba(0, 0, 0, .35);
+  --scrim: rgba(2, 8, 18, .62);
+}
+@media (max-width: 860px) {
+  html[data-ui="n"] { --pg: 16px; }
+}
+@media (min-width: 1920px) {
+  html[data-ui="n"] { --n-art-h: 240px; }
+}
+@media (min-width: 1536px) and (max-width: 1919.98px) {
+  html[data-ui="n"] { --n-art-h: 220px; }
+}
+@media (min-width: 1024px) and (max-width: 1279.98px) {
+  html[data-ui="n"] { --n-art-h: 170px; }
+}
+@media (min-width: 768px) and (max-width: 1023.98px) {
+  html[data-ui="n"] { --n-art-h: 150px; }
+}
+@media (max-width: 767.98px) {
+  html[data-ui="n"] { --n-art-h: 140px; }
+}
+/* more contrast on request (SPEC 3.11) */
+@media (prefers-contrast: more) {
+  html[data-ui="n"] { --line: #9AA9BA; --line-2: #8B9BAE; --ink-3: #34465C; --muted: #34465C; }
+  html[data-ui="n"][data-theme="dark"] { --line: #5C7BA3; --line-2: #6E8DB5; --ink-3: #C5D2E0; --muted: #C5D2E0; }
+}

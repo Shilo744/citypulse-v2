@@ -1,0 +1,4 @@
+Heebo (variable, Hebrew and Latin subsets) is licensed under the SIL Open Font License, Version 1.1.
+Copyright 2016 The Heebo Project Authors (https://github.com/OdedEzer/heebo).
+The full licence text: https://openfontlicense.org/open-font-license-official-text/
+These two files are served from this folder so that no request leaves the site (see web/css/product/shell.css, @font-face "Heebo CP").

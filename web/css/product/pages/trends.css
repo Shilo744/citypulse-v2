@@ -1,0 +1,43 @@
+/* Trends in mode N (prefix n-pg-trends-): the old hero on the pale band, the fan of lines in the tokens of the theme, the row of actions. */
+html[data-ui="n"] .hero.tr-hero { padding-block: var(--space-5); }
+html[data-ui="n"] .hero.tr-hero h1 { font-size: clamp(1.6rem, 3vw, 2.25rem); max-width: 30ch; text-wrap: balance; }
+html[data-ui="n"] .hero.tr-hero .eyebrow { font-size: var(--fs-small); }
+html[data-ui="n"] .hero.tr-hero .n-pg-trends-back { margin-bottom: var(--space-2); }
+html[data-ui="n"] .hero.tr-hero .hero-verdict { margin-top: var(--space-2); font-size: var(--fs-lede); }
+html[data-ui="n"] .hero.tr-hero .tr-hero-top { max-width: 760px; }
+html[data-ui="n"] .hero.tr-hero .tr-hero-top .hero-verdict { max-width: 56ch; }
+html[data-ui="n"] .n-pg-trends-lede { margin: 0; max-width: 62ch; font-size: var(--fs-body); color: var(--ink-2); }
+
+/* the first block under the band: which way is good, the three counts, the facts, the notes, the two links */
+html[data-ui="n"] .n-pg-trends-read { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-5); margin-bottom: var(--space-7); }
+html[data-ui="n"] .n-pg-trends-read .tr-led { margin-top: 0; padding-top: 0; border-top: 0; }
+html[data-ui="n"] .n-pg-trends-read .hero-meta, html[data-ui="n"] .n-pg-trends-read .hero-actions { margin: 0; }
+html[data-ui="n"] .n-pg-trends-read .hero-actions .btn { white-space: normal; text-align: start; }          /* the old rule is scoped to the hero it has left */
+html[data-ui="n"] .n-pg-trends-read .tr-hero-note { margin: 0; }
+html[data-ui="n"] .n-pg-trends-actions { margin-top: var(--space-3); }
+
+/* the fan and the dots of the ledger: the series tokens, a little stronger on the pale ground */
+html[data-ui="n"] .tr-fan path { opacity: .55; }
+html[data-ui="n"] .tr-led { margin-top: var(--space-4); padding-top: var(--space-3); }
+
+/* the heat grid is laid out for the width the page had when it was drawn: if the window is narrowed afterwards it must not widen the page (clip keeps the sticky year row working) */
+html[data-ui="n"] .tr-heatwrap { overflow-x: clip; }
+html[data-ui="n"] .tr-heat > .tr-dom { min-width: 0; }          /* a grid item is as wide as its drawn content unless told otherwise: the narrower window must reach the chart so that it draws again */
+
+/* the years above the heat grid: never under 12 px */
+html[data-ui="n"] .v-mx-hy { font-size: 12px; }
+
+@media (max-width: 560px) {
+  html[data-ui="n"] .hero.tr-hero { padding-block: var(--space-4); }
+  html[data-ui="n"] .tr-col { padding: var(--space-2) var(--space-3) var(--space-3); }
+}
+@media print {
+  html[data-ui="n"] .n-pg-trends-actions { display: none; }
+}
+
+/* a count of zero is quiet: muted ink, not the tone of the thing it counts (no orange "0 worsening") */
+html[data-ui="n"] .tr-col.is-zero .kf-num { color: var(--ink-3); opacity: 1; }
+
+/* targets (WCAG 2.5.8): the name of a figure in the years matrix and the link under the chart are at least 24 px high; padding above and below keeps its line, the negative margin gives the space back */
+html[data-ui="n"] a.v-mx-hlab { padding-block: 4px; margin-block: -4px; }
+html[data-ui="n"] .tr-note a { padding-block: 2px; }

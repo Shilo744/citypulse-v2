@@ -1,0 +1,1710 @@
+{
+ "meta": {
+  "generated": "2026-10-28",
+  "scout_topic": "evidence",
+  "conventions": {
+   "target.by_year": "official target per measurement year (percent) where it differs between years; 0 in the data.gov.il target field means missing",
+   "target.value for road injuries": "relative change in percent (-25 = a quarter cut) in a national plan, counted in people for the whole country, not a rate per 100,000",
+   "evidence_strength": "strong / moderate / limited = adviser classification based on what the cited page says (CPSTF 'strong evidence' -> strong; 'sufficient' or grade B -> moderate; framework-only or very low certainty -> limited)",
+   "typical_cost and time_to_effect_months": "adviser-judgement estimates, NOT taken from the cited pages",
+   "source_frameworks": "indicator sets in which an equivalent indicator or domain appears, only where the opened page shows it",
+   "evidence_notes": "caveats about the evidence base of the parameter, each with its own source",
+   "target.kind": "official = a target of an Israeli authority, confirmed on the cited page, for the same measure; international = a figure of another body or country (for example a US national objective, a WHO guideline value): orientation only, never a bar for a locality; none = no target confirmed"
+  },
+  "revised": "2026-10-31",
+  "change_notes": [
+   "2026-10-30 (b3): checked every statement of a target, goal or benchmark against research/guidelines.json and the cited pages.",
+   "road_severe_injuries_per_100k: the 2021 \"50 to 30\" goal (-50%, official) replaced by the 2026-2030 national plan goal (-25% over five years in people harmed, gov.il plan_actions p.5; national only). Reason: superseded, and counted in people, not a rate.",
+   "road_deaths_per_100k: the same \"50 to 30\" target removed (kind none). Reason: superseded; the verified 2030 figure (273 deaths) is a national count, not a rate per 100,000.",
+   "school_obesity: the US 15.5% (obesity only, ages 2-19) removed from the target column (kind none). Figures were confirmed on the page, but the Israeli indicators count overweight plus obesity in one grade, so the figure does not fit.",
+   "infant_mortality_rate: US 5.0 confirmed on the page (baseline 5.8 in 2017, 5.5 in 2024); kept as orientation only and the note now says it is a US national objective and names the UN under-five ceiling. Unchanged value.",
+   "exclusive_breastfeeding_4m (text): the sentence that all providers but one reached the target removed; the report's provider chart shows several below the 26% line.",
+   "measles_vaccine_coverage_grade1: confirmed on the WHO page (95% with two doses to stop transmission; 84% and 76% worldwide in 2024); the note now says it is a reference only. Value unchanged.",
+   "Confirmed and unchanged: the 13 Ministry of Health targets (2024 values read on the report pages), WHO 95% two-dose measles figure and its 84%/76% coverage, WHO 60% exclusive breastfeeding by 2030 (another age: orientation), HP2030 colorectal 72.8, smoking 6.1, suicide 12.8, WHO PM2.5 5 ug/m3 (read in the joint statement that quotes it; the WHO table itself was not readable), WHO iron threshold 40% anaemia.",
+  "2026-10-31 (g2): the 16 interpretation_rules were written for the people who build the model (to-do lines, names of towns, field names, English terms). Each text_he is now one or two plain Hebrew sentences for a reader, with the same meaning and the same cautions; no town, no instruction to the builders, no new fact or source (the four rules that never had a source still have none and stay cautious). ids, source_url and the number of rules (16) are unchanged."
+  ]
+ },
+ "parameters": [
+  {
+   "id": "population_size",
+   "domain": "demography",
+   "label_he": "גודל האוכלוסייה",
+   "definition_he": "מספר התושבים ביישוב לפי מפקד האוכלוסין 2022 (ובהמשך אומדני הלמ״ס).",
+   "unit": "persons",
+   "direction": "neutral",
+   "target": {
+    "value": null,
+    "kind": "none",
+    "source_url": null,
+    "note": "משתנה הקשר ומכנה לחישוב שיעורים; אין יעד."
+   },
+   "why_it_matters_he": "קובע את גודל המכנה ואת מידת האמון בשיעורים: ביישוב קטן מספרים קטנים מקפיצים אחוזים ממחצית לשנייה. מגדיר גם את סדר הגודל של השירותים הנדרשים.",
+   "interventions": [],
+   "data_hint": "CBS census 2022 on data.gov.il (lamas): resource 38207cf8-afe2-48ed-a3b0-c8f70c796015 (population and households by locality, key LocalityCode) and 9a9e085f-3bc8-41df-b15f-be0daaf99e30 (age shares, median age, wage by locality and statistical area). Listed as already done in the brief; not re-fetched by this scout."
+  },
+  {
+   "id": "child_share_0_14",
+   "domain": "demography",
+   "label_he": "שיעור ילדים בני 0-14 באוכלוסייה",
+   "definition_he": "אחוז התושבים בגילאי 0-14 מכלל תושבי היישוב (מפקד 2022).",
+   "unit": "%",
+   "direction": "neutral",
+   "target": {
+    "value": null,
+    "kind": "none",
+    "source_url": null,
+    "note": "משתנה הקשר; אין יעד."
+   },
+   "why_it_matters_he": "מגדיר את הביקוש לתחנות טיפת חלב, גני ילדים ושירותי בריאות הילד ואת גודל המכנה של מדדי טיפת חלב.",
+   "interventions": [],
+   "data_hint": "CBS census 2022 on data.gov.il (lamas): resource 38207cf8-afe2-48ed-a3b0-c8f70c796015 (population and households by locality, key LocalityCode) and 9a9e085f-3bc8-41df-b15f-be0daaf99e30 (age shares, median age, wage by locality and statistical area). Listed as already done in the brief; not re-fetched by this scout."
+  },
+  {
+   "id": "elderly_share_65_plus",
+   "domain": "demography",
+   "label_he": "שיעור בני 65 ומעלה באוכלוסייה",
+   "definition_he": "אחוז התושבים בני 65 ומעלה מכלל תושבי היישוב (מפקד 2022).",
+   "unit": "%",
+   "direction": "neutral",
+   "target": {
+    "value": null,
+    "kind": "none",
+    "source_url": null,
+    "note": "משתנה הקשר; אין יעד."
+   },
+   "why_it_matters_he": "מגדיר את הביקוש לשירותי בריאות כרוניים, סיעוד, תחבורה נגישה ושירותי רווחה לקשישים.",
+   "interventions": [
+    {
+     "id": "age_friendly_framework",
+     "title_he": "תוכנית עירונית לפי מסגרת ״ערים ידידותיות לגיל המבוגר״ של WHO",
+     "description_he": "שמונה תחומים: שירותי קהילה ובריאות, תחבורה, דיור, השתתפות חברתית, מרחבים פתוחים ומבנים, כבוד והכלה, השתתפות אזרחית ותעסוקה, מידע ותקשורת. המסגרת עוזרת לזהות חסמים לקשישים, אך העמוד אינו מציג מדידת השפעה.",
+     "evidence_strength": "limited",
+     "source_url": "https://extranet.who.int/agefriendlyworld/age-friendly-cities-framework/",
+     "owner_he": "המחלקה לגיל הזהב ולשירותים חברתיים בעירייה",
+     "typical_cost": "low",
+     "time_to_effect_months": 12
+    }
+   ],
+   "data_hint": "CBS census 2022 on data.gov.il (lamas): resource 38207cf8-afe2-48ed-a3b0-c8f70c796015 (population and households by locality, key LocalityCode) and 9a9e085f-3bc8-41df-b15f-be0daaf99e30 (age shares, median age, wage by locality and statistical area). Listed as already done in the brief; not re-fetched by this scout.",
+   "source_frameworks": [
+    "WHO Age-friendly Cities Framework (8 domains)"
+   ]
+  },
+  {
+   "id": "socioeconomic_cluster",
+   "domain": "socioeconomic",
+   "label_he": "האשכול החברתי־כלכלי של היישוב",
+   "definition_he": "דירוג היישוב במדד החברתי־כלכלי של הלמ״ס (אשכולות 1-10; נמוך = מצב חברתי־כלכלי נמוך). משמש בעיקר כמפתח לקבוצת השוואה.",
+   "unit": "cluster 1-10",
+   "direction": "neutral",
+   "target": {
+    "value": null,
+    "kind": "none",
+    "source_url": null,
+    "note": "משתנה הקשר ולא מטרה בריאותית; משמש לבחירת יישובים דומים להשוואה."
+   },
+   "why_it_matters_he": "הגורמים החברתיים־כלכליים הם הקטגוריה הכבדה ביותר במודל של County Health Rankings (50% ממשקל תנאי הקהילה) וכל מסגרות המדדים כוללות מימד כלכלי. בלי לתקנן לפי אשכול קל לטעות ולהאשים עיר ענייה בביצועים שנובעים ממצבה.",
+   "interventions": [],
+   "data_hint": "MoSA basic data table b6dcbb4c-4102-43d2-a5a1-8e049457fe7a (fields: year, authority code, authority name, socio-economic cluster, recognized persons, files; 2552 rows) carries the cluster per authority and year (per catalog.json, not re-fetched). Tipat-halav rows carry a per-child field Socio Economic Group (values 1..10 and unknown). The official CBS index file was not checked by this scout.",
+   "source_frameworks": [
+    "County Health Rankings: Social & Economic Factors (50% of Community Conditions)",
+    "Urban HEART: economics domain"
+   ]
+  },
+  {
+   "id": "unemployment_rate",
+   "domain": "socioeconomic",
+   "label_he": "שיעור אבטלה / דורשי עבודה",
+   "definition_he": "שיעור המובטלים או דורשי העבודה בקרב כוח העבודה (או בני גיל העבודה) ביישוב; חובה לציין איזו הגדרה (הלמ״ס או שירות התעסוקה).",
+   "unit": "%",
+   "direction": "lower_better",
+   "target": {
+    "value": null,
+    "kind": "none",
+    "source_url": null,
+    "note": "אין יעד בריאותי; ההשוואה מול הממוצע הארצי וקבוצת השוואה."
+   },
+   "why_it_matters_he": "אבטלה היא מדד הכלכלה בליבת Urban HEART, ותעסוקה בגיל העבודה היא מדד מוביל ב־HP2030. ב־OECD Regional Well-Being ״משרות״ (Jobs) הוא אחד מ־11 הנושאים.",
+   "interventions": [
+    {
+     "id": "unemployment_combined_programs",
+     "title_he": "תוכניות לדורשי עבודה המשלבות הכשרה לחיפוש עבודה עם רכיב טיפולי ותמיכה",
+     "description_he": "סקירת קוקריין (2020): שילוב של שיטות טיפוליות והכשרה לחיפוש עבודה כנראה מעלה מעט את מספר מי שמוצאים עבודה (ודאות בינונית). טיפול בלבד כנראה אינו משפיע על בריאות נפשית או כללית.",
+     "evidence_strength": "moderate",
+     "source_url": "https://www.cochrane.org/evidence/CD013152_health-improving-interventions-helping-unemployed-job-seekers-get-job",
+     "owner_he": "אגף הרווחה והמחלקה לפיתוח כלכלי בעירייה עם שירות התעסוקה",
+     "typical_cost": "medium",
+     "time_to_effect_months": 6
+    }
+   ],
+   "data_hint": null,
+   "source_frameworks": [
+    "Urban HEART core indicator: unemployment",
+    "Healthy People 2030 LHI: employment among the working-age population",
+    "OECD Regional Well-Being: Jobs"
+   ]
+  },
+  {
+   "id": "average_wage",
+   "domain": "socioeconomic",
+   "label_he": "שכר ממוצע של שכירים",
+   "definition_he": "שכר ממוצע כפי שמופיע בטבלת היישובים של מפקד 2022 (ראו data_hint להגדרה המדויקת בעמודה).",
+   "unit": "ILS",
+   "direction": "higher_better",
+   "target": {
+    "value": null,
+    "kind": "none",
+    "source_url": null,
+    "note": "אין יעד."
+   },
+   "why_it_matters_he": "ההכנסה קובעת נגישות לדיור, מזון ושירותים, והיא נושא ראשון ב־OECD Regional Well-Being.",
+   "interventions": [],
+   "data_hint": "CBS census 2022 on data.gov.il (lamas): resource 38207cf8-afe2-48ed-a3b0-c8f70c796015 (population and households by locality, key LocalityCode) and 9a9e085f-3bc8-41df-b15f-be0daaf99e30 (age shares, median age, wage by locality and statistical area). Listed as already done in the brief; not re-fetched by this scout.",
+   "source_frameworks": [
+    "OECD Regional Well-Being: Income"
+   ]
+  },
+  {
+   "id": "poverty_rate",
+   "domain": "socioeconomic",
+   "label_he": "שיעור העוני (משפחות וילדים מתחת לקו העוני)",
+   "definition_he": "שיעור המשפחות או הילדים החיים מתחת לקו העוני לפי הביטוח הלאומי, ברמת יישוב.",
+   "unit": "%",
+   "direction": "lower_better",
+   "target": {
+    "value": null,
+    "kind": "none",
+    "source_url": null,
+    "note": "אין יעד בריאותי."
+   },
+   "why_it_matters_he": "הכנסה היא נושא קבוע במסגרות המדדים (OECD Regional Well-Being: Income) ומשלימה את מדדי האשכול והשכר.",
+   "interventions": [],
+   "data_hint": null,
+   "source_frameworks": [
+    "OECD Regional Well-Being: Income"
+   ]
+  },
+  {
+   "id": "welfare_caseload_per_1000",
+   "domain": "socioeconomic",
+   "label_he": "תיקים ומוכרים במחלקה לשירותים חברתיים לכל 1,000 תושבים",
+   "definition_he": "מספר התיקים ומספר המוכרים במחלקה לשירותים חברתיים בשנה, מחולק באוכלוסייה פעמים 1,000.",
+   "unit": "per 1000",
+   "direction": "neutral",
+   "target": {
+    "value": null,
+    "kind": "none",
+    "source_url": null,
+    "note": "אין יעד; עלייה יכולה לבטא צורך גדול יותר או נגישות טובה יותר לשירות."
+   },
+   "why_it_matters_he": "מדד עקיף לכמות המצוקה החברתית שהרשות פוגשת. משלים את התמונה הבריאותית, אך דורש זהירות: ערך גבוה יכול לבטא צורך גדול יותר או נגישות טובה יותר לשירות (יש לבדוק).",
+   "interventions": [],
+   "data_hint": "MoSA basic data: resource b6dcbb4c-4102-43d2-a5a1-8e049457fe7a (cases and recognized persons by authority, cluster and year; 2552 rows) and 85f5972d-e8d5-4a13-821e-3dee6948fec8 (treatment intensity), per catalog.json, not re-fetched. Divide by population from the census table."
+  },
+  {
+   "id": "education_attainment",
+   "domain": "socioeconomic",
+   "label_he": "רמת השכלה / השלמת לימודים",
+   "definition_he": "שיעור בעלי השכלה על־תיכונית או שיעור סיום תיכון/בגרות ביישוב, לפי מקור הנתונים (להגדרה מדויקת יש לבדוק במאגר).",
+   "unit": "%",
+   "direction": "higher_better",
+   "target": {
+    "value": null,
+    "kind": "none",
+    "source_url": null,
+    "note": "אין יעד."
+   },
+   "why_it_matters_he": "השכלה היא נושא קבוע בכל המסגרות (Urban HEART: השלמת לימודים יסודיים; OECD: חינוך; HP2030: קריאה בכיתה ד׳) וקשורה לבריאות לאורך החיים.",
+   "interventions": [
+    {
+     "id": "ece_center_based",
+     "title_he": "הרחבת מסגרות חינוך לגיל הרך (מעונות וגנים) ברמה חינוכית גבוהה",
+     "description_he": "CPSTF ממליץ בראיות חזקות על תוכניות חינוך מוקדם במסגרת מרכזית: משפרות ציונים ושיעורי סיום תיכון, ומפחיתות שיעורי שימוש בחינוך מיוחד ופשיעה ולידות בגיל צעיר (מטא־אנליזה של 49 מחקרים).",
+     "evidence_strength": "strong",
+     "source_url": "https://www.thecommunityguide.org/findings/social-determinants-health-center-based-early-childhood-education.html",
+     "owner_he": "מחלקת החינוך והגיל הרך בעירייה",
+     "typical_cost": "high",
+     "time_to_effect_months": 24
+    },
+    {
+     "id": "full_day_kindergarten",
+     "title_he": "גן ילדים ביום ארוך (במיוחד בשכונות עם ילדים מרקע חברתי־כלכלי נמוך)",
+     "description_he": "CPSTF ממליץ בראיות חזקות: שיפור משמעותי בהישגי קריאה וחשבון לעומת חצי יום; ההשפעה לטווח ארוך תלויה באיכות החינוך שאחר כך.",
+     "evidence_strength": "strong",
+     "source_url": "https://www.thecommunityguide.org/findings/social-determinants-health-full-day-kindergarten-programs.html",
+     "owner_he": "מחלקת החינוך בעירייה",
+     "typical_cost": "high",
+     "time_to_effect_months": 24
+    },
+    {
+     "id": "high_school_completion",
+     "title_he": "תוכניות לסיום בית ספר תיכון לתלמידים בסיכון לנשירה",
+     "description_he": "CPSTF ממליץ בראיות חזקות; במטא־אנליזה (2011) עלייה חציונית של 8.5 נקודות אחוז בסיום תיכון (6.5 בעדכון החיפוש).",
+     "evidence_strength": "strong",
+     "source_url": "https://www.thecommunityguide.org/findings/social-determinants-health-high-school-completion-programs.html",
+     "owner_he": "מחלקת החינוך והנוער בעירייה",
+     "typical_cost": "medium",
+     "time_to_effect_months": 24
+    }
+   ],
+   "data_hint": null,
+   "source_frameworks": [
+    "Urban HEART core indicator: completion of primary education",
+    "OECD Regional Well-Being: Education",
+    "Healthy People 2030 LHI: 4th grade reading proficiency"
+   ]
+  },
+  {
+   "id": "mmr_mmrv_by_13m",
+   "domain": "immunization",
+   "label_he": "חיסון MMR/MMRV עד גיל 13 חודשים",
+   "definition_he": "שיעור הפעוטות שמלאו להם 13 חודשים בתקופה הנמדדת וקיבלו מנה אחת של MMR או MMRV בין גיל 12 ל־13 חודשים (תחנות טיפת חלב).",
+   "unit": "%",
+   "direction": "higher_better",
+   "target": {
+    "value": 80,
+    "kind": "official",
+    "source_url": "https://www.gov.il/BlobFolder/reports/quality-national-prog-2013-2024/he/files_publications_quality_indicators_quality-national-prog-2013-2024.pdf",
+    "note": "יעד משרד הבריאות לשנת 2024 (עמוד 359 בדוח). יעד פנימי של משרד הבריאות לתחנות, לא יעד ל־95% כיסוי של שתי מנות. ב־2024 השדה target במאגר שווה 0 בכל השורות (ערך חסר ולא יעד אפס); יעד 2024 נלקח מדוח התוכנית הלאומית למדדי איכות 2013-2024 של משרד הבריאות. השוואה בין־לאומית: ארגון הבריאות העולמי קובע כיסוי של לפחות 95% בשתי מנות כדי לעצור הדבקה (https://www.who.int/news/item/28-11-2025-measles-deaths-down-88--since-2000--but-cases-surge) – מדד אחר (שתי מנות, בכל גיל).",
+    "by_year": {
+     "2020": 75,
+     "2021": 75,
+     "2022": 80,
+     "2023": 80,
+     "2024": 80
+    }
+   },
+   "why_it_matters_he": "חיסון MMR/MMRV מגן מפני חצבת, חזרת ואדמת (וב־MMRV גם אבעבועות רוח). הוועדה המייעצת למחלות זיהומיות בישראל ממליצה לתת אותו עד גיל 13 חודשים כדי למנוע חשיפה לתחלואה קשה. ב־2024 עמדה העמידה הארצית על 66% (64% ב־2023) מול יעד 80%, אך לפי הדוח בגיל 19 חודשים כ־90% מהתינוקות מחוסנים – חלק גדול מהפער הוא עיכוב ולא אי־חיסון. המגזר הערבי מציג עמידה גבוהה בהרבה מהמגזר היהודי.",
+   "interventions": [
+    {
+     "id": "vax_reminder_recall",
+     "title_he": "תזכורות והזמנה חוזרת להורים שלא הגיעו למועד החיסון",
+     "description_he": "לזהות מדי חודש תינוקות שעברו את גיל החיסון ולא התחסנו, ולשלוח להורים תזכורת או הזמנה חוזרת (הודעה, טלפון או מכתב). צוות השירותים המונעים בארה״ב (CPSTF) ממליץ על כך בראיות חזקות; בסקירה שעליה הוא מסתמך עלו שיעורי החיסון בחציון ב־11 נקודות אחוז.",
+     "evidence_strength": "strong",
+     "source_url": "https://www.thecommunityguide.org/findings/vaccination-programs-client-reminder-and-recall-systems.html",
+     "owner_he": "מנהלי תחנות טיפת חלב (משרד הבריאות, קופת החולים, ובתל אביב ובירושלים גם העירייה) בשיתוף המחלקה לבריאות בעירייה",
+     "typical_cost": "low",
+     "time_to_effect_months": 3
+    },
+    {
+     "id": "vax_home_visits",
+     "title_he": "ביקורי בית של אחות להשלמת חיסונים אצל משפחות שלא מגיעות לתחנה",
+     "description_he": "תיעדוף משפחות שעבר מועד החיסון שלהן וביקור בית (או יום חיסון בשכונה) להשלמה. CPSTF ממליץ על ביקורי בית להעלאת שיעורי חיסון בראיות חזקות; חציון העלייה 11 נקודות אחוז (20 מחקרים).",
+     "evidence_strength": "strong",
+     "source_url": "https://www.thecommunityguide.org/findings/vaccination-programs-home-visits-increase-vaccination-rates.html",
+     "owner_he": "אחיות בריאות הציבור וצוותי טיפת חלב; הרשות יכולה לממן שעות נוספות או ניידת",
+     "typical_cost": "medium",
+     "time_to_effect_months": 6
+    },
+    {
+     "id": "vax_tip_barriers",
+     "title_he": "אבחון חסמים בקבוצות עם כיסוי חיסוני נמוך לפי שיטת TIP של ארגון הבריאות העולמי",
+     "description_he": "לפני שמתכננים קמפיין: לזהות באיזה שכונות או קבוצות הכיסוי נמוך, לראיין הורים ואנשי צוות ולהבין מה מונע חיסון (שעות, נגישות, אמון, שפה), ולתכנן פתרון מותאם. המסמך של WHO אירופה (2019) מציג מסגרת בת שלושה עמודי תווך לכך. זו מסגרת עבודה ולא ניסוי מבוקר, ולכן הראיות להשפעה מוגבלות.",
+     "evidence_strength": "limited",
+     "source_url": "https://www.who.int/europe/publications/i/item/9789289054492",
+     "owner_he": "המחלקה לבריאות בעירייה עם לשכת הבריאות המחוזית ונציגי הקהילה",
+     "typical_cost": "low",
+     "time_to_effect_months": 9
+    }
+   ],
+   "data_hint": "data.gov.il ckan_datastore, package health-quality-measurement-family-care-center, resource 0e91ec84-846a-46ab-bbb0-0d315104abe3 (measure_code 05-15-2-01-003); locality = station_city (station location, not residence); fields incl. measurement_year, number_of_cases, number_of_cases_approved, target, sector, Socio Economic Group, provider_ownership, station. This scout fetched only the target field by year (all measures) and sample rows.",
+   "source_frameworks": [
+    "Israel MoH National Quality Indicators Programme (tipat halav)",
+    "Urban HEART core indicator: fully immunized children (related)"
+   ]
+  },
+  {
+   "id": "dtap_ipv_hib_4doses_by_18m",
+   "domain": "immunization",
+   "label_he": "ארבע מנות של החיסון המחומש עד גיל 18 חודשים",
+   "definition_he": "שיעור הפעוטות שמלאו להם 18 חודשים וקיבלו ארבע מנות של החיסון המחומש (DTaP+IPV+Hib) עד גיל 18 חודשים.",
+   "unit": "%",
+   "direction": "higher_better",
+   "target": {
+    "value": 90,
+    "kind": "official",
+    "source_url": "https://www.gov.il/BlobFolder/reports/quality-national-prog-2013-2024/he/files_publications_quality_indicators_quality-national-prog-2013-2024.pdf",
+    "note": "יעד משרד הבריאות 90% לכל השנים 2020-2024 (עמוד 366). ב־2024 השדה target במאגר שווה 0 בכל השורות (ערך חסר ולא יעד אפס); יעד 2024 נלקח מדוח התוכנית הלאומית למדדי איכות 2013-2024 של משרד הבריאות.",
+    "by_year": {
+     "2020": 90,
+     "2021": 90,
+     "2022": 90,
+     "2023": 90,
+     "2024": 90
+    }
+   },
+   "why_it_matters_he": "החיסון המחומש מגן מדיפתריה, טטנוס, שעלת, פוליו ודלקת קרום המוח וכלול בשגרה מ־2002. לפי דוח 2024 אף נותן שירות לא הגיע ליעד, ונמצא פער של כ־16 נקודות אחוז לטובת המגזר הערבי.",
+   "interventions": [
+    {
+     "id": "vax_reminder_recall",
+     "title_he": "תזכורות והזמנה חוזרת להורים שלא הגיעו למועד החיסון",
+     "description_he": "לזהות מדי חודש תינוקות שעברו את גיל החיסון ולא התחסנו, ולשלוח להורים תזכורת או הזמנה חוזרת (הודעה, טלפון או מכתב). צוות השירותים המונעים בארה״ב (CPSTF) ממליץ על כך בראיות חזקות; בסקירה שעליה הוא מסתמך עלו שיעורי החיסון בחציון ב־11 נקודות אחוז.",
+     "evidence_strength": "strong",
+     "source_url": "https://www.thecommunityguide.org/findings/vaccination-programs-client-reminder-and-recall-systems.html",
+     "owner_he": "מנהלי תחנות טיפת חלב (משרד הבריאות, קופת החולים, ובתל אביב ובירושלים גם העירייה) בשיתוף המחלקה לבריאות בעירייה",
+     "typical_cost": "low",
+     "time_to_effect_months": 3
+    },
+    {
+     "id": "vax_provider_feedback",
+     "title_he": "משוב סדיר לכל תחנה על שיעורי החיסון שלה מול היעד",
+     "description_he": "לאסוף מדי רבעון את שיעורי העמידה לפי תחנה ולהחזיר אותם לצוותים בהשוואה ליעד ולתחנות דומות. CPSTF ממליץ על הערכת ביצועים ומשוב בראיות חזקות; חציון העלייה 9 נקודות אחוז (16 מחקרים).",
+     "evidence_strength": "strong",
+     "source_url": "https://www.thecommunityguide.org/findings/vaccination-programs-provider-assessment-and-feedback.html",
+     "owner_he": "מנהלי התחנות; בעיריות שמפעילות תחנות (תל אביב, ירושלים) – מנהל השירות העירוני",
+     "typical_cost": "low",
+     "time_to_effect_months": 3
+    },
+    {
+     "id": "vax_community_combo",
+     "title_he": "חבילה קהילתית משולבת: תזכורות, הסברה בקהילה והנגשת מועד ומקום החיסון",
+     "description_he": "שילוב של לפחות שני מהלכים מתואמים, למשל תזכורות ופנייה יזומה להורים יחד עם הרחבת נגישות (שעות, מקום, ביקור בית). CPSTF ממליץ בראיות חזקות; חציון העלייה 14 נקודות אחוז (18 מחקרים), ובקרב ילדים 12 נקודות. בקרב בני 65 ומעלה החציון היה 30.8 נקודות.",
+     "evidence_strength": "strong",
+     "source_url": "https://www.thecommunityguide.org/findings/vaccination-programs-community-based-interventions-implemented-combination.html",
+     "owner_he": "המחלקה לבריאות בעירייה עם לשכת הבריאות המחוזית, קופות החולים ומנהיגות קהילתית",
+     "typical_cost": "medium",
+     "time_to_effect_months": 6
+    }
+   ],
+   "data_hint": "data.gov.il ckan_datastore, package health-quality-measurement-family-care-center, resource 4083f942-9ef3-4205-bf75-69a985337c94 (measure_code 05-15-2-01-004); locality = station_city (station location, not residence); fields incl. measurement_year, number_of_cases, number_of_cases_approved, target, sector, Socio Economic Group, provider_ownership, station. This scout fetched only the target field by year (all measures) and sample rows.",
+   "source_frameworks": [
+    "Israel MoH National Quality Indicators Programme (tipat halav)",
+    "Urban HEART core indicator: fully immunized children (related)"
+   ]
+  },
+  {
+   "id": "pertussis_3doses_by_7m",
+   "domain": "immunization",
+   "label_he": "שלוש מנות חיסון נגד שעלת עד גיל 7 חודשים",
+   "definition_he": "שיעור התינוקות שמלאו להם 7 חודשים במחצית הנמדדת וקיבלו שלוש מנות חיסון נגד שעלת (בגילי 2, 4 ו־6 חודשים, הפרש של 8 שבועות לפחות בין מנות). הערה: במאגר הכותרת היא רק ״שעלת״.",
+   "unit": "%",
+   "direction": "higher_better",
+   "target": {
+    "value": 75,
+    "kind": "official",
+    "source_url": "https://www.gov.il/BlobFolder/reports/quality-national-prog-2013-2024/he/files_publications_quality_indicators_quality-national-prog-2013-2024.pdf",
+    "note": "יעד משרד הבריאות 2024: 75% (עמוד 373); 70% ב־2020-2021 ו־75% ב־2022-2023. ב־2024 השדה target במאגר שווה 0 בכל השורות (ערך חסר ולא יעד אפס); יעד 2024 נלקח מדוח התוכנית הלאומית למדדי איכות 2013-2024 של משרד הבריאות.",
+    "by_year": {
+     "2020": 70,
+     "2021": 70,
+     "2022": 75,
+     "2023": 75,
+     "2024": 75
+    }
+   },
+   "why_it_matters_he": "שעלת בעלייה בישראל ובעולם, והתחלואה הגבוהה ביותר בתינוקות מתחת לגיל שנה, עם סיכון לסיבוכים, הפסקות נשימה ותמותה. לפי הדוח השלמת שלוש מנות עד 7 חודשים מקנה הגנה של 84.4%. רוב נותני השירות לא הגיעו ליעד ב־2024, ונמצא פער לטובת המגזר הערבי.",
+   "interventions": [
+    {
+     "id": "vax_reminder_recall",
+     "title_he": "תזכורות והזמנה חוזרת להורים שלא הגיעו למועד החיסון",
+     "description_he": "לזהות מדי חודש תינוקות שעברו את גיל החיסון ולא התחסנו, ולשלוח להורים תזכורת או הזמנה חוזרת (הודעה, טלפון או מכתב). צוות השירותים המונעים בארה״ב (CPSTF) ממליץ על כך בראיות חזקות; בסקירה שעליה הוא מסתמך עלו שיעורי החיסון בחציון ב־11 נקודות אחוז.",
+     "evidence_strength": "strong",
+     "source_url": "https://www.thecommunityguide.org/findings/vaccination-programs-client-reminder-and-recall-systems.html",
+     "owner_he": "מנהלי תחנות טיפת חלב (משרד הבריאות, קופת החולים, ובתל אביב ובירושלים גם העירייה) בשיתוף המחלקה לבריאות בעירייה",
+     "typical_cost": "low",
+     "time_to_effect_months": 3
+    },
+    {
+     "id": "vax_home_visits",
+     "title_he": "ביקורי בית של אחות להשלמת חיסונים אצל משפחות שלא מגיעות לתחנה",
+     "description_he": "תיעדוף משפחות שעבר מועד החיסון שלהן וביקור בית (או יום חיסון בשכונה) להשלמה. CPSTF ממליץ על ביקורי בית להעלאת שיעורי חיסון בראיות חזקות; חציון העלייה 11 נקודות אחוז (20 מחקרים).",
+     "evidence_strength": "strong",
+     "source_url": "https://www.thecommunityguide.org/findings/vaccination-programs-home-visits-increase-vaccination-rates.html",
+     "owner_he": "אחיות בריאות הציבור וצוותי טיפת חלב; הרשות יכולה לממן שעות נוספות או ניידת",
+     "typical_cost": "medium",
+     "time_to_effect_months": 6
+    }
+   ],
+   "data_hint": "data.gov.il ckan_datastore, package health-quality-measurement-family-care-center, resource 2aefe23d-0256-4456-90e7-a8d672eb6e3a (measure_code 05-17-2-01-006); locality = station_city (station location, not residence); fields incl. measurement_year, number_of_cases, number_of_cases_approved, target, sector, Socio Economic Group, provider_ownership, station. This scout fetched only the target field by year (all measures) and sample rows.",
+   "source_frameworks": [
+    "Israel MoH National Quality Indicators Programme (tipat halav)"
+   ]
+  },
+  {
+   "id": "postpartum_depression_screening",
+   "domain": "maternal_child",
+   "label_he": "איתור דיכאון לאחר לידה",
+   "definition_he": "שיעור האימהות לתינוקות שמלאו להם שלושה חודשים בתקופה הנמדדת שמילאו שאלון לאיתור דיכאון לאחר לידה (EPDS/EDS) עד שלושה חודשים מהלידה.",
+   "unit": "%",
+   "direction": "higher_better",
+   "target": {
+    "value": 90,
+    "kind": "official",
+    "source_url": "https://www.gov.il/BlobFolder/reports/quality-national-prog-2013-2024/he/files_publications_quality_indicators_quality-national-prog-2013-2024.pdf",
+    "note": "יעד משרד הבריאות 90% לכל השנים 2020-2024 (עמוד 266). ב־2024 השדה target במאגר שווה 0 בכל השורות (ערך חסר ולא יעד אפס); יעד 2024 נלקח מדוח התוכנית הלאומית למדדי איכות 2013-2024 של משרד הבריאות.",
+    "by_year": {
+     "2020": 90,
+     "2021": 90,
+     "2022": 90,
+     "2023": 90,
+     "2024": 90
+    }
+   },
+   "why_it_matters_he": "דיכאון לאחר לידה שכיח, פוגע בהתקשרות בין האם לתינוק ובהתפתחות התינוק, ולכן איתור מוקדם והפניה חשובים. לפי הנוהל של משרד הבריאות אחיות טיפת חלב מעבירות שאלון. ב־2024 עמד פער של 7 נקודות אחוז לטובת המגזר הערבי; רוב נותני השירות לא הגיעו ליעד ב־2023.",
+   "interventions": [
+    {
+     "id": "ppd_screen_refer",
+     "title_he": "איתור דיכאון לאחר לידה בשאלון (EPDS) יחד עם מסלול הפניה מסודר לאבחון וטיפול",
+     "description_he": "שאלון לבדו אינו מספיק: צריך לקבוע מראש לאן מפנים אישה שהשאלון חיובי אצלה (קופת חולים, שירות לבריאות הנפש, רווחה). הצוות האמריקאי (USPSTF, 2023) ממליץ בדרגה B על סקירת דיכאון גם בהריון ואחרי לידה, ומדגיש שנדרשות מערכות וצוות שיבטיחו אבחון, טיפול או הפניה.",
+     "evidence_strength": "moderate",
+     "source_url": "https://www.uspreventiveservicestaskforce.org/uspstf/recommendation/screening-depression-suicide-risk-adults",
+     "owner_he": "אחיות טיפת חלב, קופות החולים ושירותי בריאות הנפש, המחלקה לשירותים חברתיים",
+     "typical_cost": "low",
+     "time_to_effect_months": 3
+    },
+    {
+     "id": "ppd_counseling_at_risk",
+     "title_he": "הפניה של נשים בסיכון מוגבר לייעוץ קוגניטיבי־התנהגותי או בין־אישי",
+     "description_he": "USPSTF ממליץ בדרגה B לספק או להפנות נשים בהריון ואחרי לידה שנמצאות בסיכון מוגבר לדיכאון (היסטוריה של דיכאון, קשיים כלכליים, אלימות לאחרונה, חרדה) לייעוץ מסוג CBT או IPT. לגבי התערבויות אחרות (פעילות גופנית, הסברה, תוספי תזונה) הראיות מוגבלות או מעורבות.",
+     "evidence_strength": "moderate",
+     "source_url": "https://www.uspreventiveservicestaskforce.org/uspstf/recommendation/perinatal-depression-preventive-interventions",
+     "owner_he": "קופות החולים ומרפאות בריאות הנפש; הרשות מממנת קבוצות בקהילה",
+     "typical_cost": "medium",
+     "time_to_effect_months": 6
+    },
+    {
+     "id": "ecd_maternal_mh",
+     "title_he": "שילוב תמיכה פסיכו־חברתית לבריאות הנפש של האם בשירותי הגיל הרך",
+     "description_he": "אחת מארבע ההמלצות של הנחיית WHO לשיפור התפתחות הילד (2020) היא לשלב התערבויות פסיכו־חברתיות לבריאות נפש האם בשירותי בריאות והתפתחות של הגיל הרך.",
+     "evidence_strength": "moderate",
+     "source_url": "https://www.who.int/publications/i/item/97892400020986",
+     "owner_he": "המחלקה לגיל הרך בעירייה וטיפות החלב",
+     "typical_cost": "medium",
+     "time_to_effect_months": 6
+    }
+   ],
+   "data_hint": "data.gov.il ckan_datastore, package health-quality-measurement-family-care-center, resource b7af4c2f-254f-4978-9cf2-529bdeeadadf (measure_code 05-15-2-01-001); locality = station_city (station location, not residence); fields incl. measurement_year, number_of_cases, number_of_cases_approved, target, sector, Socio Economic Group, provider_ownership, station. This scout fetched only the target field by year (all measures) and sample rows.",
+   "source_frameworks": [
+    "Israel MoH National Quality Indicators Programme (tipat halav)"
+   ]
+  },
+  {
+   "id": "head_circumference_3measurements_by_8m",
+   "domain": "maternal_child",
+   "label_he": "השלמת שלוש מדידות היקף ראש עד גיל 8 חודשים",
+   "definition_he": "שיעור התינוקות שמלאו להם 8 חודשים שנערכו להם לפחות שלוש מדידות של היקף ראש בטווחי הגילים: לידה עד חודש וחצי, חודשיים עד חמישה חודשים, שישה עד שמונה חודשים.",
+   "unit": "%",
+   "direction": "higher_better",
+   "target": {
+    "value": 95,
+    "kind": "official",
+    "source_url": "https://www.gov.il/BlobFolder/reports/quality-national-prog-2013-2024/he/files_publications_quality_indicators_quality-national-prog-2013-2024.pdf",
+    "note": "יעד משרד הבריאות 2024: 95% (עמוד 338). במאגר יש נתונים רק ל־2023-2024 והשדה target הוא 0 (חסר). הדוח מציין שהגדרת המדד עודכנה ב־2021 ושמדידה חדשה החלה ב־2022, ולכן אין להשוות לסדרות ישנות.",
+    "by_year": {
+     "2024": 95
+    }
+   },
+   "why_it_matters_he": "מדידת היקף ראש חיונית לזיהוי מוקדם של בעיות התפתחות; היקף חריג יכול להיות סימפטום למחלות שעלולות לגרום להפרעות נוירולוגיות והתפתחותיות. ב־2024 אף נותן שירות לא הגיע ליעד, ונמצא פער ניכר לטובת המגזר הערבי.",
+   "interventions": [],
+   "data_hint": "data.gov.il ckan_datastore, package health-quality-measurement-family-care-center, resource 05c89ca7-7dcb-4669-b864-0d83c640ddc8 (measure_code 05-15-2-01-002); locality = station_city (station location, not residence); fields incl. measurement_year, number_of_cases, number_of_cases_approved, target, sector, Socio Economic Group, provider_ownership, station. This scout fetched only the target field by year (all measures) and sample rows.",
+   "source_frameworks": [
+    "Israel MoH National Quality Indicators Programme (tipat halav)"
+   ],
+   "evidence_notes": [
+    {
+     "text_he": "לא אותרה התערבות עירונית מבוססת ראיות שניתן לתעד עבורה מקור שנפתח; המדד הוא נוהל קליני של התחנה (ציוד, הכשרה, תיעוד).",
+     "source_url": "https://www.gov.il/BlobFolder/reports/quality-national-prog-2013-2024/he/files_publications_quality_indicators_quality-national-prog-2013-2024.pdf"
+    }
+   ]
+  },
+  {
+   "id": "language_communication_check_2_3y",
+   "domain": "maternal_child",
+   "label_he": "בדיקת התפתחות בדגש על שפה ותקשורת בגיל שנתיים עד שלוש",
+   "definition_he": "שיעור הילדים שמלאו להם שלוש שנים במחצית הנמדדת וביצעו בגילי שנתיים עד שלוש בדיקת התפתחות תוך התייחסות לשפה ולתקשורת.",
+   "unit": "%",
+   "direction": "higher_better",
+   "target": {
+    "value": 90,
+    "kind": "official",
+    "source_url": "https://www.gov.il/BlobFolder/reports/quality-national-prog-2013-2024/he/files_publications_quality_indicators_quality-national-prog-2013-2024.pdf",
+    "note": "יעד משרד הבריאות 90% לכל השנים 2020-2024 (עמוד 344). ב־2024 השדה target במאגר שווה 0 בכל השורות (ערך חסר ולא יעד אפס); יעד 2024 נלקח מדוח התוכנית הלאומית למדדי איכות 2013-2024 של משרד הבריאות.",
+    "by_year": {
+     "2020": 90,
+     "2021": 90,
+     "2022": 90,
+     "2023": 90,
+     "2024": 90
+    }
+   },
+   "why_it_matters_he": "כישורי שפה קריטיים להשתלבות חברתית ולהצלחה בבית הספר; בדיקה בגיל שנתיים עד שלוש מאפשרת הפניה לאבחון לפני הכניסה למערכת החינוך. משרד הבריאות הגדיר חובת בדיקה בגיל זה. העמידה הארצית יציבה סביב היעד ורוב נותני השירות לא הגיעו אליו ב־2024; פער בולט לטובת המגזר הערבי.",
+   "interventions": [
+    {
+     "id": "ecd_responsive_caregiving",
+     "title_he": "מענים להורים: טיפול רגיש ופעילויות למידה מוקדמת בשלוש השנים הראשונות",
+     "description_he": "הנחיית WHO (2020) ממליצה לספק טיפול רגיש ופעילויות למידה מוקדמת בשלוש השנים הראשונות, ולתמוך בהורים בכך. ברמה העירונית זה יכול להיות קבוצות הורים בטיפת חלב, ספריות ומרכזי הורה־ילד.",
+     "evidence_strength": "moderate",
+     "source_url": "https://www.who.int/publications/i/item/97892400020986",
+     "owner_he": "המחלקה לגיל הרך ולחינוך בעירייה וטיפות החלב",
+     "typical_cost": "medium",
+     "time_to_effect_months": 12
+    }
+   ],
+   "data_hint": "data.gov.il ckan_datastore, package health-quality-measurement-family-care-center, resource 37217656-50b8-4c8a-a870-5a8e225ec866 (measure_code 05-15-2-01-005); locality = station_city (station location, not residence); fields incl. measurement_year, number_of_cases, number_of_cases_approved, target, sector, Socio Economic Group, provider_ownership, station. This scout fetched only the target field by year (all measures) and sample rows.",
+   "source_frameworks": [
+    "Israel MoH National Quality Indicators Programme (tipat halav)"
+   ],
+   "evidence_notes": [
+    {
+     "text_he": "USPSTF קבע בינואר 2024 (הצהרה I) שהראיות אינן מספיקות כדי להעריך תועלת מול נזק של סקר שפה בילדים ללא תסמינים בני 5 ומטה; הבדיקה בישראל היא מדיניות משרד הבריאות ולא המלצה מבוססת ראיות חד־משמעית.",
+     "source_url": "https://www.uspreventiveservicestaskforce.org/uspstf/recommendation/speech-and-language-delay-and-disorders-in-children-age-5-and-younger-screening"
+    }
+   ]
+  },
+  {
+   "id": "developmental_tests_by_age_6",
+   "domain": "maternal_child",
+   "label_he": "בדיקות התפתחות עד גיל 6",
+   "definition_he": "שיעור הילדים שמלאו להם 6 שנים במחצית הנמדדת ובוצעה להם בדיקת התפתחות (טווח הגילים המדויק נחתך בתיאור במאגר).",
+   "unit": "%",
+   "direction": "higher_better",
+   "target": {
+    "value": 25,
+    "kind": "official",
+    "source_url": "https://data.gov.il/api/3/action/datastore_search?resource_id=550a5ced-f7e3-457c-bf2a-32d8b2f6f4d2&limit=1",
+    "note": "היעד היחיד במאגר הוא 25% ל־2022 (שדה target); ב־2020-2021 הערך 0 (חסר) ואין נתונים ל־2023-2024. המדד אינו מופיע בפרק טיפות החלב של דוח 2013-2024 שנבדק.",
+    "by_year": {
+     "2022": 25
+    }
+   },
+   "why_it_matters_he": "מדד ישן שהופסק או שונה; נשאר כאן רק לצורך המשכיות היסטורית. לא להציג כמדד נוכחי.",
+   "interventions": [],
+   "data_hint": "data.gov.il ckan_datastore, package health-quality-measurement-family-care-center, resource 550a5ced-f7e3-457c-bf2a-32d8b2f6f4d2 (measure_code 05-18-2-01-006); locality = station_city (station location, not residence); fields incl. measurement_year, number_of_cases, number_of_cases_approved, target, sector, Socio Economic Group, provider_ownership, station. This scout fetched only the target field by year (all measures) and sample rows.",
+   "source_frameworks": [
+    "Israel MoH National Quality Indicators Programme (tipat halav) - legacy measure"
+   ]
+  },
+  {
+   "id": "safe_sleep_guidance_2m",
+   "domain": "maternal_child",
+   "label_he": "הדרכה לשינה בטוחה בגיל חודשיים",
+   "definition_he": "שיעור התינוקות הרשומים בתחנה שמלאו להם חודשיים והוריהם קיבלו הדרכה לשינה בטוחה (מתועד).",
+   "unit": "%",
+   "direction": "higher_better",
+   "target": {
+    "value": 90,
+    "kind": "official",
+    "source_url": "https://www.gov.il/BlobFolder/reports/quality-national-prog-2013-2024/he/files_publications_quality_indicators_quality-national-prog-2013-2024.pdf",
+    "note": "יעד משרד הבריאות 90% לשנים 2023-2024 (עמוד 380). במאגר 2021-2022 ו־2024 הערך 0 (חסר). ב־2024 השדה target במאגר שווה 0 בכל השורות (ערך חסר ולא יעד אפס); יעד 2024 נלקח מדוח התוכנית הלאומית למדדי איכות 2013-2024 של משרד הבריאות.",
+    "by_year": {
+     "2023": 90,
+     "2024": 90
+    }
+   },
+   "why_it_matters_he": "מוות בעריסה (SIDS) הוא הסיבה הרביעית לתמותת תינוקות בישראל לפי הדוח. הדרכת הורים והעלאת מודעות לגורמי סיכון יכולות למנוע חלק מהמקרים. ב־2024 עמדה העמידה הארצית על 90%, אך כמחצית מנותני השירות טרם הגיעו ליעד.",
+   "interventions": [
+    {
+     "id": "safe_sleep_guidance",
+     "title_he": "הדרכה מתועדת להורים על שינה בטוחה, עם עלון או דף נחיתה",
+     "description_he": "נוהל משרד הבריאות (2019): השכבה על הגב, מזרן קשיח ומיטה ריקה מחפצים, חדר ההורים, אוויר נקי מעישון והמשך הנקה. בארה״ב ירד שיעור מוות בעריסה בכ־60% מאז קמפיין Back to Sleep (נתון תצפיתי שמופיע בפרסום של NICHD), והמוות בעריסה הוא הסיבה הרביעית לתמותת תינוקות בישראל לפי דוח המדדים.",
+     "evidence_strength": "moderate",
+     "source_url": "https://www.nichd.nih.gov/newsroom/releases/102416-updated-safe-to-sleep",
+     "owner_he": "אחיות טיפת חלב; המחלקה לבריאות בעירייה מפיצה חומרים ופועלת בקהילות עם שיעור נמוך",
+     "typical_cost": "low",
+     "time_to_effect_months": 3
+    }
+   ],
+   "data_hint": "data.gov.il ckan_datastore, package health-quality-measurement-family-care-center, resource 891d8c43-246a-4a3e-a1cd-08605a151fa0 (measure_code 05-20-2-01-001); locality = station_city (station location, not residence); fields incl. measurement_year, number_of_cases, number_of_cases_approved, target, sector, Socio Economic Group, provider_ownership, station. This scout fetched only the target field by year (all measures) and sample rows.",
+   "source_frameworks": [
+    "Israel MoH National Quality Indicators Programme (tipat halav)",
+    "Healthy People 2030 LHI: infant deaths (related outcome)"
+   ]
+  },
+  {
+   "id": "first_visit_within_2_weeks",
+   "domain": "maternal_child",
+   "label_he": "ביקור ראשון בטיפת חלב בשבועיים הראשונים",
+   "definition_he": "שיעור התינוקות הרשומים בתחנה שמלאו להם שבועיים שהגיעו לביקור ראשון בתחנה או שנערך להם ביקור בית במהלך השבועיים הראשונים מהלידה.",
+   "unit": "%",
+   "direction": "higher_better",
+   "target": {
+    "value": 75,
+    "kind": "official",
+    "source_url": "https://www.gov.il/BlobFolder/reports/quality-national-prog-2013-2024/he/files_publications_quality_indicators_quality-national-prog-2013-2024.pdf",
+    "note": "יעד משרד הבריאות 75% לכל השנים 2020-2024 (עמוד 351). ב־2024 השדה target במאגר שווה 0 בכל השורות (ערך חסר ולא יעד אפס); יעד 2024 נלקח מדוח התוכנית הלאומית למדדי איכות 2013-2024 של משרד הבריאות.",
+    "by_year": {
+     "2020": 75,
+     "2021": 75,
+     "2022": 75,
+     "2023": 75,
+     "2024": 75
+    }
+   },
+   "why_it_matters_he": "השבועות הראשונים הם תקופה קריטית; בביקור הראשון נאספים נתוני בסיס, מאותרות בעיות ויש תמיכה בהנקה ובהורות. ב־2024 עמדה העמידה הארצית על 48% (45% ב־2023) מול יעד 75%, ואף נותן שירות לא הגיע ליעד. פער לטובת האוכלוסייה היהודית.",
+   "interventions": [
+    {
+     "id": "first_visit_outreach",
+     "title_he": "פנייה יזומה לכל משפחה בשבוע הראשון לאחר השחרור לקביעת ביקור בתחנה או ביקור בית",
+     "description_he": "הדוח של משרד הבריאות מגדיר את המדד כביקור בתחנה או ביקור בית בשבועיים הראשונים, ומציין שהנחיות AAP הן ביקור תוך 2-5 ימים מהלידה ושכוח המשימה הישראלי ממליץ על ביקור תוך 72 שעות מהשחרור. לא נמצא מחקר מבוקר על התערבות עירונית ספציפית, ולכן הראיות מוגבלות.",
+     "evidence_strength": "limited",
+     "source_url": "https://www.gov.il/BlobFolder/reports/quality-national-prog-2013-2024/he/files_publications_quality_indicators_quality-national-prog-2013-2024.pdf",
+     "owner_he": "מנהלי תחנות טיפת חלב (ובעיריות המפעילות – העירייה), המחלקה לבריאות בעירייה",
+     "typical_cost": "low",
+     "time_to_effect_months": 3
+    }
+   ],
+   "data_hint": "data.gov.il ckan_datastore, package health-quality-measurement-family-care-center, resource fa1b80f7-ae95-4afd-a707-c2bd2e13cd0e (measure_code 05-16-2-01-005); locality = station_city (station location, not residence); fields incl. measurement_year, number_of_cases, number_of_cases_approved, target, sector, Socio Economic Group, provider_ownership, station. This scout fetched only the target field by year (all measures) and sample rows.",
+   "source_frameworks": [
+    "Israel MoH National Quality Indicators Programme (tipat halav)"
+   ]
+  },
+  {
+   "id": "iron_supplement_documented",
+   "domain": "maternal_child",
+   "label_he": "תיעוד מתן תוסף ברזל לתינוקות",
+   "definition_he": "שיעור התינוקות הרשומים בתחנה שמלאו להם 14 חודשים (במאגר: ״עד 13 חודשים״) ויש לפחות פעמיים תיעוד בתיק הרפואי לכך שקיבלו תוסף ברזל. המדד מודד תיעוד ולא צריכה בפועל.",
+   "unit": "%",
+   "direction": "higher_better",
+   "target": {
+    "value": 75,
+    "kind": "official",
+    "source_url": "https://www.gov.il/BlobFolder/reports/quality-national-prog-2013-2024/he/files_publications_quality_indicators_quality-national-prog-2013-2024.pdf",
+    "note": "יעד משרד הבריאות 2024: 75% (עמוד 239); במאגר 70% ב־2021 ו־73% ב־2022-2023, ו־0 (חסר) ב־2020 וב־2024. ב־2024 השדה target במאגר שווה 0 בכל השורות (ערך חסר ולא יעד אפס); יעד 2024 נלקח מדוח התוכנית הלאומית למדדי איכות 2013-2024 של משרד הבריאות.",
+    "by_year": {
+     "2021": 70,
+     "2022": 73,
+     "2023": 73,
+     "2024": 75
+    }
+   },
+   "why_it_matters_he": "מחסור בברזל ואנמיה הם גורם סיכון להאטה בהתפתחות ולתפקוד קוגניטיבי ירוד. מחסני הברזל מספיקים עד גיל 4-6 חודשים; לפי סקר מב״ת לרך 2 רק 46.4% מהתינוקות קיבלו תוסף בהתאם להמלצות. ב־2024 העמידה הארצית (תיעוד) 75%, בדיוק ביעד, אך רק מחצית מנותני השירות הגיעו אליו; פער ניכר לטובת האוכלוסייה הערבית.",
+   "interventions": [
+    {
+     "id": "iron_guidance_documentation",
+     "title_he": "הדרכה ותיעוד מתן תוסף ברזל בכל ביקור בגילאי 4-18 חודשים",
+     "description_he": "משרד הבריאות ממליץ על מזון עשיר בברזל ותוסף ברזל לתינוקות בגיל 4-18 חודשים; לפי סקר מב״ת לרך 2 רק 46.4% קיבלו תוסף בהתאם להמלצות. WHO ממליץ על תוסף יומי לגיל 6-23 חודשים במקומות עם שכיחות אנמיה של 40% ויותר (https://www.who.int/tools/elena/interventions/iron-children-6to23-malaria), כך שהסף הזה אינו בהכרח רלוונטי לישראל. הראיות לגבי התערבות עירונית ספציפית מוגבלות.",
+     "evidence_strength": "limited",
+     "source_url": "https://www.gov.il/BlobFolder/reports/quality-national-prog-2013-2024/he/files_publications_quality_indicators_quality-national-prog-2013-2024.pdf",
+     "owner_he": "אחיות טיפת חלב וקופות החולים; הרשות מסייעת בהפצת מידע",
+     "typical_cost": "low",
+     "time_to_effect_months": 3
+    }
+   ],
+   "data_hint": "data.gov.il ckan_datastore, package health-quality-measurement-family-care-center, resource 727a22ac-95c4-4a73-b489-054e7ac545b9 (measure_code 05-16-2-01-004); locality = station_city (station location, not residence); fields incl. measurement_year, number_of_cases, number_of_cases_approved, target, sector, Socio Economic Group, provider_ownership, station. This scout fetched only the target field by year (all measures) and sample rows.",
+   "source_frameworks": [
+    "Israel MoH National Quality Indicators Programme (tipat halav)"
+   ]
+  },
+  {
+   "id": "exclusive_breastfeeding_4m",
+   "domain": "maternal_child",
+   "label_he": "הנקה בלעדית סביב גיל 4 חודשים",
+   "definition_he": "שיעור התינוקות שמלאו להם 4 חודשים ו־15 יום, הרשומים בטיפות חלב, שדווחה לגביהם הנקה בלעדית סביב גיל 4 חודשים.",
+   "unit": "%",
+   "direction": "higher_better",
+   "target": {
+    "value": 26,
+    "kind": "official",
+    "source_url": "https://www.gov.il/BlobFolder/reports/quality-national-prog-2013-2024/he/files_publications_quality_indicators_quality-national-prog-2013-2024.pdf",
+    "note": "יעד משרד הבריאות 2024: 26% (עמוד 231); במאגר יש נתונים רק ל־2024 (target=0.26). השוואה בין־לאומית אחרת: ארגון הבריאות העולמי מציין יעד של לפחות 60% הנקה בלעדית ב־6 החודשים הראשונים עד 2030 (https://www.who.int/news-room/fact-sheets/detail/infant-and-young-child-feeding) – מדד אחר (6 חודשים).",
+    "by_year": {
+     "2024": 26
+    }
+   },
+   "why_it_matters_he": "הנקה בלעדית מגנה על התינוק ועל האם (זיהומים, מוות בעריסה, אסתמה ועוד). ארגון הבריאות העולמי ממליץ הנקה בלעדית עד גיל 6 חודשים; לפי הדוח כ־90% מהנשים בישראל מתחילות להניק, אך השיעור יורד דרסטית בתקופת חופשת הלידה. ב־2024 עמד המדד הארצי על 26% (22% ב־2022, 24% ב־2023), בדיוק ביעד. פער בולט לטובת האוכלוסייה היהודית.",
+   "interventions": [
+    {
+     "id": "bf_support_contacts",
+     "title_he": "ליווי מתוכנן להנקה: 4-8 מפגשים עם יועצת הנקה או אם מלווה מאומנת",
+     "description_he": "ליווי אישי או טלפוני בשבועות הראשונים אחרי הלידה. סקירת קוקריין (עדכון 2022) מצאה שבתמיכה המתמקדת בהנקה כ־10% פחות נשים צפויות להפסיק הנקה בלעדית עד גיל שישה חודשים (ודאות בינונית; ההשפעה גדולה יותר בשבועות ובחודשים הראשונים). אין הבדל ברור בין מלווה מקצועית ללא מקצועית, ו־4-8 מפגשים מתוכננים עשויים לעבוד טוב יותר.",
+     "evidence_strength": "moderate",
+     "source_url": "https://www.cochrane.org/CD001141/PREG_support-healthy-breastfeeding-mothers-healthy-term-babies",
+     "owner_he": "תחנות טיפת חלב ויועצות הנקה; הרשות מממנת קבוצות או אימהות מלוות",
+     "typical_cost": "medium",
+     "time_to_effect_months": 4
+    },
+    {
+     "id": "bf_community_support",
+     "title_he": "קבוצות תמיכה לאימהות מניקות וייעוץ הנקה זמין בקהילה",
+     "description_he": "ארגון הבריאות העולמי מציין שהנקה מגיבה היטב להתערבויות תמיכה, ומונה ייעוץ הנקה דרך שירותי הבריאות וקבוצות תמיכה בקהילה בין הדרכים היעילות. דוח משרד הבריאות מציין שחזרת האם לעבודה וקשיי הנקה הם גורמים עיקריים להפסקה.",
+     "evidence_strength": "moderate",
+     "source_url": "https://www.who.int/news-room/fact-sheets/detail/infant-and-young-child-feeding",
+     "owner_he": "המחלקה לבריאות ולגיל הרך בעירייה בשיתוף טיפות החלב",
+     "typical_cost": "low",
+     "time_to_effect_months": 6
+    }
+   ],
+   "data_hint": "data.gov.il ckan_datastore, package health-quality-measurement-family-care-center, resource 5256590e-b340-4a00-910a-181f54654232 (measure_code 05-21-2-01-001); locality = station_city (station location, not residence); fields incl. measurement_year, number_of_cases, number_of_cases_approved, target, sector, Socio Economic Group, provider_ownership, station. This scout fetched only the target field by year (all measures) and sample rows.",
+   "source_frameworks": [
+    "Israel MoH National Quality Indicators Programme (tipat halav)"
+   ]
+  },
+  {
+   "id": "breastfeeding_maintenance",
+   "domain": "maternal_child",
+   "label_he": "שימור הנקה בלעדית בקרב נשים שהחלו הנקה בלעדית",
+   "definition_he": "שימור הנקה בלעדית בקרב נשים שהחלו בהנקה בלעדית (הגדרה מתוך תיאור המדד במאגר; אין תיאור מפורט בדוח).",
+   "unit": "%",
+   "direction": "higher_better",
+   "target": {
+    "value": 70,
+    "kind": "official",
+    "source_url": "https://data.gov.il/api/3/action/datastore_search?resource_id=9dbd407b-165b-4df9-9d7f-3073dff0010a&limit=1",
+    "note": "היעד היחיד במאגר: 70% ל־2020 (שדה target); אין נתונים ל־2021-2024 ואין מדד כזה בדוח 2013-2024 שנבדק.",
+    "by_year": {
+     "2020": 70
+    }
+   },
+   "why_it_matters_he": "מדד ישן שהופסק; נשאר להמשכיות היסטורית בלבד. לשימוש עכשווי יש להעדיף את מדד ההנקה הבלעדית בגיל 4 חודשים.",
+   "interventions": [
+    {
+     "id": "bf_support_contacts",
+     "title_he": "ליווי מתוכנן להנקה: 4-8 מפגשים עם יועצת הנקה או אם מלווה מאומנת",
+     "description_he": "ליווי אישי או טלפוני בשבועות הראשונים אחרי הלידה. סקירת קוקריין (עדכון 2022) מצאה שבתמיכה המתמקדת בהנקה כ־10% פחות נשים צפויות להפסיק הנקה בלעדית עד גיל שישה חודשים (ודאות בינונית; ההשפעה גדולה יותר בשבועות ובחודשים הראשונים). אין הבדל ברור בין מלווה מקצועית ללא מקצועית, ו־4-8 מפגשים מתוכננים עשויים לעבוד טוב יותר.",
+     "evidence_strength": "moderate",
+     "source_url": "https://www.cochrane.org/CD001141/PREG_support-healthy-breastfeeding-mothers-healthy-term-babies",
+     "owner_he": "תחנות טיפת חלב ויועצות הנקה; הרשות מממנת קבוצות או אימהות מלוות",
+     "typical_cost": "medium",
+     "time_to_effect_months": 4
+    }
+   ],
+   "data_hint": "data.gov.il ckan_datastore, package health-quality-measurement-family-care-center, resource 9dbd407b-165b-4df9-9d7f-3073dff0010a (measure_code 05-16-2-01-001); locality = station_city (station location, not residence); fields incl. measurement_year, number_of_cases, number_of_cases_approved, target, sector, Socio Economic Group, provider_ownership, station. This scout fetched only the target field by year (all measures) and sample rows.",
+   "source_frameworks": [
+    "Israel MoH National Quality Indicators Programme (tipat halav) - legacy measure"
+   ]
+  },
+  {
+   "id": "violence_screening_women_4m",
+   "domain": "maternal_child",
+   "label_he": "תשאול נשים לאלימות במשפחה לאחר הלידה",
+   "definition_he": "שיעור הנשים שבמהלך התקופה הנמדדת מלאו לתינוק שלהן 4 חודשים ובוצע להן תשאול לאלימות כלפי נשים במהלך ארבעת החודשים לאחר הלידה.",
+   "unit": "%",
+   "direction": "higher_better",
+   "target": {
+    "value": 95,
+    "kind": "official",
+    "source_url": "https://www.gov.il/BlobFolder/reports/quality-national-prog-2013-2024/he/files_publications_quality_indicators_quality-national-prog-2013-2024.pdf",
+    "note": "יעד משרד הבריאות 95% ל־2023-2024 (עמוד 278); 90% ב־2020-2022 (שדה target במאגר). ב־2024 השדה target במאגר שווה 0 בכל השורות (ערך חסר ולא יעד אפס); יעד 2024 נלקח מדוח התוכנית הלאומית למדדי איכות 2013-2024 של משרד הבריאות.",
+    "by_year": {
+     "2020": 90,
+     "2021": 90,
+     "2022": 90,
+     "2023": 95,
+     "2024": 95
+    }
+   },
+   "why_it_matters_he": "אלימות משפחתית פוגעת באם ובתינוק בטווח הקצר והארוך; נשים מגיעות לתחנה בשלבים שונים (הריון, לידה, גידול ילדים) ולאחיות תפקיד משמעותי באיתור. לפי חוזר מנכ״ל המדד מבוסס על ריאיון הנשים. ב־2024 הרוב המוחלט של נותני השירות לא הגיע ליעד 95%; פער לטובת המגזר הערבי.",
+   "interventions": [
+    {
+     "id": "ipv_screen_refer",
+     "title_he": "תשאול בטוח של נשים לאחר לידה על אלימות, עם הפניה לליווי רב־רכיבי",
+     "description_he": "USPSTF (יוני 2025, דרגה B) ממליץ לסקור נשים בגיל הפוריות, כולל בהריון ואחרי לידה, ולהפנות להתערבויות מבוססות ראיות הכוללות כמה רכיבים וליווי מתמשך; בסיס הראיות חזק ביותר דווקא בהריון ואחרי לידה. חשוב לתאם מראש עם המרכז לטיפול ולמניעה של אלימות במשפחה בעיר.",
+     "evidence_strength": "moderate",
+     "source_url": "https://www.uspreventiveservicestaskforce.org/uspstf/recommendation/intimate-partner-violence-and-abuse-of-elderly-and-vulnerable-adults-screening",
+     "owner_he": "אחיות טיפת חלב; המחלקה לשירותים חברתיים והמרכז לטיפול ולמניעת אלימות במשפחה",
+     "typical_cost": "low",
+     "time_to_effect_months": 3
+    },
+    {
+     "id": "ipv_training_referral_protocol",
+     "title_he": "נהלים, הכשרת צוותים ומסלול הפניה בין בריאות, רווחה ומערכת המשפט",
+     "description_he": "ארגון הבריאות העולמי מציין שמערכת הבריאות יכולה לקבוע מדיניות, פרוטוקולים ותקני הכשרה, להכשיר עובדי בריאות לטיפול בנפגעות, ולתאם הפניות בין בריאות, משפט, שירותים חברתיים והגנת ילדים. העמוד אינו מכמת השפעה.",
+     "evidence_strength": "limited",
+     "source_url": "https://www.who.int/news-room/fact-sheets/detail/violence-against-women",
+     "owner_he": "המחלקה לשירותים חברתיים, טיפות החלב והמשטרה",
+     "typical_cost": "low",
+     "time_to_effect_months": 6
+    }
+   ],
+   "data_hint": "data.gov.il ckan_datastore, package health-quality-measurement-family-care-center, resource 2614d0c1-553f-4434-8f81-05b87ff2bd10 (measure_code 05-16-2-01-002); locality = station_city (station location, not residence); fields incl. measurement_year, number_of_cases, number_of_cases_approved, target, sector, Socio Economic Group, provider_ownership, station. This scout fetched only the target field by year (all measures) and sample rows.",
+   "source_frameworks": [
+    "Israel MoH National Quality Indicators Programme (tipat halav)"
+   ]
+  },
+  {
+   "id": "infant_mortality_rate",
+   "domain": "outcomes",
+   "label_he": "תמותת תינוקות (ל־1,000 לידות חי)",
+   "definition_he": "מספר התינוקות שמתו בשנה הראשונה לחייהם ל־1,000 לידות חי.",
+   "unit": "per 1000",
+   "direction": "lower_better",
+   "target": {
+    "value": 5,
+    "kind": "international",
+    "source_url": "https://odphp.health.gov/healthypeople/objectives-and-data/browse-objectives/infants/reduce-rate-infant-deaths-mich-02",
+    "note": "יעד לאומי אמריקאי (Healthy People 2030, MICH-02): 5.0 מקרי מוות של תינוקות עד גיל שנה ל־1,000 לידות חי; בסיס 5.8 ב־2017 ו־5.5 ב־2024 (מאומת בעמוד). זו נקודת ייחוס בלבד, לא יעד ישראלי. יעד האו״ם (3.2) הוא 25 ל־1,000 לתמותת ילדים מתחת לגיל חמש: גיל אחר ורף רופף, ולכן אינו שיפוט ליישוב."
+   },
+   "why_it_matters_he": "מדד תוצאה קלאסי שמופיע גם בליבת Urban HEART וגם ברשימת אינדיקטורי המפתח של HP2030. ברמת יישוב יש מקרים בודדים בשנה, ולכן המדד רועש מאוד; לעבוד בממוצע רב־שנתי או ברמת מחוז.",
+   "interventions": [
+    {
+     "id": "safe_sleep_guidance",
+     "title_he": "הדרכה מתועדת להורים על שינה בטוחה, עם עלון או דף נחיתה",
+     "description_he": "נוהל משרד הבריאות (2019): השכבה על הגב, מזרן קשיח ומיטה ריקה מחפצים, חדר ההורים, אוויר נקי מעישון והמשך הנקה. בארה״ב ירד שיעור מוות בעריסה בכ־60% מאז קמפיין Back to Sleep (נתון תצפיתי שמופיע בפרסום של NICHD), והמוות בעריסה הוא הסיבה הרביעית לתמותת תינוקות בישראל לפי דוח המדדים.",
+     "evidence_strength": "moderate",
+     "source_url": "https://www.nichd.nih.gov/newsroom/releases/102416-updated-safe-to-sleep",
+     "owner_he": "אחיות טיפת חלב; המחלקה לבריאות בעירייה מפיצה חומרים ופועלת בקהילות עם שיעור נמוך",
+     "typical_cost": "low",
+     "time_to_effect_months": 3
+    }
+   ],
+   "data_hint": null,
+   "source_frameworks": [
+    "Urban HEART outcome indicator: infant mortality",
+    "Healthy People 2030 LHI: infant deaths"
+   ],
+   "data_note": "No locality-level open source verified. The MoH live-births registry (resource 0290f6eb-e0fa-4b26-ab27-d02a9d362b77) has birth month, mother age, parity, gestation week, sex and weight but no locality column (per catalog.json); deaths by locality not found."
+  },
+  {
+   "id": "measles_vaccine_coverage_grade1",
+   "domain": "immunization",
+   "label_he": "כיסוי חיסוני חצבת בקרב תלמידי כיתות א׳",
+   "definition_he": "אחוז הכיסוי החיסוני לחצבת בקרב תלמידי כיתות א׳ ביישוב, לפי שנת לימודים (מאגר משרד הבריאות; הגדרת מספר המנות אינה מתועדת בשדות).",
+   "unit": "%",
+   "direction": "higher_better",
+   "target": {
+    "value": 95,
+    "kind": "international",
+    "source_url": "https://www.who.int/news/item/28-11-2025-measles-deaths-down-88--since-2000--but-cases-surge",
+    "note": "ארגון הבריאות העולמי (28.11.2025): נדרש כיסוי של לפחות 95% בשתי מנות כדי לעצור הדבקה (מאומת בעמוד). נקודת ייחוס בלבד: סף לעצירת הדבקה באוכלוסייה, לא יעד של יישוב. לא נבדק אם המדד הישראלי מתייחס לשתי מנות."
+   },
+   "why_it_matters_he": "ארגון הבריאות העולמי קובע שנדרש כיסוי של לפחות 95% בשתי מנות כדי לעצור הדבקה, ולכן חשוב לבדוק את הכיסוי ביישוב ולא רק את הממוצע הארצי (2024 בעולם: 84% במנה ראשונה ו־76% בשנייה). זה אחד המדדים הבודדים שיש להם נתון לכל יישוב לפי שנה.",
+   "interventions": [
+    {
+     "id": "vax_school_programs",
+     "title_he": "תוכנית חיסונים רב־רכיבית בגנים ובבתי הספר",
+     "description_he": "שילוב של לפחות שניים מאלה: הסברה, מעקב אחר סטטוס החיסונים של התלמידים, הפניית מי שחסר לו חיסון ומתן החיסון באתר. CPSTF ממליץ בראיות חזקות; חציון העלייה 47 נקודות אחוז.",
+     "evidence_strength": "strong",
+     "source_url": "https://www.thecommunityguide.org/findings/vaccination-programs-schools-and-organized-child-care-centers.html",
+     "owner_he": "מחלקת החינוך בעירייה עם שירותי בריאות התלמיד של לשכת הבריאות",
+     "typical_cost": "medium",
+     "time_to_effect_months": 6
+    },
+    {
+     "id": "vax_community_combo",
+     "title_he": "חבילה קהילתית משולבת: תזכורות, הסברה בקהילה והנגשת מועד ומקום החיסון",
+     "description_he": "שילוב של לפחות שני מהלכים מתואמים, למשל תזכורות ופנייה יזומה להורים יחד עם הרחבת נגישות (שעות, מקום, ביקור בית). CPSTF ממליץ בראיות חזקות; חציון העלייה 14 נקודות אחוז (18 מחקרים), ובקרב ילדים 12 נקודות. בקרב בני 65 ומעלה החציון היה 30.8 נקודות.",
+     "evidence_strength": "strong",
+     "source_url": "https://www.thecommunityguide.org/findings/vaccination-programs-community-based-interventions-implemented-combination.html",
+     "owner_he": "המחלקה לבריאות בעירייה עם לשכת הבריאות המחוזית, קופות החולים ומנהיגות קהילתית",
+     "typical_cost": "medium",
+     "time_to_effect_months": 6
+    },
+    {
+     "id": "vax_tip_barriers",
+     "title_he": "אבחון חסמים בקבוצות עם כיסוי חיסוני נמוך לפי שיטת TIP של ארגון הבריאות העולמי",
+     "description_he": "לפני שמתכננים קמפיין: לזהות באיזה שכונות או קבוצות הכיסוי נמוך, לראיין הורים ואנשי צוות ולהבין מה מונע חיסון (שעות, נגישות, אמון, שפה), ולתכנן פתרון מותאם. המסמך של WHO אירופה (2019) מציג מסגרת בת שלושה עמודי תווך לכך. זו מסגרת עבודה ולא ניסוי מבוקר, ולכן הראיות להשפעה מוגבלות.",
+     "evidence_strength": "limited",
+     "source_url": "https://www.who.int/europe/publications/i/item/9789289054492",
+     "owner_he": "המחלקה לבריאות בעירייה עם לשכת הבריאות המחוזית ונציגי הקהילה",
+     "typical_cost": "low",
+     "time_to_effect_months": 9
+    }
+   ],
+   "data_hint": "ministry-health, ״כיסוי חיסוני החצבת״: resource 1ed79571-04e9-46dc-8b55-566ee78bf9da (2088 rows; fields: שנת לימודים, סמל יישוב, יישוב, אחוז הכיסוי) per catalog.json; not re-fetched by this scout.",
+   "source_frameworks": [
+    "Urban HEART core indicator: fully immunized children"
+   ]
+  },
+  {
+   "id": "school_obesity",
+   "domain": "child_health",
+   "label_he": "השמנה בקרב תלמידים",
+   "definition_he": "שיעור התלמידים בכיתה א׳ או ז׳ (לפי המדד) עם עודף משקל או השמנה לפי אחוזוני BMI. שתי הקטגוריות מחוברות.",
+   "unit": "%",
+   "direction": "lower_better",
+   "target": {
+    "value": null,
+    "kind": "none",
+    "source_url": null,
+    "note": "אין יעד רשמי ישראלי. יעד Healthy People 2030 (NWS-04): 15.5% השמנה בקרב ילדים ומתבגרים בני 2-19 (בסיס 17.8% ב־2013-16, 21.1% ב־2021-23; מאומת בעמוד) הוא יעד לאומי אמריקאי להשמנה בלבד, ולכן אינו ישים: המדדים כאן סופרים עודף משקל והשמנה יחד בכיתה אחת. הוסר מהטבלה. נקודות ייחוס בין־לאומיות מאומתות (WHO אירופה: 29% בכיתה א׳, 22% בכיתה ז׳) מוצגות בדף המדד עצמו."
+   },
+   "why_it_matters_he": "השמנת ילדים היא מדד מוביל ב־HP2030. לפי HP2030, תוכניות התנהגותיות עצימות בעלות יותר מאסטרטגיה אחת ושינויי מדיניות בבתי ספר שמקלים על אכילה בריאה ופעילות גופנית יכולים להפחית השמנה.",
+   "interventions": [
+    {
+     "id": "obesity_school_meals_pa",
+     "title_he": "תוכנית בית־ספרית משולבת: ארוחות או חטיפים בריאים יחד עם פעילות גופנית (כיתות א׳–ו׳)",
+     "description_he": "CPSTF ממליץ (ראיות מספיקות): שיעור עודף משקל והשמנה ירד בחציון של 2.0 נקודות אחוז (7 מחקרים). נמצאו מעט מחקרים בחטיבה ובתיכון ולכן אי אפשר להסיק לגביהן.",
+     "evidence_strength": "moderate",
+     "source_url": "https://www.thecommunityguide.org/findings/obesity-prevention-control-meal-fruit-vegetable-snack-interventions-combined-physical-activity-interventions-schools.html",
+     "owner_he": "המחלקה לחינוך ולבריאות בעירייה בשיתוף משרד החינוך",
+     "typical_cost": "medium",
+     "time_to_effect_months": 12
+    },
+    {
+     "id": "obesity_enhanced_pe",
+     "title_he": "הגברת העצימות והזמן הפעיל בשיעורי חינוך גופני",
+     "description_he": "CPSTF ממליץ בראיות חזקות על חינוך גופני משופר: תלמידים בילו 10.37 נקודות אחוז יותר משיעור החינוך הגופני בפעילות בינונית עד נמרצת (13 מחקרים). זו תוצאה של פעילות גופנית ולא של ירידה במשקל.",
+     "evidence_strength": "strong",
+     "source_url": "https://www.thecommunityguide.org/findings/physical-activity-enhanced-school-based-physical-education.html",
+     "owner_he": "המחלקה לחינוך בעירייה ובתי הספר",
+     "typical_cost": "low",
+     "time_to_effect_months": 6
+    },
+    {
+     "id": "obesity_cochrane_activity",
+     "title_he": "פעילות גופנית (לבד או יחד עם תזונה) בבתי ספר יסודיים",
+     "description_he": "סקירת קוקריין (ילדים בני 5-11, עדכון 2024): התערבויות פעילות עשויות להוריד מעט את ה־BMI (כ־0.11 יחידות בטווח בינוני), הביטחון בראיות בינוני עד נמוך מאוד, והתועלת לא נשמרה בטווח ארוך. תזונה בלבד לא הראתה השפעה ברורה.",
+     "evidence_strength": "limited",
+     "source_url": "https://www.cochrane.org/evidence/CD015328_do-dietary-and-activity-strategies-help-prevent-obesity-children-aged-5-11-years",
+     "owner_he": "המחלקה לחינוך ולבריאות בעירייה",
+     "typical_cost": "medium",
+     "time_to_effect_months": 12
+    }
+   ],
+   "data_hint": null,
+   "source_frameworks": [
+    "Healthy People 2030 LHI: children and adolescents with obesity"
+   ],
+   "data_note": "No school-obesity open dataset found in the catalog.json keyword scan (BMI hits are only a quality measure of psychiatric hospitals). MoH school-health reports may exist but were not verified."
+  },
+  {
+   "id": "road_deaths_per_100k",
+   "domain": "injuries",
+   "label_he": "הרוגים בתאונות דרכים ל־100,000 תושבים",
+   "definition_he": "מספר ההרוגים בתאונות דרכים ברשות מקומית בשנה (או בחמש שנים), מחולק באוכלוסייה פעמים 100,000.",
+   "unit": "per 100000",
+   "direction": "lower_better",
+   "target": {
+    "value": null,
+    "kind": "none",
+    "source_url": null,
+    "note": "אין יעד רשמי לשיעור הרוגים ל־100,000 שאומת. התוכנית הלאומית 2026-2030 קובעת מספר הרוגים שלא יעלה על 273 ב־2030 בכל הארץ (מספר אנשים, לא שיעור ליישוב). יעד ״50 עד 30״ מ־2021 הוסר: נמצאה תוכנית עדכנית יותר, והוא נקבע במספר פגועים לעומת 2019. היעד שמופיע בדף העובדות של ארגון הבריאות העולמי (עצרת האו״ם: חצייה של מספר ההרוגים והפצועים בתאונות דרכים בעולם עד 2030, בלי שנת בסיס) הוא יעד עולמי ואינו רף ליישוב."
+   },
+   "why_it_matters_he": "פציעות בתאונות דרכים הן מדד תוצאה בליבת Urban HEART. ברמת יישוב יש מעט הרוגים בשנה, ולכן יש לעבוד על חמש שנים ולהשתמש גם בפצועים קשה.",
+   "interventions": [
+    {
+     "id": "road_who_save_lives",
+     "title_he": "תוכנית עירונית משולבת לפי חבילת SAVE LIVES של WHO",
+     "description_he": "שש אסטרטגיות: ניהול מהירויות, מנהיגות, תכנון ושיפור תשתיות, תקני בטיחות לרכב, אכיפה וטיפול אחרי תאונה (22 התערבויות). ארגון הבריאות העולמי מגדיר זאת ״מלאי מבוסס ראיות״ ומדגיש יישום משולב. בישראל מציין מבקר המדינה (https://library.mevaker.gov.il/sites/DigitalLibrary/Documents/2024/Road-Safety/2024-Road-Safety-Taktzir.pdf) שהמלצות תוכנית ״50 עד 30״ מ־2021 נוסו כפיילוט בקבוצת רשויות בתקציב של 80 מיליון ש״ח בלבד. מאז פורסמה תוכנית לאומית לשנים 2026-2030.",
+     "evidence_strength": "moderate",
+     "source_url": "https://www.who.int/publications/i/item/save-lives-a-road-safety-technical-package",
+     "owner_he": "מחלקת התנועה וההנדסה בעירייה, הרלב״ד, המשטרה",
+     "typical_cost": "high",
+     "time_to_effect_months": 24
+    },
+    {
+     "id": "road_traffic_calming",
+     "title_he": "מיתון תנועה אזורי ברחובות מגורים (אזורי מהירות מופחתת ופתרונות הנדסיים)",
+     "description_he": "סקירת קוקריין (22 מחקרי לפני ואחרי) מצאה ירידה בתאונות עם פגיעות (יחס שיעורים 0.85, רווח בר־סמך 0.75 עד 0.96). לגבי תאונות קטלניות התוצאה אינה חד־משמעית. המחברים מכנים זאת ״התערבות מבטיחה״ וקוראים להערכות נוספות, והחיפוש בסקירה עודכן ב־2008, ולכן הראיות מוגבלות.",
+     "evidence_strength": "limited",
+     "source_url": "https://www.cochrane.org/CD003110/INJ_area-wide-traffic-calming-for-preventing-traffic-related-injuries",
+     "owner_he": "מחלקת התנועה וההנדסה בעירייה",
+     "typical_cost": "medium",
+     "time_to_effect_months": 12
+    }
+   ],
+   "data_hint": "Ministry of Transport ACCIDENTS_MUNICIPAL_CSV resource b17b1634-c001-4d37-96c6-a661b2ecd98c (1174 rows; fields MUNICIPAL, CITY, CITYCODE, SUMACCIDEN, DEAD, SEVER_INJ, SLIGH_INJ, PEDESTRINJ, INJ0_19 ...) and CBS accidents-with-casualties PUF 2018-2024 (e.g. 2024 data resource 05d14adb-fe54-49f7-b7ce-f30348e2d959, field SEMEL_YISHUV), per catalog.json; not re-fetched by this scout.",
+   "source_frameworks": [
+    "Urban HEART outcome indicator: road traffic injuries"
+   ]
+  },
+  {
+   "id": "road_severe_injuries_per_100k",
+   "domain": "injuries",
+   "label_he": "פצועים קשה בתאונות דרכים ל־100,000 תושבים",
+   "definition_he": "מספר הפצועים קשה בתאונות דרכים ברשות מקומית בשנה (או בחמש שנים), מחולק באוכלוסייה פעמים 100,000.",
+   "unit": "per 100000",
+   "direction": "lower_better",
+   "target": {
+    "value": -25,
+    "kind": "official",
+    "source_url": "https://www.gov.il/BlobFolder/reports/202509_plan_actions/he/202509_plan_actions.pdf",
+    "note": "יעד לאומי בתוכנית הלאומית לבטיחות בדרכים 2026-2030 (משרד התחבורה והרשות הלאומית לבטיחות בדרכים, עמוד 5): הפחתה של 25% בפגיעה חמורה בתוך חמש שנים לעומת הממוצע של 2020-2024, ומספר הרוגים שלא יעלה על 273 ב־2030. היעד נקבע במספר האנשים בכל הארץ ולא בשיעור ל־100,000 ולא ליישוב, ולכן אינו רף לשיעור של יישוב. המונח ״פגיעה חמורה״ אינו מוגדר בעמוד. הכריכה נושאת תאריך יולי 2024 עם עדכונים בפברואר ובאוגוסט 2025; אישור הממשלה דווח בכלכליסט ב־16.11.2025 וטקסט ההחלטה לא נמצא. יעד ״50 עד 30״ מ־2021 (הפחתה של 50% עד 2030 לעומת 2019) הוסר: נמצאה תוכנית עדכנית יותר, והוא נקבע במספר פגועים ולא בשיעור."
+   },
+   "why_it_matters_he": "היעד הלאומי בתוכנית 2026-2030 מנוסח כהפחתה של פגיעה חמורה במספר האנשים בכל הארץ, לא כשיעור ליישוב. מדד זה (פצועים קשה) נשען על יותר מקרים מהרוגים בלבד ולכן יציב יותר סטטיסטית.",
+   "interventions": [
+    {
+     "id": "road_who_save_lives",
+     "title_he": "תוכנית עירונית משולבת לפי חבילת SAVE LIVES של WHO",
+     "description_he": "שש אסטרטגיות: ניהול מהירויות, מנהיגות, תכנון ושיפור תשתיות, תקני בטיחות לרכב, אכיפה וטיפול אחרי תאונה (22 התערבויות). ארגון הבריאות העולמי מגדיר זאת ״מלאי מבוסס ראיות״ ומדגיש יישום משולב. בישראל מציין מבקר המדינה (https://library.mevaker.gov.il/sites/DigitalLibrary/Documents/2024/Road-Safety/2024-Road-Safety-Taktzir.pdf) שהמלצות תוכנית ״50 עד 30״ מ־2021 נוסו כפיילוט בקבוצת רשויות בתקציב של 80 מיליון ש״ח בלבד. מאז פורסמה תוכנית לאומית לשנים 2026-2030.",
+     "evidence_strength": "moderate",
+     "source_url": "https://www.who.int/publications/i/item/save-lives-a-road-safety-technical-package",
+     "owner_he": "מחלקת התנועה וההנדסה בעירייה, הרלב״ד, המשטרה",
+     "typical_cost": "high",
+     "time_to_effect_months": 24
+    },
+    {
+     "id": "road_traffic_calming",
+     "title_he": "מיתון תנועה אזורי ברחובות מגורים (אזורי מהירות מופחתת ופתרונות הנדסיים)",
+     "description_he": "סקירת קוקריין (22 מחקרי לפני ואחרי) מצאה ירידה בתאונות עם פגיעות (יחס שיעורים 0.85, רווח בר־סמך 0.75 עד 0.96). לגבי תאונות קטלניות התוצאה אינה חד־משמעית. המחברים מכנים זאת ״התערבות מבטיחה״ וקוראים להערכות נוספות, והחיפוש בסקירה עודכן ב־2008, ולכן הראיות מוגבלות.",
+     "evidence_strength": "limited",
+     "source_url": "https://www.cochrane.org/CD003110/INJ_area-wide-traffic-calming-for-preventing-traffic-related-injuries",
+     "owner_he": "מחלקת התנועה וההנדסה בעירייה",
+     "typical_cost": "medium",
+     "time_to_effect_months": 12
+    }
+   ],
+   "data_hint": "Same as road_deaths_per_100k (fields DEAD + SEVER_INJ in ACCIDENTS_MUNICIPAL_CSV).",
+   "source_frameworks": [
+    "Urban HEART outcome indicator: road traffic injuries"
+   ]
+  },
+  {
+   "id": "child_road_injuries_0_19",
+   "domain": "injuries",
+   "label_he": "נפגעי תאונות דרכים בני 0-19 ל־10,000 ילדים ובני נוער",
+   "definition_he": "מספר הנפגעים בתאונות דרכים בגילי 0-19 ביישוב, מחולק באוכלוסיית הגילים הזו פעמים 10,000.",
+   "unit": "per 10000",
+   "direction": "lower_better",
+   "target": {
+    "value": null,
+    "kind": "none",
+    "source_url": null,
+    "note": "אין יעד ייעודי שנמצא; חל היעד הכללי להפחתת פגיעות חמורות."
+   },
+   "why_it_matters_he": "מדד ממוקד לגילי 0-19 (שדה INJ0_19 במאגר) המאפשר לבחון בטיחות סביב גנים ובתי ספר ולהצמיד אליו התערבויות הנדסיות עירוניות.",
+   "interventions": [
+    {
+     "id": "road_traffic_calming",
+     "title_he": "מיתון תנועה אזורי ברחובות מגורים (אזורי מהירות מופחתת ופתרונות הנדסיים)",
+     "description_he": "סקירת קוקריין (22 מחקרי לפני ואחרי) מצאה ירידה בתאונות עם פגיעות (יחס שיעורים 0.85, רווח בר־סמך 0.75 עד 0.96). לגבי תאונות קטלניות התוצאה אינה חד־משמעית. המחברים מכנים זאת ״התערבות מבטיחה״ וקוראים להערכות נוספות, והחיפוש בסקירה עודכן ב־2008, ולכן הראיות מוגבלות.",
+     "evidence_strength": "limited",
+     "source_url": "https://www.cochrane.org/CD003110/INJ_area-wide-traffic-calming-for-preventing-traffic-related-injuries",
+     "owner_he": "מחלקת התנועה וההנדסה בעירייה",
+     "typical_cost": "medium",
+     "time_to_effect_months": 12
+    },
+    {
+     "id": "road_who_save_lives",
+     "title_he": "תוכנית עירונית משולבת לפי חבילת SAVE LIVES של WHO",
+     "description_he": "שש אסטרטגיות: ניהול מהירויות, מנהיגות, תכנון ושיפור תשתיות, תקני בטיחות לרכב, אכיפה וטיפול אחרי תאונה (22 התערבויות). ארגון הבריאות העולמי מגדיר זאת ״מלאי מבוסס ראיות״ ומדגיש יישום משולב. בישראל מציין מבקר המדינה (https://library.mevaker.gov.il/sites/DigitalLibrary/Documents/2024/Road-Safety/2024-Road-Safety-Taktzir.pdf) שהמלצות תוכנית ״50 עד 30״ מ־2021 נוסו כפיילוט בקבוצת רשויות בתקציב של 80 מיליון ש״ח בלבד. מאז פורסמה תוכנית לאומית לשנים 2026-2030.",
+     "evidence_strength": "moderate",
+     "source_url": "https://www.who.int/publications/i/item/save-lives-a-road-safety-technical-package",
+     "owner_he": "מחלקת התנועה וההנדסה בעירייה, הרלב״ד, המשטרה",
+     "typical_cost": "high",
+     "time_to_effect_months": 24
+    }
+   ],
+   "data_hint": "ACCIDENTS_MUNICIPAL_CSV field INJ0_19 (same resource b17b1634-c001-4d37-96c6-a661b2ecd98c), per catalog.json; divide by census population aged 0-19 (resource 9a9e085f...).",
+   "source_frameworks": [
+    "Urban HEART outcome indicator: road traffic injuries"
+   ]
+  },
+  {
+   "id": "pharmacies_per_10k",
+   "domain": "access_capacity",
+   "label_he": "בתי מרקחת לכל 10,000 תושבים",
+   "definition_he": "מספר בתי המרקחת המורשים ביישוב לכל 10,000 תושבים.",
+   "unit": "per 10000",
+   "direction": "higher_better",
+   "target": {
+    "value": null,
+    "kind": "none",
+    "source_url": null,
+    "note": "לא נמצא יעד רשמי או נקודת ייחוס בין־לאומית שנפתחה."
+   },
+   "why_it_matters_he": "מדד נגישות פיזית לשירות בריאות בסיסי. ״נגישות לשירותים״ הוא נושא קבוע ב־OECD Regional Well-Being, ו״תשתית בריאות״ היא רבע ממשקל תנאי הקהילה ב־County Health Rankings.",
+   "interventions": [],
+   "data_hint": null,
+   "source_frameworks": [
+    "OECD Regional Well-Being: Access to services",
+    "County Health Rankings: Health Infrastructure (25% of Community Conditions)"
+   ],
+   "data_note": "Not found in catalog.json: only the medical-cannabis pharmacies list (resource f635f611-5b6d-4b21-9cd3-ce7b14da6c11, 423 rows, field pharmacy_city) which is not the full pharmacy register. The MoH pharmacy register must be located by another scout."
+  },
+  {
+   "id": "primary_care_clinics_per_10k",
+   "domain": "access_capacity",
+   "label_he": "מרפאות רפואה ראשונית לכל 10,000 תושבים",
+   "definition_he": "מספר מרפאות קופות החולים (רפואה ראשונית) ביישוב לכל 10,000 תושבים; אפשר להוסיף שעות פעילות ומרחק נסיעה.",
+   "unit": "per 10000",
+   "direction": "higher_better",
+   "target": {
+    "value": null,
+    "kind": "none",
+    "source_url": null,
+    "note": "לא נמצא יעד רשמי או נקודת ייחוס בין־לאומית שנפתחה."
+   },
+   "why_it_matters_he": "תשתית בריאות בסיסית; ״נגישות לשירותים״ מופיע ב־OECD Regional Well-Being ו״תשתית בריאות״ ב־County Health Rankings.",
+   "interventions": [],
+   "data_hint": null,
+   "source_frameworks": [
+    "OECD Regional Well-Being: Access to services",
+    "County Health Rankings: Health Infrastructure (25% of Community Conditions)"
+   ],
+   "data_note": "Not found in catalog.json (only specialty lists such as addiction clinics, labs, psychiatric hospitals). The clinics register must be located by another scout."
+  },
+  {
+   "id": "tipat_halav_stations_per_1000_births",
+   "domain": "access_capacity",
+   "label_he": "תחנות טיפת חלב ביישוב ביחס למספר התינוקות",
+   "definition_he": "מספר התחנות השונות (station) הרשומות ביישוב (station_city) במאגרי מדדי האיכות, חלקי מספר התינוקות (למשל המכנה של מדד MMR או ילדים בני 0-1) פעמים 1,000.",
+   "unit": "per 1000",
+   "direction": "neutral",
+   "target": {
+    "value": null,
+    "kind": "none",
+    "source_url": null,
+    "note": "אין יעד; משמש לאבחון עומס ונגישות."
+   },
+   "why_it_matters_he": "השערת עבודה לבדיקה בנתונים: יישוב עם מעט תחנות ביחס למספר התינוקות עשוי להתקשות בביקור הראשון תוך שבועיים. מדד עזר, לא מדד מאושר.",
+   "interventions": [],
+   "data_hint": "Derived: count distinct station per station_city in the tipat-halav resources (e.g. 0e91ec84-846a-46ab-bbb0-0d315104abe3). Counts only stations that appear in the quality data; not verified by this scout.",
+   "source_frameworks": [
+    "Israel MoH National Quality Indicators Programme (derived)"
+   ]
+  },
+  {
+   "id": "daycare_centers_per_1000_children_0_3",
+   "domain": "access_capacity",
+   "label_he": "מעונות יום לכל 1,000 ילדים בגיל 0-3",
+   "definition_he": "מספר מעונות היום המוכרים ביישוב, חלקי מספר הילדים בגילי 0-3, פעמים 1,000.",
+   "unit": "per 1000",
+   "direction": "higher_better",
+   "target": {
+    "value": null,
+    "kind": "none",
+    "source_url": null,
+    "note": "אין יעד."
+   },
+   "why_it_matters_he": "מעונות ומסגרות לגיל הרך הם תשתית לחינוך מוקדם; CPSTF ממליץ בראיות חזקות על תוכניות חינוך מוקדם במסגרת מרכזית.",
+   "interventions": [
+    {
+     "id": "ece_center_based",
+     "title_he": "הרחבת מסגרות חינוך לגיל הרך (מעונות וגנים) ברמה חינוכית גבוהה",
+     "description_he": "CPSTF ממליץ בראיות חזקות על תוכניות חינוך מוקדם במסגרת מרכזית: משפרות ציונים ושיעורי סיום תיכון, ומפחיתות שיעורי שימוש בחינוך מיוחד ופשיעה ולידות בגיל צעיר (מטא־אנליזה של 49 מחקרים).",
+     "evidence_strength": "strong",
+     "source_url": "https://www.thecommunityguide.org/findings/social-determinants-health-center-based-early-childhood-education.html",
+     "owner_he": "מחלקת החינוך והגיל הרך בעירייה",
+     "typical_cost": "high",
+     "time_to_effect_months": 24
+    }
+   ],
+   "data_hint": "Ministry of Labor daycare register, resource 0f67a263-d9f4-44d4-9816-c96e9dfbc7e5 (12295 rows; fields include daycare code, city code, city name) per catalog.json; not re-fetched.",
+   "source_frameworks": [
+    "OECD Regional Well-Being: Access to services"
+   ]
+  },
+  {
+   "id": "mammography_screening",
+   "domain": "prevention",
+   "label_he": "היענות לסקר סרטן השד (ממוגרפיה)",
+   "definition_he": "שיעור הנשים בגיל הסקר שביצעו ממוגרפיה בטווח הזמן המומלץ (לפי מדד איכות של קופות החולים).",
+   "unit": "%",
+   "direction": "higher_better",
+   "target": {
+    "value": null,
+    "kind": "none",
+    "source_url": null,
+    "note": "לא נמצא יעד מספרי רשמי שנפתח."
+   },
+   "why_it_matters_he": "סקר מניעה שבו, לפי CPSTF, שילוב של יצירת ביקוש, נגישות ושיפור מתן השירות מעלה את ההיענות.",
+   "interventions": [
+    {
+     "id": "screening_breast_multicomponent",
+     "title_he": "תוכנית רב־רכיבית להעלאת ההיענות לממוגרפיה",
+     "description_he": "CPSTF ממליץ בראיות חזקות על שילוב אסטרטגיות של יצירת ביקוש ונגישות בקהילה, יחד עם חיזוק מתן השירות על ידי המערכת (משוב, תמריצים, תזכורות); החציון: עלייה של 6.2 נקודות אחוז (34 זרועות מחקר).",
+     "evidence_strength": "strong",
+     "source_url": "https://www.thecommunityguide.org/findings/cancer-screening-multicomponent-interventions-breast-cancer.html",
+     "owner_he": "המחלקה לבריאות בעירייה בשיתוף קופות החולים",
+     "typical_cost": "medium",
+     "time_to_effect_months": 12
+    }
+   ],
+   "data_hint": null,
+   "source_frameworks": [
+    "Related: Healthy People 2030 cancer screening objectives"
+   ],
+   "data_note": "No locality-level open source verified (HMO quality measures are by provider). Not in catalog.json at locality level."
+  },
+  {
+   "id": "colorectal_screening",
+   "domain": "prevention",
+   "label_he": "היענות לסקר סרטן המעי הגס",
+   "definition_he": "שיעור בני קבוצת הגיל המוגדרת שביצעו בדיקת דם סמוי בצואה או קולונוסקופיה בטווח הזמן המומלץ.",
+   "unit": "%",
+   "direction": "higher_better",
+   "target": {
+    "value": 72.8,
+    "kind": "international",
+    "source_url": "https://odphp.health.gov/healthypeople/objectives-and-data/browse-objectives/cancer/increase-proportion-adults-who-get-screened-colorectal-cancer-c-07",
+    "note": "יעד לאומי אמריקאי (HP2030, C-07): 72.8% בגילי 45-75; בסיס 63.5% ב־2023. נקודת ייחוס בלבד – גילאי הסקר בישראל והגדרות שונים."
+   },
+   "why_it_matters_he": "מדד מוביל ב־HP2030 (סקר מעי גס). הרשות יכולה להשפיע דרך הסברה ונגישות.",
+   "interventions": [
+    {
+     "id": "screening_colorectal_multicomponent",
+     "title_he": "תוכנית רב־רכיבית להעלאת ההיענות לבדיקת דם סמוי או קולונוסקופיה",
+     "description_he": "CPSTF ממליץ בראיות חזקות; חציון העלייה 15.4 נקודות אחוז (39 זרועות), ו־24.2 נקודות כששלוש אסטרטגיות (ביקוש, נגישות ומתן שירות) משולבות.",
+     "evidence_strength": "strong",
+     "source_url": "https://www.thecommunityguide.org/findings/cancer-screening-multicomponent-interventions-colorectal-cancer.html",
+     "owner_he": "המחלקה לבריאות בעירייה בשיתוף קופות החולים",
+     "typical_cost": "medium",
+     "time_to_effect_months": 12
+    }
+   ],
+   "data_hint": null,
+   "source_frameworks": [
+    "Healthy People 2030 LHI: colorectal cancer screening"
+   ],
+   "data_note": "No locality-level open source verified."
+  },
+  {
+   "id": "adult_smoking",
+   "domain": "behaviors",
+   "label_he": "שיעור המעשנים בקרב מבוגרים",
+   "definition_he": "שיעור המבוגרים המעשנים סיגריות כיום.",
+   "unit": "%",
+   "direction": "lower_better",
+   "target": {
+    "value": 6.1,
+    "kind": "international",
+    "source_url": "https://odphp.health.gov/healthypeople/objectives-and-data/browse-objectives/tobacco-use/reduce-current-cigarette-smoking-adults-tu-02",
+    "note": "יעד לאומי אמריקאי (HP2030, TU-02): 6.1%; בסיס 14.2% ב־2019 ו־10.1% ב־2024. נקודת ייחוס בלבד."
+   },
+   "why_it_matters_he": "מדד בליבת Urban HEART ובמדדי המפתח של HP2030. רשות מקומית יכולה להשפיע דרך אזורים נקיים מעישון ואכיפה.",
+   "interventions": [
+    {
+     "id": "smoke_free_policies",
+     "title_he": "הרחבת מדיניות מרחבים נקיים מעישון ואכיפתה",
+     "description_he": "CPSTF ממליץ בראיות חזקות על מדיניות נקייה מעישון: זיהום אוויר פנימי ירד בחציון של 88%, שכיחות העישון ירדה ב־2.7 נקודות אחוז, ואשפוזים בגין אירועי לב וכלי דם ירדו ב־5.1%. הראיות נוגעות למדיניות כזו באופן כללי; הרחבה למרחבים פתוחים היא התאמה עירונית.",
+     "evidence_strength": "strong",
+     "source_url": "https://www.thecommunityguide.org/findings/tobacco-use-smoke-free-policies.html",
+     "owner_he": "המחלקה לבריאות, מחלקת הפיקוח והרשות לאכיפה בעירייה",
+     "typical_cost": "low",
+     "time_to_effect_months": 12
+    }
+   ],
+   "data_hint": null,
+   "source_frameworks": [
+    "Urban HEART core indicator: prevalence of tobacco smoking",
+    "Healthy People 2030 LHI: cigarette smoking in adults"
+   ],
+   "data_note": "No locality-level open source verified (survey data are national/district)."
+  },
+  {
+   "id": "physical_inactivity",
+   "domain": "behaviors",
+   "label_he": "מבוגרים שאינם עומדים בהמלצות לפעילות גופנית",
+   "definition_he": "שיעור המבוגרים שאינם עומדים בהנחיות המינימום לפעילות אירובית וחיזוק שרירים.",
+   "unit": "%",
+   "direction": "lower_better",
+   "target": {
+    "value": null,
+    "kind": "none",
+    "source_url": null,
+    "note": "לא נבחר יעד שנפתח."
+   },
+   "why_it_matters_he": "פעילות גופנית היא מדד מוביל ב־HP2030, ו־CPSTF ממליץ על התערבויות בסביבה הבנויה להגברתה.",
+   "interventions": [
+    {
+     "id": "pa_built_environment",
+     "title_he": "תכנון עירוני משולב: הליכה, אופניים ותחבורה ציבורית יחד עם שימושי קרקע מעורבים וגישה לפארקים",
+     "description_he": "CPSTF ממליץ על שילוב של שיפור מערכות תחבורה להולכי רגל ולרוכבי אופניים עם התערבויות בשימושי קרקע ובעיצוב סביבתי; דרגת הראיות ״מספיקות״.",
+     "evidence_strength": "moderate",
+     "source_url": "https://www.thecommunityguide.org/findings/physical-activity-built-environment-approaches.html",
+     "owner_he": "מחלקת התכנון וההנדסה בעירייה",
+     "typical_cost": "high",
+     "time_to_effect_months": 24
+    }
+   ],
+   "data_hint": null,
+   "source_frameworks": [
+    "Healthy People 2030 LHI: meeting aerobic and muscle-strengthening guidelines"
+   ],
+   "data_note": "No locality-level open source verified."
+  },
+  {
+   "id": "diabetes_prevalence",
+   "domain": "chronic_disease",
+   "label_he": "שכיחות סוכרת במבוגרים",
+   "definition_he": "שיעור המבוגרים עם סוכרת מאובחנת (רישום קופות החולים) ביישוב.",
+   "unit": "%",
+   "direction": "lower_better",
+   "target": {
+    "value": null,
+    "kind": "none",
+    "source_url": null,
+    "note": "אין יעד שנפתח."
+   },
+   "why_it_matters_he": "סוכרת היא מדד תוצאה ב־Urban HEART (שכיחות ותמותה) ומדד מוביל ב־HP2030 (מקרים חדשים).",
+   "interventions": [
+    {
+     "id": "diabetes_dpp",
+     "title_he": "תוכניות קהילתיות למניעת סוכרת (תזונה ופעילות גופנית) לאנשים בסיכון",
+     "description_he": "CPSTF ממליץ בראיות חזקות: שיעור מי שפיתחו סוכרת סוג 2 ירד בחציון ב־11 נקודות אחוז (16 מחקרים) ומשקל הגוף ירד בממוצע ב־2.2% (24 מחקרים).",
+     "evidence_strength": "strong",
+     "source_url": "https://www.thecommunityguide.org/findings/diabetes-combined-diet-and-physical-activity-promotion-programs-prevent-type-2-diabetes.html",
+     "owner_he": "קופות החולים והמחלקה לבריאות בעירייה (מרכזים קהילתיים)",
+     "typical_cost": "medium",
+     "time_to_effect_months": 12
+    }
+   ],
+   "data_hint": null,
+   "source_frameworks": [
+    "Urban HEART outcome indicator: diabetes prevalence and death",
+    "Healthy People 2030 LHI: new cases of diagnosed diabetes"
+   ],
+   "data_note": "No locality-level open source verified (HMO registries)."
+  },
+  {
+   "id": "flu_vaccination_65plus",
+   "domain": "prevention",
+   "label_he": "חיסון שפעת עונתי בקרב בני 65 ומעלה",
+   "definition_he": "שיעור בני 65 ומעלה שהתחסנו נגד שפעת בעונה.",
+   "unit": "%",
+   "direction": "higher_better",
+   "target": {
+    "value": null,
+    "kind": "none",
+    "source_url": null,
+    "note": "HP2030 כולל מדד שפעת לכל הגילים, אך יעדו לא נפתח; לא נמצא יעד ישראלי."
+   },
+   "why_it_matters_he": "חיסון שפעת שנתי הוא מדד מוביל ב־HP2030. CPSTF מצא שהתערבויות קהילתיות משולבות העלו את שיעור החיסון בקרב בני 65+ בחציון של 30.8 נקודות.",
+   "interventions": [
+    {
+     "id": "vax_reminder_recall",
+     "title_he": "תזכורות והזמנה חוזרת להורים שלא הגיעו למועד החיסון",
+     "description_he": "לזהות מדי חודש תינוקות שעברו את גיל החיסון ולא התחסנו, ולשלוח להורים תזכורת או הזמנה חוזרת (הודעה, טלפון או מכתב). צוות השירותים המונעים בארה״ב (CPSTF) ממליץ על כך בראיות חזקות; בסקירה שעליה הוא מסתמך עלו שיעורי החיסון בחציון ב־11 נקודות אחוז.",
+     "evidence_strength": "strong",
+     "source_url": "https://www.thecommunityguide.org/findings/vaccination-programs-client-reminder-and-recall-systems.html",
+     "owner_he": "מנהלי תחנות טיפת חלב (משרד הבריאות, קופת החולים, ובתל אביב ובירושלים גם העירייה) בשיתוף המחלקה לבריאות בעירייה",
+     "typical_cost": "low",
+     "time_to_effect_months": 3
+    },
+    {
+     "id": "vax_community_combo",
+     "title_he": "חבילה קהילתית משולבת: תזכורות, הסברה בקהילה והנגשת מועד ומקום החיסון",
+     "description_he": "שילוב של לפחות שני מהלכים מתואמים, למשל תזכורות ופנייה יזומה להורים יחד עם הרחבת נגישות (שעות, מקום, ביקור בית). CPSTF ממליץ בראיות חזקות; חציון העלייה 14 נקודות אחוז (18 מחקרים), ובקרב ילדים 12 נקודות. בקרב בני 65 ומעלה החציון היה 30.8 נקודות.",
+     "evidence_strength": "strong",
+     "source_url": "https://www.thecommunityguide.org/findings/vaccination-programs-community-based-interventions-implemented-combination.html",
+     "owner_he": "המחלקה לבריאות בעירייה עם לשכת הבריאות המחוזית, קופות החולים ומנהיגות קהילתית",
+     "typical_cost": "medium",
+     "time_to_effect_months": 6
+    }
+   ],
+   "data_hint": null,
+   "source_frameworks": [
+    "Healthy People 2030 LHI: persons vaccinated annually against seasonal influenza"
+   ],
+   "data_note": "No locality-level open source verified."
+  },
+  {
+   "id": "suicide_rate",
+   "domain": "mental_health",
+   "label_he": "שיעור התאבדויות (ל־100,000 תושבים)",
+   "definition_he": "מספר מקרי ההתאבדות בשנה ל־100,000 תושבים (מתוקנן גיל כשאפשר).",
+   "unit": "per 100000",
+   "direction": "lower_better",
+   "target": {
+    "value": 12.8,
+    "kind": "international",
+    "source_url": "https://odphp.health.gov/healthypeople/objectives-and-data/browse-objectives/mental-health-and-mental-disorders/reduce-suicide-rate-mhmd-01",
+    "note": "יעד לאומי אמריקאי (HP2030, MHMD-01): 12.8 ל־100,000, מתוקנן גיל; בסיס 14.2 ב־2018 ו־13.7 ב־2024. נקודת ייחוס בלבד."
+   },
+   "why_it_matters_he": "אחד מעשרת מדדי המפתח לכל הגילים ב־HP2030. מספרים קטנים מאוד ביישוב; רק רב־שנתי.",
+   "interventions": [
+    {
+     "id": "suicide_live_life",
+     "title_he": "ארבע ההתערבויות המרכזיות של WHO למניעת התאבדות (LIVE LIFE)",
+     "description_he": "הגבלת הגישה לאמצעים, דיווח תקשורתי אחראי, טיפוח כישורים חברתיים־רגשיים אצל בני נוער, ואיתור, הערכה, טיפול ומעקב אחר מי שנמצא בסיכון.",
+     "evidence_strength": "moderate",
+     "source_url": "https://www.who.int/news-room/fact-sheets/detail/suicide",
+     "owner_he": "המחלקה לשירותים חברתיים, מחלקת החינוך, מרכזי החוסן בעיר",
+     "typical_cost": "medium",
+     "time_to_effect_months": 12
+    }
+   ],
+   "data_hint": null,
+   "source_frameworks": [
+    "Healthy People 2030 LHI: suicides"
+   ],
+   "data_note": "No locality-level open source verified."
+  },
+  {
+   "id": "elderly_living_alone",
+   "domain": "older_adults",
+   "label_he": "קשישים החיים לבד",
+   "definition_he": "שיעור בני 65 ומעלה המתגוררים במשק בית של אדם אחד.",
+   "unit": "%",
+   "direction": "lower_better",
+   "target": {
+    "value": null,
+    "kind": "none",
+    "source_url": null,
+    "note": "אין יעד."
+   },
+   "why_it_matters_he": "בדידות ובידוד של קשישים הם יעד להתערבויות קהילתיות (ראו התערבויות, בראיות חלשות); מדד חשוב לתכנון שירותי רווחה לקשישים.",
+   "interventions": [
+    {
+     "id": "loneliness_group_programs",
+     "title_he": "פעילויות קבוצתיות, פעילות גופנית ותוכניות רב־רכיביות לצמצום בדידות אצל קשישים",
+     "description_he": "סקירה שיטתית ומטא־אנליזה בגיליון PMC9577679 מצאה שהתערבויות שונות קשורות להפחתת בדידות בעוצמה קטנה עד גדולה (פעילות גופנית, תוכניות רב־רכיביות, טיפולים כמו CBT), אך איכות הראיות נמוכה מאוד ו״התערבויות חברתיות״ לא הראו תועלת מובהקת.",
+     "evidence_strength": "limited",
+     "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9577679/",
+     "owner_he": "המחלקה לשירותים חברתיים, מרכזי יום וקהילה תומכת",
+     "typical_cost": "medium",
+     "time_to_effect_months": 6
+    },
+    {
+     "id": "age_friendly_framework",
+     "title_he": "תוכנית עירונית לפי מסגרת ״ערים ידידותיות לגיל המבוגר״ של WHO",
+     "description_he": "שמונה תחומים: שירותי קהילה ובריאות, תחבורה, דיור, השתתפות חברתית, מרחבים פתוחים ומבנים, כבוד והכלה, השתתפות אזרחית ותעסוקה, מידע ותקשורת. המסגרת עוזרת לזהות חסמים לקשישים, אך העמוד אינו מציג מדידת השפעה.",
+     "evidence_strength": "limited",
+     "source_url": "https://extranet.who.int/agefriendlyworld/age-friendly-cities-framework/",
+     "owner_he": "המחלקה לגיל הזהב ולשירותים חברתיים בעירייה",
+     "typical_cost": "low",
+     "time_to_effect_months": 12
+    }
+   ],
+   "data_hint": "Possibly derivable from the census 2022 household table (resource 38207cf8-afe2-48ed-a3b0-c8f70c796015); whether it breaks households by member age was not verified.",
+   "source_frameworks": [
+    "WHO Age-friendly Cities Framework: social participation, respect and social inclusion"
+   ]
+  },
+  {
+   "id": "air_pm25_annual",
+   "domain": "environment",
+   "label_he": "ריכוז PM2.5 שנתי ממוצע",
+   "definition_he": "ריכוז שנתי ממוצע של חלקיקים נשימים קטנים (PM2.5) במיקרוגרם למטר מעוקב בתחנות ניטור ביישוב.",
+   "unit": "ug/m3",
+   "direction": "lower_better",
+   "target": {
+    "value": 5,
+    "kind": "international",
+    "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8494774",
+    "note": "ערך הנחיה של ארגון הבריאות העולמי (2021) לממוצע שנתי: PM2.5 לא יעלה על 5 מיקרוגרם למטר מעוקב, כפי שמצוטט בהצהרה משותפת של אגודות רפואיות (המקור הראשוני של WHO לא נפתח במלואו). זה ערך הנחיה ולא תקן ישראלי."
+   },
+   "why_it_matters_he": "חשיפה לאוויר לא בריא היא מדד מוביל ב־HP2030; לפי ארגון הבריאות העולמי ב־2019 חיו 99% מאוכלוסיית העולם במקומות שבהם לא עמדו בערכי ההנחיה.",
+   "interventions": [
+    {
+     "id": "air_urban_transport",
+     "title_he": "מדיניות עירונית לצמצום זיהום אוויר: תחבורה ציבורית מהירה, הליכה ואופניים, עיר ירוקה וקומפקטית",
+     "description_he": "דף העובדות של ארגון הבריאות העולמי מונה אותן כמדיניות תחבורה ותכנון עירוני המפחיתה זיהום אוויר.",
+     "evidence_strength": "moderate",
+     "source_url": "https://www.who.int/news-room/fact-sheets/detail/ambient-(outdoor)-air-quality-and-health",
+     "owner_he": "מחלקת איכות הסביבה, התחבורה והתכנון בעירייה",
+     "typical_cost": "high",
+     "time_to_effect_months": 24
+    }
+   ],
+   "data_hint": "Ministry of Environmental Protection monitoring-station lists: resources 782cfb94-ebbd-4f41-aba2-80c298457a58 and 9e6daaea-fd72-4ee2-882b-38a5eee135f0 (159 stations; field ישוב) per catalog.json. The source of the measurement time series was not verified.",
+   "source_frameworks": [
+    "Healthy People 2030 LHI: exposure to unhealthy air",
+    "OECD Regional Well-Being: Environment"
+   ]
+  },
+  {
+   "id": "green_space_access_share",
+   "domain": "environment",
+   "label_he": "נגישות לשטחים ירוקים",
+   "definition_he": "שיעור התושבים המתגוררים במרחק הליכה מוגדר משטח ירוק ציבורי. הגדרת המרחק נקבעת מקומית; מסמך WHO אירופה (2016) מציג אינדיקטור נגישות עם ערכת כלים.",
+   "unit": "%",
+   "direction": "higher_better",
+   "target": {
+    "value": null,
+    "kind": "none",
+    "source_url": null,
+    "note": "לא נבחר יעד מספרי מאומת."
+   },
+   "why_it_matters_he": "שטחים ירוקים קשורים לבריאות נפשית ופיזית ולצמצום חשיפה לחום ורעש.",
+   "interventions": [
+    {
+     "id": "green_space_access",
+     "title_he": "הרחבת גישה לשטחים ירוקים בשכונות",
+     "description_he": "הסקירה של WHO אירופה (2016) קובעת ששטחים ירוקים עירוניים יכולים לקדם בריאות נפשית ופיזית ולהפחית תחלואה ותמותה, בין השאר דרך הרגעה, לכידות חברתית, פעילות גופנית והפחתת חשיפה לזיהום, רעש וחום.",
+     "evidence_strength": "moderate",
+     "source_url": "https://www.who.int/europe/publications/i/item/WHO-EURO-2016-3352-43111-60341",
+     "owner_he": "מחלקת הגנים והנוף והתכנון בעירייה",
+     "typical_cost": "high",
+     "time_to_effect_months": 24
+    }
+   ],
+   "data_hint": null,
+   "source_frameworks": [
+    "County Health Rankings: Physical Environment (25% of Community Conditions)"
+   ],
+   "data_note": "No open source verified; requires GIS layers of green areas and population grid."
+  },
+  {
+   "id": "sports_facilities_per_10k",
+   "domain": "environment",
+   "label_he": "מתקני ספורט לכל 10,000 תושבים",
+   "definition_he": "מספר מתקני הספורט ברשות מקומית לכל 10,000 תושבים.",
+   "unit": "per 10000",
+   "direction": "higher_better",
+   "target": {
+    "value": null,
+    "kind": "none",
+    "source_url": null,
+    "note": "אין יעד."
+   },
+   "why_it_matters_he": "תשתית לפעילות גופנית; מצביעה על הזדמנות פעילות בקהילה.",
+   "interventions": [
+    {
+     "id": "pa_built_environment",
+     "title_he": "תכנון עירוני משולב: הליכה, אופניים ותחבורה ציבורית יחד עם שימושי קרקע מעורבים וגישה לפארקים",
+     "description_he": "CPSTF ממליץ על שילוב של שיפור מערכות תחבורה להולכי רגל ולרוכבי אופניים עם התערבויות בשימושי קרקע ובעיצוב סביבתי; דרגת הראיות ״מספיקות״.",
+     "evidence_strength": "moderate",
+     "source_url": "https://www.thecommunityguide.org/findings/physical-activity-built-environment-approaches.html",
+     "owner_he": "מחלקת התכנון וההנדסה בעירייה",
+     "typical_cost": "high",
+     "time_to_effect_months": 24
+    }
+   ],
+   "data_hint": "Ministry of Culture and Sport, ״מתקני ספורט בישראל״: resource f8dbd3ed-2c62-4d0e-bbaa-b6a15a0e5f7d (8777 rows; fields רשות מקומית, ישוב) per catalog.json; not re-fetched.",
+   "source_frameworks": [
+    "County Health Rankings: Physical Environment (25% of Community Conditions)"
+   ]
+  },
+  {
+   "id": "public_transport_stops_per_1000",
+   "domain": "environment",
+   "label_he": "תחנות תחבורה ציבורית לכל 1,000 תושבים",
+   "definition_he": "מספר תחנות התחבורה הציבורית ביישוב לכל 1,000 תושבים.",
+   "unit": "per 1000",
+   "direction": "higher_better",
+   "target": {
+    "value": null,
+    "kind": "none",
+    "source_url": null,
+    "note": "אין יעד."
+   },
+   "why_it_matters_he": "תשתית תחבורה היא חלק מהתערבות הסביבה הבנויה ש־CPSTF ממליץ עליה, וחלק מהמדיניות שארגון הבריאות העולמי מונה להפחתת זיהום אוויר.",
+   "interventions": [
+    {
+     "id": "pa_built_environment",
+     "title_he": "תכנון עירוני משולב: הליכה, אופניים ותחבורה ציבורית יחד עם שימושי קרקע מעורבים וגישה לפארקים",
+     "description_he": "CPSTF ממליץ על שילוב של שיפור מערכות תחבורה להולכי רגל ולרוכבי אופניים עם התערבויות בשימושי קרקע ובעיצוב סביבתי; דרגת הראיות ״מספיקות״.",
+     "evidence_strength": "moderate",
+     "source_url": "https://www.thecommunityguide.org/findings/physical-activity-built-environment-approaches.html",
+     "owner_he": "מחלקת התכנון וההנדסה בעירייה",
+     "typical_cost": "high",
+     "time_to_effect_months": 24
+    },
+    {
+     "id": "air_urban_transport",
+     "title_he": "מדיניות עירונית לצמצום זיהום אוויר: תחבורה ציבורית מהירה, הליכה ואופניים, עיר ירוקה וקומפקטית",
+     "description_he": "דף העובדות של ארגון הבריאות העולמי מונה אותן כמדיניות תחבורה ותכנון עירוני המפחיתה זיהום אוויר.",
+     "evidence_strength": "moderate",
+     "source_url": "https://www.who.int/news-room/fact-sheets/detail/ambient-(outdoor)-air-quality-and-health",
+     "owner_he": "מחלקת איכות הסביבה, התחבורה והתכנון בעירייה",
+     "typical_cost": "high",
+     "time_to_effect_months": 24
+    }
+   ],
+   "data_hint": "Ministry of Transport, ״תחנות תחבורה ציבורית״: resource e873e6a2-66c1-494f-a677-f5e77348edb0 (34235 rows; fields CityCode, CityName) per catalog.json; not re-fetched.",
+   "source_frameworks": [
+    "OECD Regional Well-Being: Access to services"
+   ]
+  }
+ ],
+ "interpretation_rules": [
+  {
+   "id": "small_numbers",
+   "text_he": "ביישוב עם עשרות לידות בשנה, תינוק אחד יכול לשנות את השיעור בכמה נקודות אחוז. לכן שיעור שמבוסס על מעט מקרים אינו מעיד על מצב היישוב, וכדאי להסתכל גם על מספר המקרים שעומד מאחוריו."
+  },
+  {
+   "id": "ecological_fallacy",
+   "text_he": "שיעור של יישוב אינו מתאר אדם מסוים ביישוב. כשמשווים יישובים, קשר בין שני מדדים (למשל אבטלה וחיסונים) אינו מוכיח שהקשר קיים גם אצל אנשים בודדים.",
+   "source_url": "https://academic.oup.com/aje/article-abstract/139/8/747/131774"
+  },
+  {
+   "id": "sector_differences",
+   "text_he": "לפי דוח משרד הבריאות, ב-2024 שיעורי העמידה בחלק ממדדי טיפות החלב היו גבוהים יותר במגזר הערבי, ובחלקם במגזר היהודי. ההבדלים משקפים גם הרגלי שימוש בשירות ודרכי תיעוד ולא רק את איכות השירות, ולכן נכון להשוות יישוב ליישובים דומים לו, באותו מגזר ובאותו אשכול חברתי־כלכלי.",
+   "source_url": "https://www.gov.il/BlobFolder/reports/quality-national-prog-2013-2024/he/files_publications_quality_indicators_quality-national-prog-2013-2024.pdf"
+  },
+  {
+   "id": "haredi_not_separable",
+   "text_he": "בנתוני טיפות החלב יש רק שני ערכי מגזר, יהודי וערבי, ולכן אי אפשר לבודד בהם אוכלוסייה חרדית. כדאי להסתמך על האשכול החברתי־כלכלי ועל יישובים דומים בכל התכונות, ולא להסיק מהשוואה בין שני יישובים בלבד.",
+   "source_url": "https://data.gov.il/api/3/action/datastore_search?resource_id=0e91ec84-846a-46ab-bbb0-0d315104abe3&limit=1"
+  },
+  {
+   "id": "timeliness_vs_final_coverage",
+   "text_he": "מדדי טיפות החלב בודקים אם הפעולה בוצעה בחלון גיל קבוע (למשל חיסון חצבת, חזרת ואדמת בין 12 ל-13 חודשים), ולא אם הילד חוסן בסופו של דבר. לפי הדוח, לקראת גיל 19 חודשים כ-90% מהתינוקות מחוסנים, ולכן שיעור של 66% אינו אומר ששליש מהילדים נשארו בלי חיסון.",
+   "source_url": "https://www.gov.il/BlobFolder/reports/quality-national-prog-2013-2024/he/files_publications_quality_indicators_quality-national-prog-2013-2024.pdf"
+  },
+  {
+   "id": "denominator_and_location",
+   "text_he": "המדדים מחושבים על ילדים הרשומים בתחנה, והיישוב בנתונים הוא היישוב שבו נמצאת התחנה ולא מקום המגורים. משפחה עשויה להשתמש בתחנה ביישוב שכן או במקור שירות אחר, ולכן ייתכן שהנתונים חסרים או מוטים; גם מפעיל התחנה משתנה בין יישובים, והוא יכול להיות משרד הבריאות, קופת חולים או רשות מקומית.",
+   "source_url": "https://www.gov.il/BlobFolder/reports/quality-national-prog-2013-2024/he/files_publications_quality_indicators_quality-national-prog-2013-2024.pdf"
+  },
+  {
+   "id": "definition_changes",
+   "text_he": "הגדרות של מדדים השתנו בין השנים: הגדרת היקף הראש עודכנה ב-2021, מדד ההנקה הבלעדית נמדד רק מ-2024 ומדדים אחרים הופסקו. גם היעדים הרשמיים עודכנו, למשל היעד לחיסון חצבת, חזרת ואדמת עלה מ-75% ל-80%, ולכן יש להשוות כל שנה ליעד של אותה שנה ולזכור ששינוי חד בסדרה עשוי לנבוע משינוי הגדרה.",
+   "source_url": "https://www.gov.il/BlobFolder/reports/quality-national-prog-2013-2024/he/files_publications_quality_indicators_quality-national-prog-2013-2024.pdf"
+  },
+  {
+   "id": "target_zero_means_missing",
+   "text_he": "בנתונים הפתוחים של טיפות החלב, ערך 0 בשדה היעד פירושו שהיעד חסר ולא שהיעד הוא אפס אחוז. היעדים הרשמיים של 2024 מופיעים בדוח התוכנית הלאומית למדדי איכות של משרד הבריאות.",
+   "source_url": "https://www.gov.il/BlobFolder/reports/quality-national-prog-2013-2024/he/files_publications_quality_indicators_quality-national-prog-2013-2024.pdf"
+  },
+  {
+   "id": "ranking_pitfalls",
+   "text_he": "הפרשים קטנים בדירוג בין יישובים בדרך כלל אינם משקפים הבדל אמיתי. המסגרת האמריקאית County Health Rankings, שחלק ממסגרת המדדים כאן מבוסס עליה, הפסיקה לתת לכל מחוז מקום בדירוג ועברה לקבוצות, בלי ״מקום ראשון״; לכן כדאי להציג יישוב ביחס ליישובים דומים ולממוצע ולא כמקום מדויק בדירוג כולל.",
+   "source_url": "https://www.countyhealthrankings.org/explore-health-rankings/faq-page"
+  },
+  {
+   "id": "regression_to_the_mean",
+   "text_he": "יישוב שנראה קיצוני בשנה אחת נוטה להיראות פחות קיצוני בשנה שאחריה גם בלי שנעשה בו דבר. לכן שיפור ביישוב שהיה במצב גרוע אינו מוכיח שתוכנית מסוימת הצליחה, בלי השוואה ליישובים דומים ולממוצע של כמה שנים.",
+   "source_url": "https://academic.oup.com/ije/article/34/1/215/638272"
+  },
+  {
+   "id": "war_2023_2024",
+   "text_he": "לפי דוח משרד הבריאות, בתקופת המלחמה בשנים 2023-2024 ירד מספר הילדים שנכללו בחישוב ברוב מדדי טיפות החלב בכ-1% עד 2% ברמה הארצית. ביישובים שפונו או שקלטו מפונים ייתכנו שינויים חדים יותר בהרכב המטופלים, ולכן יש לקרוא בזהירות שינויים בשנים האלה.",
+   "source_url": "https://www.gov.il/BlobFolder/reports/quality-national-prog-2013-2024/he/files_publications_quality_indicators_quality-national-prog-2013-2024.pdf"
+  },
+  {
+   "id": "international_benchmark_not_target",
+   "text_he": "נקודת ייחוס בין-לאומית אינה יעד רשמי של ישראל: יעדי Healthy People 2030 הם יעדים לאומיים אמריקאיים בהגדרות שונות (למשל סקר מעי גס בגילי 45-75), והיעד של ארגון הבריאות העולמי להנקה מתייחס לשישה חודשים בעוד שטיפות החלב מודדות ארבעה חודשים. לכן הם מוצגים כנקודת ייחוס בלבד.",
+   "source_url": "https://odphp.health.gov/healthypeople/objectives-and-data/browse-objectives/cancer/increase-proportion-adults-who-get-screened-colorectal-cancer-c-07"
+  },
+  {
+   "id": "provider_responsibility",
+   "text_he": "היעדים הרשמיים של משרד הבריאות נקבעים לנותני השירות: משרד הבריאות, קופות החולים ורשויות מקומיות שמפעילות תחנות. רשות מקומית שאינה מפעילה תחנות משפיעה בעיקר דרך נגישות, פנייה יזומה ושיתוף פעולה, ולכן לפני שמייחסים לה אחריות לפער כדאי לברר מי מפעיל את התחנה.",
+   "source_url": "https://www.gov.il/BlobFolder/reports/quality-national-prog-2013-2024/he/files_publications_quality_indicators_quality-national-prog-2013-2024.pdf"
+  },
+  {
+   "id": "unknown_socioeconomic_group",
+   "text_he": "בנתוני טיפות החלב האשכול החברתי־כלכלי של חלק מהילדים רשום כ״לא ידוע״, ולעיתים מדובר בחלק גדול מהם. לכן ייתכן שנתון המחולק לפי אשכול מתייחס רק לחלק מהילדים."
+  },
+  {
+   "id": "multiple_comparisons",
+   "text_he": "כשבודקים הרבה מדדים בהרבה יישובים, ייתכן שחלק מהיישובים ייראו חריגים רק במקרה. לכן חריגה אחת היא רמז ולא הוכחה, וחריגה שחוזרת בכמה שנים או בכמה מדדים קשורים משכנעת יותר."
+  },
+  {
+   "id": "age_structure",
+   "text_he": "במדדי תחלואה ותמותה שלא הותאמו להרכב הגיל אי אפשר להשוות ישירות בין יישוב צעיר ליישוב מבוגר. כשאפשר, עדיף להשוות לפי גיל, או להסתכל בנפרד על ילדים ועל קשישים."
+  }
+ ],
+ "frameworks_consulted": [
+  {
+   "name": "WHO European Healthy Cities Network (current phase VIII 2026-2030; city health plans, equity). No numeric core-indicator list was found on the page.",
+   "url": "https://www.who.int/europe/groups/who-european-healthy-cities-network"
+  },
+  {
+   "name": "WHO Urban HEART (Kumaresan et al. 2010, J Urban Health): 12 core indicators in 4 policy domains + outcomes (infant mortality, diabetes, TB, road traffic injuries)",
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2937122"
+  },
+  {
+   "name": "County Health Rankings & Roadmaps - UW PHI Model of Health (Population Health & Well-being; Community Conditions) - methods page",
+   "url": "https://www.countyhealthrankings.org/explore-health-rankings/our-methods"
+  },
+  {
+   "name": "County Health Rankings & Roadmaps FAQ (individual county ranks replaced by Health Groups)",
+   "url": "https://www.countyhealthrankings.org/explore-health-rankings/faq-page"
+  },
+  {
+   "name": "Healthy People 2030 - 23 Leading Health Indicators",
+   "url": "https://odphp.health.gov/healthypeople/objectives-and-data/leading-health-indicators"
+  },
+  {
+   "name": "OECD Regional Well-Being - 11 topics for 467 regions",
+   "url": "https://www.oecdregionalwellbeing.org/"
+  },
+  {
+   "name": "NYC Community Health Profiles - 59 community districts, more than 50 measures",
+   "url": "https://www.nyc.gov/site/doh/data/data-publications/profiles.page"
+  },
+  {
+   "name": "Chicago public-health indicators by community area (27 indicators, historical dataset; points to Chicago Health Atlas, whose site could not be read)",
+   "url": "https://catalog.data.gov/dataset/public-health-statistics-selected-public-health-indicators-by-chicago-community-area-histo"
+  },
+  {
+   "name": "Israel Healthy Cities Network (Ministry of Health tender-committee protocol: founded 1990 by MoH + Local Government Center, 62 member local authorities, WHO Europe recognition every 5 years)",
+   "url": "https://mr.gov.il/ilgstorefront/he/p/attachment/005056BF4F1A1EEFADFBF628142092E6/%D7%A4%D7%A8%D7%95%D7%98%D7%95%D7%A7%D7%95%D7%9C%20%D7%95%D7%A2%D7%93%D7%94"
+  },
+  {
+   "name": "Israel MoH National Quality Indicators Programme report 2013-2024 (tipat halav measures, definitions, yearly targets) - opened by script (13 MB PDF)",
+   "url": "https://www.gov.il/BlobFolder/reports/quality-national-prog-2013-2024/he/files_publications_quality_indicators_quality-national-prog-2013-2024.pdf"
+  },
+  {
+   "name": "State Comptroller special report on road safety 2024 (summary): history of the 2021 \"50 to 30\" plan, which a 2026-2030 national plan has since followed",
+   "url": "https://library.mevaker.gov.il/sites/DigitalLibrary/Documents/2024/Road-Safety/2024-Road-Safety-Taktzir.pdf"
+  },
+  {
+   "name": "WHO Age-friendly Cities Framework (8 domains)",
+   "url": "https://extranet.who.int/agefriendlyworld/age-friendly-cities-framework/"
+  }
+ ]
+}

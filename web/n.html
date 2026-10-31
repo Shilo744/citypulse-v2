@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="he" dir="rtl" data-ui="n" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CityPulse · בריאות הציבור ברמת היישוב</title>
+<meta name="description" content="תמונת מצב של בריאות הציבור לכל יישוב בישראל מנתונים רשמיים: חמש שאלות פשוטות, השוואה, מגמות והמלצות לפעולה.">
+<meta name="theme-color" content="#F5F7FA" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0B1626" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="he_IL">
+<meta property="og:site_name" content="CityPulse">
+<meta property="og:title" content="CityPulse · בריאות הציבור ברמת היישוב">
+<meta property="og:description" content="תמונת מצב של בריאות הציבור לכל יישוב בישראל מנתונים רשמיים.">
+<meta property="og:image" content="assets/product/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/product/favicon-32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="assets/product/favicon-48.png">
+<link rel="apple-touch-icon" href="assets/product/apple-touch-icon-180.png">
+<link rel="preload" href="assets/fonts/heebo-hebrew.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/heebo-latin.woff2" as="font" type="font/woff2" crossorigin>
+<!-- modulepreload: the static import graph of js/product/app.js and js/product/city/home.js (the town page), so that the browser fetches the modules in parallel
+     instead of discovering them one import at a time. Regenerate with: node src/tools/perf_probe.js --preload (tests/product-perf.test.mjs checks the list) -->
+<link rel="modulepreload" href="js/ui.js">
+<link rel="modulepreload" href="js/product/nav.js">
+<link rel="modulepreload" href="js/product/config.js">
+<link rel="modulepreload" href="js/product/city/groups.js">
+<link rel="modulepreload" href="js/product/net.js">
+<link rel="modulepreload" href="js/product/seo.js">
+<link rel="modulepreload" href="js/product/storage.js">
+<link rel="modulepreload" href="js/product/live.js">
+<link rel="modulepreload" href="js/product/kit/townsearch.js">
+<link rel="modulepreload" href="js/product/kit/catart.js">
+<link rel="modulepreload" href="js/product/kit/star.js">
+<link rel="modulepreload" href="js/product/kit/base.js">
+<link rel="modulepreload" href="js/product/kit/helpsheet.js">
+<link rel="modulepreload" href="js/product/band.js">
+<link rel="modulepreload" href="js/product/kit/states.js">
+<link rel="modulepreload" href="js/product/routes.js">
+<link rel="modulepreload" href="js/product/shell.js">
+<link rel="modulepreload" href="js/product/app.js">
+<link rel="modulepreload" href="js/product/kit/share.js">
+<link rel="modulepreload" href="js/product/kit/csv.js">
+<link rel="modulepreload" href="js/product/kit/from.js">
+<link rel="modulepreload" href="js/product/kit/glossary.js">
+<link rel="modulepreload" href="js/product/kit/term.js">
+<link rel="modulepreload" href="js/product/kit/plural.js">
+<link rel="modulepreload" href="js/product/city/copy.js">
+<link rel="modulepreload" href="js/product/city/data.js">
+<link rel="modulepreload" href="js/product/kit/provenance.js">
+<link rel="modulepreload" href="js/product/simple/words.js">
+<link rel="modulepreload" href="js/product/kit/guide.js">
+<link rel="modulepreload" href="js/product/simple/model.js">
+<link rel="modulepreload" href="js/product/city/sentence.js">
+<link rel="modulepreload" href="js/viz/math.js">
+<link rel="modulepreload" href="js/viz/core.js">
+<link rel="modulepreload" href="js/product/city/parts.js">
+<link rel="modulepreload" href="js/viz/compare.js">
+<link rel="modulepreload" href="js/product/city/answers.js">
+<link rel="modulepreload" href="js/product/city/sections.js">
+<link rel="modulepreload" href="js/product/simple/pref.js">
+<link rel="modulepreload" href="js/product/city/home.js">
+<!-- one request instead of 39: the server (src/lib/css-bundle.js, list in src/lib/config.js) inlines the @imports of these six sheets in this order: app, motion, layout, viz, pages-n, product; where the route does not exist the sheets load one by one -->
+<link rel="stylesheet" href="css/n.bundle.css" onerror="this.onerror=null;['app','motion','layout','viz','pages-n','product'].forEach(function(n){var l=document.createElement('link');l.rel='stylesheet';l.href='css/'+n+'.css';document.head.appendChild(l)});this.remove()">
+<script>
+  /* light unless the person chose dark; set before first paint so the page never flashes */
+  document.documentElement.dataset.theme = "light";          /* the product is light only: no toggle, and a dark system setting is not followed */
+  /* motion unless the system asks for less: the hidden start states of css/motion.css exist only under this class */
+  try { if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("js-motion"); } catch (e) { /* old browser */ }
+</script>
+</head>
+<body>
+<div id="oldbrowser" class="n-state-old" role="note" hidden>הדפדפן שלכם ישן, וחלק מהעיצוב לא יוצג נכון. מומלץ לעדכן.</div>
+<a class="sr" href="#view">דלגו לתוכן</a>
+<div class="app">
+  <aside class="side" id="side" aria-label="תפריט ראשי"></aside>
+  <div class="main">
+    <header class="top" id="top">
+      <button class="btn sm ghost menu-btn" id="menu" type="button" aria-label="תפריט" aria-expanded="false"></button>
+      <nav class="crumbs" id="crumbs" aria-label="מיקום"></nav>
+      <span class="spacer"></span>
+      <div id="quick" class="no-print"></div>
+    </header>
+    <main class="page" id="view" tabindex="-1"></main>
+    <footer class="n-shell-foot" id="foot"></footer>
+  </div>
+</div>
+<div class="scrim" id="scrim"></div>
+<div class="sr" id="live" role="status" aria-live="polite" aria-atomic="true"></div>
+<noscript><div class="n-state-noscript"><b>CityPulse</b><p>CityPulse מציג תמונת מצב של בריאות הציבור לכל יישוב בישראל מנתונים רשמיים. כדי להציג את הנתונים נדרש JavaScript.</p></div></noscript>
+<script nomodule>document.getElementById("oldbrowser").hidden = false;</script>
+<script type="module" src="js/motion.js"></script>
+<script type="module" src="js/product/boot.js"></script>
+</body>
+</html>

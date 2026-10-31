@@ -1,0 +1,12 @@
+/* Lab direction "questions3": the questions page unchanged (css/lab/questions.css) plus one thing, the bloom under the weakest sentence (prefix .lq3-). Colour only through tokens. */
+.lq3-bloom { --lb-sheen: color-mix(in srgb, var(--surface) 28%, transparent); --lb-vein: color-mix(in srgb, var(--surface) 62%, transparent); display: grid; justify-items: start; gap: 12px; margin-top: 28px; }
+:root[data-theme="dark"] .lq3-bloom { --lb-sheen: color-mix(in srgb, var(--ink) 11%, transparent); --lb-vein: color-mix(in srgb, var(--ink) 30%, transparent); }
+.lq3-bloom > .lb-fig { width: 100%; max-width: 540px; justify-self: start; }
+.lq3-bloom .lb-lab { max-width: 72px; }
+.lq3-bloom .lb-lab-in { font-size: .74rem; gap: 1px; }
+.lq3-bloom .lb-bloom.is-init.has-hot .lb-pl:not(.is-hot) { opacity: .72; }
+.lq3-how { display: grid; justify-items: start; gap: 6px; }
+.lq3-how .lb-enc { max-width: 40ch; margin: 0; font-size: .95rem; font-weight: 600; line-height: 1.55; text-align: start; color: var(--ink-2); text-wrap: pretty; }
+.lq3-how .lb-enc.is-sub { display: none; }
+.lq3-how .lb-key { justify-content: flex-start; gap: 4px 14px; margin: 4px 0 0; font-size: .82rem; }
+

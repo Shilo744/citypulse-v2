@@ -1,0 +1,559 @@
+/* n-home-: the town page (#/c/<key>, and its alias /simple). ONE page, two levels ("במבט אחד" and "הפרטים המלאים"), one story in one order: how things stand, what goes well,
+   what needs attention, what changed, next to similar towns, what to do, what is missing. Typography is the star: a very large sentence, restrained colour, whitespace and
+   hairlines instead of boxes. No card, no capsule, no side stripe; colour only through tokens (dark mode follows them); motion only through the verbs of css/motion.css
+   (.rv sections and blocks, .viz .grow-x bars and marks). The same classes draw the evidence blocks of the long answers and the figures of the briefing. */
+
+html[data-ui="n"] .n-home { display: block; padding-bottom: var(--space-6); }
+
+/* ── the opening band: the ask field, the suggestions ── */
+html[data-ui="n"] .n-home-hero { --n-art-h: 96px; --n-band-gap: 6px; padding-top: var(--space-4); padding-bottom: calc(var(--n-art-h) + var(--space-2)); }
+html[data-ui="n"] .n-home-hero.n-home-noart { padding-bottom: var(--space-5); }
+/* the small phones (320 and 360; 390 keeps its 96): the long names and notes of the small towns push the answer down, so the picture gives 32 px */
+@media (max-width: 380px) {
+  html[data-ui="n"] .n-home-hero { --n-art-h: 64px; }
+}
+/* the picture window per width (the answer sentence has to be on the first screen, FINAL.md row 2): 96 px by default, 72 on a tablet, 56 and no suggestions on a short tablet window (the same icon row of the actions as on a phone) */
+@media (min-width: 701px) and (max-width: 1180px) {
+  html[data-ui="n"] .n-home-hero { --n-art-h: 72px; }
+}
+@media (min-width: 1181px) {
+  html[data-ui="n"] .n-home-hero { --n-art-h: 80px; }                    /* the head holds the basis, the background and the switch: the picture gives 16 px so that the answer starts above 520 px at 1280x900 */
+}
+@media (min-width: 701px) and (max-width: 1180px) and (max-height: 860px) {
+  html[data-ui="n"] .n-home-hero { --n-art-h: 56px; padding-top: var(--space-3); }
+  html[data-ui="n"] .n-home-suggest { display: none; }
+}
+/* the name, the facts and the basis on the start side; the actions opposite them on the end side; the question field under both; the picture window last, never under a word */
+html[data-ui="n"] .n-home-hero .n-home-hero-in { grid-template-columns: minmax(0, 1fr) auto; column-gap: var(--space-6); }
+html[data-ui="n"] .n-home-hero .n-home-hero-in > * { grid-column: 1; }
+html[data-ui="n"] .n-home-hero .n-home-hero-in > .n-home-hero-actions { grid-column: 2; grid-row: 1 / span 5; flex-direction: column; flex-wrap: nowrap; align-items: flex-start; align-self: end; gap: 0; }
+html[data-ui="n"] .n-home-hero .n-home-hero-in > .n-home-hero-ask { grid-column: 1 / -1; max-width: none; min-width: 0; }
+html[data-ui="n"] .n-home-hero .n-home-ask { max-width: 760px; }
+html[data-ui="n"] .n-home-hero .n-home-hero-row { flex-direction: column; flex-wrap: nowrap; align-items: flex-start; gap: 0; }
+html[data-ui="n"] .n-home-hero .n-home-hero-row button[aria-pressed] { min-height: 32px; padding: 4px 0; color: var(--teal-ink); font-size: var(--fs-small); }
+html[data-ui="n"] .n-home-hero .n-home-hero-row button[aria-pressed]:hover { color: var(--ink); }
+html[data-ui="n"] .n-home-name { display: block; font-size: clamp(2.25rem, 3.6vw, 2.75rem); line-height: 1.1; }
+html[data-ui="n"] .n-home-basis { flex: 1 0 100%; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 var(--space-4); color: var(--ink-2); font-size: var(--fs-small); font-weight: 500; }
+html[data-ui="n"] .n-home-ask-note, html[data-ui="n"] .n-home-suggest, html[data-ui="n"] .n-home-ask-msg { position: relative; z-index: 2; }
+html[data-ui="n"] .n-home-basis-link { display: inline-flex; align-items: center; gap: 6px; min-height: 24px; text-wrap: balance; color: var(--teal-ink); font-weight: 700; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .25em; }
+html[data-ui="n"] .n-home-basis-link:hover { color: var(--ink); }
+html[data-ui="n"] .n-home-basis-link svg { width: 14px; height: 14px; fill: none; stroke: currentColor; }
+html[data-ui="n"] .n-home-askwrap { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-1); min-width: 0; }
+html[data-ui="n"] .n-home-ask { display: flex; align-items: center; gap: var(--space-3); min-height: 52px; padding: 3px 6px 3px var(--space-4); padding-inline-start: var(--space-4); padding-inline-end: 6px; border: 1px solid var(--line-strong); border-radius: 16px; background: var(--surface); box-shadow: var(--shadow-up); }
+html[data-ui="n"] .n-home-ask:focus-within { border-color: var(--focus); box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus) 24%, transparent), var(--shadow-up); }
+html[data-ui="n"] .n-home-ask > svg { flex: none; width: 22px; height: 22px; color: var(--ink-3); fill: none; stroke: currentColor; }
+html[data-ui="n"] .n-home-ask-in { flex: 1; min-width: 0; padding: 10px 0; border: 0; outline: 0; background: transparent; color: var(--ink); font: 500 1.0625rem var(--font); caret-color: var(--teal-dark); }
+html[data-ui="n"] .n-home-ask-in::placeholder { color: var(--ink-3); opacity: 1; }
+html[data-ui="n"] .n-home-ask-in:disabled { cursor: not-allowed; }
+html[data-ui="n"] .n-home-ask-in[aria-invalid="true"] { text-decoration: underline wavy var(--attn-ink); text-underline-offset: 4px; }
+html[data-ui="n"] .n-home-ask-go { flex: none; min-height: 44px; padding: 6px 22px; border: 0; border-radius: 12px; background: var(--teal-dark); color: var(--on-primary); font: 700 1rem var(--font); cursor: pointer; }
+html[data-ui="n"] .n-home-ask-go:hover { background: var(--nav); color: var(--on-nav-strong); }
+html[data-ui="n"] .n-home-ask-go:disabled { background: var(--none-bar); cursor: not-allowed; }
+html[data-ui="n"] .n-home-ask-go:active { opacity: .8; }
+html[data-ui="n"] .n-home-ask-msg { margin: 0; color: var(--attn-ink); font-size: var(--fs-small); font-weight: 600; }
+html[data-ui="n"] .n-home-ask-msg:empty { display: none; }
+html[data-ui="n"] .n-home-ask-note { margin: 0; color: var(--ink-3); font-size: var(--fs-small); }
+html[data-ui="n"] .n-home-suggest { margin: 0; color: var(--ink-2); font-size: var(--fs-small); text-wrap: balance; }
+html[data-ui="n"] .n-home-suggest a { white-space: nowrap; }
+html[data-ui="n"] .n-home-suggest-l { font-weight: 600; }
+
+/* links that are plain text: teal, underlined, darker on hover; the focus ring is the same everywhere */
+html[data-ui="n"] .n-home-link, html[data-ui="n"] .n-home-lede a, html[data-ui="n"] .n-home-block a:not([class]), html[data-ui="n"] .n-home-more summary, html[data-ui="n"] .n-home-suggest a { color: var(--teal-ink); font-weight: 600; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .25em; text-decoration-color: var(--teal-line); }
+html[data-ui="n"] .n-home-link:hover, html[data-ui="n"] .n-home-lede a:hover, html[data-ui="n"] .n-home-block a:not([class]):hover, html[data-ui="n"] .n-home-suggest a:hover { color: var(--ink); text-decoration-color: currentColor; }
+html[data-ui="n"] .n-home :is(a, button, summary, input):focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 6px; }
+
+/* ── the status row: five figures, hairlines between, only the concern figure is orange ── */
+html[data-ui="n"] .n-home-ledger-h { margin: 0 0 var(--space-1); color: var(--ink-3); font-size: var(--fs-small); font-weight: 600; }
+html[data-ui="n"] .n-home-ledger ul { list-style: none; margin: 0; padding: 0; }
+html[data-ui="n"] .n-home-ledger li { border-top: 1px solid var(--line); }
+html[data-ui="n"] .n-home-ledger li:first-child { border-top: 0; }
+html[data-ui="n"] .n-home-lcell { display: flex; align-items: baseline; gap: var(--space-3); min-height: 40px; padding: 6px 0; color: inherit; text-decoration: none; }
+html[data-ui="n"] a.n-home-lcell:hover span { color: var(--ink); text-decoration: underline; text-underline-offset: .25em; }
+html[data-ui="n"] .n-home-ln { flex: none; min-width: 2.3ch; color: var(--ink-3); font-size: 2rem; line-height: 1; font-weight: 800; font-variant-numeric: tabular-nums; }
+html[data-ui="n"] .n-home-lcell span { color: var(--ink-2); font-size: var(--fs-small); font-weight: 600; }
+html[data-ui="n"] .n-home-ledger .is-concern .n-home-ln { color: var(--attn-ink); }
+html[data-ui="n"] .n-home-ledger .is-watch .n-home-ln, html[data-ui="n"] .n-home-ledger .is-good .n-home-ln, html[data-ui="n"] .n-home-ledger .is-strength .n-home-ln { color: var(--ink); }
+html[data-ui="n"] .n-home-ledger .is-zero .n-home-ln { color: var(--ink-3); }
+html[data-ui="n"] .n-home-ledger-why { margin: var(--space-2) 0 0; color: var(--ink-3); font-size: var(--fs-micro); line-height: 1.5; }
+
+/* ── the sentence of the verdict, the way to read it, the first-visit lines ── */
+html[data-ui="n"] .n-home-sentence { margin: 0; font-size: var(--fs-answer); line-height: 1.12; font-weight: 800; letter-spacing: -.015em; color: var(--ink); text-wrap: balance; overflow-wrap: break-word; outline: none; }
+html[data-ui="n"] .n-home-sentence.is-long { font-size: calc(var(--fs-answer) * .82); line-height: 1.15; }
+html[data-ui="n"] .n-home-sentence.is-calm, html[data-ui="n"] .n-home-sentence.is-nodata { font-size: var(--fs-nonanswer); line-height: 1.2; font-weight: 700; color: var(--ink-2); }
+html[data-ui="n"] .n-home-n { font-variant-numeric: tabular-nums; }
+html[data-ui="n"] .n-home-n.t-attn { color: var(--attn-ink); }
+html[data-ui="n"] .n-home-n.t-good, html[data-ui="n"] .n-home-n.t-teal { color: var(--teal-ink); }
+html[data-ui="n"] .n-home-n.t-none { color: var(--none-ink); }
+html[data-ui="n"] .n-home-nb { white-space: nowrap; }
+@media (max-width: 340px) {          /* a figure with its year stays on one line, except on a screen so narrow (320 px with the text at 200%) that the label alone is wider than the page: then it wraps at its spaces, the figure itself (a button) stays whole */
+  html[data-ui="n"] .n-home-nb { white-space: normal; }
+}
+html[data-ui="n"] .n-home-clause { display: block; margin-top: var(--space-3); font-size: .5em; line-height: 1.3; font-weight: 700; letter-spacing: 0; color: var(--ink-2); }
+html[data-ui="n"] .n-home-sdom { color: inherit; text-decoration: underline; text-decoration-color: var(--attn-bar); text-decoration-thickness: .07em; text-underline-offset: .13em; }
+html[data-ui="n"] .n-home-sdom:hover { color: var(--attn-ink); text-decoration-color: currentColor; }
+html[data-ui="n"] .n-home-lede { margin: var(--space-4) 0 0; max-width: 52ch; font-size: var(--fs-lede); line-height: 1.6; color: var(--ink-2); }
+html[data-ui="n"] .n-home-howto { margin: var(--space-3) 0 0; max-width: 66ch; font-size: var(--fs-small); font-weight: 500; line-height: 1.5; color: var(--ink-3); }
+html[data-ui="n"] .n-home-welcome { margin-top: var(--space-5); padding-top: var(--space-4); border-top: 1px solid var(--line); max-width: 66ch; }
+html[data-ui="n"] .n-home-welcome[hidden] { display: none; }
+html[data-ui="n"] .n-home-welcome h3 { font-size: var(--fs-row); }
+html[data-ui="n"] .n-home-welcome-l { margin: var(--space-2) 0 var(--space-1); padding-inline-start: 1.25em; color: var(--ink-2); font-size: var(--fs-small); line-height: 1.6; }
+
+html[data-ui="n"] .n-home-block { margin-top: var(--space-8); padding-top: var(--space-5); border-top: 1px solid var(--line); }
+html[data-ui="n"] .n-home-bh { margin: 0; font-size: var(--fs-section); line-height: 1.25; font-weight: 800; color: var(--ink); }
+html[data-ui="n"] .n-home-bh2 { margin: var(--space-6) 0 var(--space-2); font-size: var(--fs-row); font-weight: 700; color: var(--ink); }
+html[data-ui="n"] .n-home-bs { margin: var(--space-2) 0 0; max-width: 66ch; font-size: var(--fs-small); line-height: 1.55; color: var(--ink-2); }
+html[data-ui="n"] .n-home-none { margin: var(--space-2) 0 0; color: var(--ink-3); font-size: var(--fs-small); }
+html[data-ui="n"] .n-home-more { margin: var(--space-5) 0 0; }
+html[data-ui="n"] details.n-home-more summary { display: inline-flex; align-items: center; gap: 6px; min-height: 32px; cursor: pointer; list-style: none; }
+html[data-ui="n"] details.n-home-more summary::-webkit-details-marker { display: none; }
+html[data-ui="n"] details.n-home-more summary svg { width: 16px; height: 16px; fill: none; stroke: currentColor; }
+html[data-ui="n"] details.n-home-more[open] > summary svg { transform: rotate(180deg); }
+html[data-ui="n"] .n-home-spot { display: grid; grid-template-columns: minmax(0, 220px) minmax(0, 1fr); gap: var(--space-6); align-items: center; margin-top: var(--space-7); }
+html[data-ui="n"] .n-home-spotpic { display: block; }
+html[data-ui="n"] .n-home-spotpic img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; mix-blend-mode: multiply; -webkit-mask-image: radial-gradient(closest-side, black 78%, transparent); mask-image: radial-gradient(closest-side, black 78%, transparent); }
+html[data-ui="n"][data-theme="dark"] .n-home-spotpic img { mix-blend-mode: screen; }
+html[data-ui="n"] .n-home-spot-links { display: grid; gap: var(--space-2); justify-items: start; font-size: var(--fs-body); }
+
+/* ── the strip chart of a figure, the status word ── */
+html[data-ui="n"] .n-home-lg { display: flex; flex-wrap: wrap; align-items: center; gap: 6px var(--space-5); margin-top: var(--space-4); color: var(--ink-2); font-size: var(--fs-small); }
+html[data-ui="n"] .n-home-lg span { display: inline-flex; align-items: center; gap: 7px; }
+html[data-ui="n"] .n-home-lg i { flex: none; width: 11px; height: 11px; border-radius: 50%; }
+html[data-ui="n"] .n-home-lg i.k-city { background: var(--c-city); }
+html[data-ui="n"] .n-home-lg i.k-peer { background: var(--c-peer); }
+html[data-ui="n"] .n-home-lg i.k-nat { background: var(--c-nat); }
+html[data-ui="n"] .n-home-lg-better { margin-inline-start: auto; font-weight: 700; }
+html[data-ui="n"] .n-home-lg-better svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.2; }
+html[data-ui="n"] .n-home-st { display: inline-flex; align-items: center; gap: 5px; margin-inline-end: var(--space-1); font-weight: 700; }
+html[data-ui="n"] .n-home-st svg { width: 15px; height: 15px; fill: none; stroke: currentColor; }
+html[data-ui="n"] .n-home-st.t-attn { color: var(--attn-ink); }
+html[data-ui="n"] .n-home-st.t-good { color: var(--good-ink); }
+html[data-ui="n"] .n-home-st.t-none { color: var(--none-ink); }
+html[data-ui="n"] .n-home-db { display: block; width: 100%; max-width: 440px; height: auto; overflow: visible; direction: ltr; }
+html[data-ui="n"] .n-home-db-track { stroke: var(--line-2); stroke-width: 2; stroke-linecap: round; }
+html[data-ui="n"] .n-home-db-conn { fill: color-mix(in srgb, var(--c-city) 20%, var(--line)); }
+html[data-ui="n"] .n-home-db-knock { fill: var(--bg); }
+html[data-ui="n"] .n-home-item:hover .n-home-db-knock { fill: var(--surface-2); }
+html[data-ui="n"] .n-home-db-dot.k-city { fill: var(--c-city); }
+html[data-ui="n"] .n-home-db-dot.k-peer { fill: var(--c-peer); }
+html[data-ui="n"] .n-home-db-dot.k-nat { fill: var(--c-nat); }
+html[data-ui="n"] .n-home-vals { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px var(--space-4); margin-top: 6px; font-variant-numeric: tabular-nums; }
+html[data-ui="n"] .n-home-v { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-2); font-size: var(--fs-small); }
+html[data-ui="n"] .n-home-v i { flex: none; width: 9px; height: 9px; border-radius: 50%; }
+html[data-ui="n"] .n-home-v.k-city i { background: var(--c-city); }
+html[data-ui="n"] .n-home-v.k-peer i { background: var(--c-peer); }
+html[data-ui="n"] .n-home-v.k-nat i { background: var(--c-nat); }
+html[data-ui="n"] .n-home-v.k-city b { color: var(--ink); font-size: var(--fs-row); font-weight: 800; }
+html[data-ui="n"] .n-home-v.k-peer b, html[data-ui="n"] .n-home-v.k-nat b { font-weight: 600; }
+html[data-ui="n"] .n-home-unit { color: var(--ink-3); font-size: var(--fs-micro); }
+html[data-ui="n"] .n-home-nocmp { margin: 6px 0 0; color: var(--ink-3); font-size: var(--fs-small); }
+
+/* ── question 2 and 3 ── */
+html[data-ui="n"] .n-home .v-cmp-row[data-tone="good"] .v-cmp-bar { background: var(--good-bar); }
+html[data-ui="n"] .n-home .v-cmp-row[data-tone="none"] .v-cmp-bar { background: var(--ink-3); }
+html[data-ui="n"] .n-home .v-cmp-lab b { font-size: var(--fs-body); font-weight: 700; -webkit-line-clamp: unset; display: block; }
+html[data-ui="n"] .n-home .v-cmp-lab small { font-size: var(--fs-small); color: var(--ink-2); -webkit-line-clamp: unset; display: block; }
+html[data-ui="n"] .n-home-tell { margin-top: var(--space-3); }
+html[data-ui="n"] .n-home-tell-db { margin-top: var(--space-5); max-width: 460px; }
+html[data-ui="n"] .n-home-tell .n-home-lg { margin-top: var(--space-3); }
+html[data-ui="n"] .n-home-ladder { margin-top: var(--space-4); }
+html[data-ui="n"] .n-home-lr-head, html[data-ui="n"] .n-home-lr a { display: grid; grid-template-columns: minmax(96px, 150px) minmax(0, 1fr) minmax(140px, 220px); gap: var(--space-4); align-items: center; }
+html[data-ui="n"] .n-home-lr-head { color: var(--ink-3); font-size: var(--fs-micro); }
+html[data-ui="n"] .n-home-lr-ends { display: flex; justify-content: space-between; direction: ltr; }
+html[data-ui="n"] .n-home-lad { list-style: none; margin: var(--space-1) 0 0; padding: 0; }
+html[data-ui="n"] .n-home-lr a { padding: 9px 0; border-top: 1px solid var(--line); color: inherit; text-decoration: none; }
+html[data-ui="n"] .n-home-lr a:hover .n-home-lr-name { text-decoration: underline; text-underline-offset: 4px; }
+html[data-ui="n"] .n-home-lr-name { color: var(--ink); font-size: var(--fs-body); font-weight: 700; }
+html[data-ui="n"] .n-home-lr-track { position: relative; display: block; direction: ltr; height: 22px; background: linear-gradient(var(--line-2), var(--line-2)) center / 100% 2px no-repeat; }
+html[data-ui="n"] .n-home-lr-mid { position: absolute; left: 50%; top: 4px; width: 1px; height: 14px; background: var(--line-strong); }
+html[data-ui="n"] .n-home-lr-stem { position: absolute; left: 0; top: 10px; height: 2px; border-radius: 1px; background: var(--line-strong); }
+html[data-ui="n"] .n-home-lr-dot { position: absolute; top: 3px; width: 16px; height: 16px; margin-left: -8px; border-radius: 50%; background: var(--c-city); box-shadow: 0 0 0 3px var(--bg); }
+html[data-ui="n"] .n-home-lr-val { color: var(--ink-2); font-size: var(--fs-small); text-wrap: balance; }
+html[data-ui="n"] .n-home-lr-ends small { font-size: var(--fs-micro); }
+html[data-ui="n"] .n-home-lr-val.is-none { color: var(--ink-3); }
+html[data-ui="n"] .n-home-peers { list-style: none; margin: var(--space-3) 0 0; padding: 0; }
+html[data-ui="n"] .n-home-peers li { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 2px var(--space-5); padding: var(--space-3) 0; border-top: 1px solid var(--line); }
+html[data-ui="n"] .n-home-peers li a:first-child { color: var(--ink); font-weight: 700; }
+html[data-ui="n"] .n-home-peers-add { font-size: var(--fs-small); }
+
+/* ── question 5 ── */
+html[data-ui="n"] .n-home-trio { display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); margin-top: var(--space-4); }
+html[data-ui="n"] .n-home-tri { display: grid; align-content: start; gap: var(--space-2); min-width: 0; padding: 4px var(--space-5); }
+html[data-ui="n"] .n-home-tri:first-child { padding-inline-start: 0; }
+html[data-ui="n"] .n-home-tri + .n-home-tri { border-inline-start: 1px solid var(--line); }
+html[data-ui="n"] .n-home-tri-n { color: var(--ink); font-size: clamp(2.25rem, 4vw, 3.25rem); line-height: 1; font-weight: 800; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+html[data-ui="n"] .n-home-tri span { display: inline-flex; align-items: center; gap: var(--space-2); color: var(--ink-2); font-size: var(--fs-small); font-weight: 600; line-height: 1.35; }
+html[data-ui="n"] .n-home-sw { flex: none; width: 13px; height: 13px; border-radius: 4px; }
+html[data-ui="n"] .n-home-sw.k-found, html[data-ui="n"] .n-home-cell.k-found { background: color-mix(in srgb, var(--good-bar) 78%, var(--surface)); }
+html[data-ui="n"] .n-home-sw.k-small, html[data-ui="n"] .n-home-cell.k-small { background: transparent; box-shadow: inset 0 0 0 2px var(--none-bar); }
+html[data-ui="n"] .n-home-sw.k-missing, html[data-ui="n"] .n-home-cell.k-missing { background: var(--track); box-shadow: inset 0 0 0 1px var(--line-2); }
+html[data-ui="n"] .n-home-cb { display: flex; gap: 3px; height: 36px; margin-top: var(--space-5); }
+html[data-ui="n"] .n-home-cell { flex: 1 1 0; min-width: 0; height: 100%; border-radius: 4px; }
+html[data-ui="n"] .n-home-cb-host { min-height: 36px; }
+html[data-ui="n"] .n-home-mg { list-style: none; margin: var(--space-4) 0 0; padding: 0; }
+html[data-ui="n"] .n-home-mg li { padding: var(--space-4) 0; border-top: 1px solid var(--line); }
+html[data-ui="n"] .n-home-mg-names { margin: 0; color: var(--ink); font-size: var(--fs-row); line-height: 1.55; font-weight: 700; }
+html[data-ui="n"] .n-home-mg-why { margin: 4px 0 0; color: var(--ink-2); font-size: var(--fs-body); }
+html[data-ui="n"] .n-home-mg-src { margin: 4px 0 0; color: var(--ink-3); font-size: var(--fs-small); }
+html[data-ui="n"] .n-home-sm { list-style: none; margin: var(--space-3) 0 0; padding: 0; }
+html[data-ui="n"] .n-home-sm li { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 4px 10px; align-items: baseline; padding: 11px 0; border-top: 1px solid var(--line); }
+html[data-ui="n"] .n-home-hollow { align-self: center; fill: none; stroke: var(--ink-3); stroke-width: 2; }
+html[data-ui="n"] .n-home-sm li a { color: var(--ink); font-weight: 600; }
+html[data-ui="n"] .n-home-sm-v { color: var(--ink-2); font-size: var(--fs-small); font-variant-numeric: tabular-nums; }
+/* a phone: the details go under the name (an "auto" column that long would squeeze the name until it breaks letter by letter) */
+@media (max-width: 700px) {
+  html[data-ui="n"] .n-home-sm li { grid-template-columns: 22px minmax(0, 1fr); }
+  html[data-ui="n"] .n-home-sm-v { grid-column: 2; }
+}
+
+/* ── details: a row that is a whole link is not underlined all over; no word alone on the last line; the labels of the shared neighbours chart are plain text ── */
+html[data-ui="n"] .n-home-block :is(.n-home-lr, .n-home-next) a:not([class]) { color: inherit; font-weight: inherit; text-decoration: none; }
+html[data-ui="n"] .n-home-body :is(p, li, h3, h4) { text-wrap: pretty; }
+html[data-ui="n"] .n-home-body :is(.n-home-sentence, .n-home-lede, .n-home-bs, .n-home-mg-why, .n-home-mg-src, .n-home-lead) { text-wrap: balance; }
+html[data-ui="n"] .n-home-prov a { display: inline-block; white-space: normal; max-width: 100%; }          /* one unit that moves to the next line whole; only a line narrower than the link itself (a phone with the text enlarged) wraps it */
+/* targets (WCAG 2.5.8): a link that stands alone on its line, and the add-to-compare link, are at least 24 px high; padding above and below an inline link moves nothing on the page */
+html[data-ui="n"] .n-home-bg-a, html[data-ui="n"] .n-home-link, html[data-ui="n"] .n-home-tell-name a, html[data-ui="n"] .n-home-mg-src a { padding-block: 2px; }
+html[data-ui="n"] .n-home-peers-add { padding-block: 2px; margin-block: -2px; }
+html[data-ui="n"] .n-home-peers li a:first-child { min-width: 24px; }          /* a town with a name of two letters */
+html[data-ui="n"] .n-home .v-cmp-badge { padding: 0; border-radius: 0; background: none; color: var(--ink-3); font-size: 12px; font-weight: 600; }
+html[data-ui="n"] .n-home .v-cmp-lrow.is-self { box-shadow: none; border-radius: 0; }
+html[data-ui="n"] .n-home .v-cmp-ref-tag { padding: 2px 4px; border-radius: 0; background: var(--bg); box-shadow: none; color: var(--ink-2); font-size: 12px; }
+html[data-ui="n"] .n-home .v-cmp-nm .t { overflow: visible; text-overflow: clip; white-space: normal; overflow-wrap: anywhere; line-height: 1.3; }
+
+/* ── the head: the quiet lines under the facts, the level switch ── */
+html[data-ui="n"] .n-home-facts { display: contents; }
+html[data-ui="n"] .n-home-lines { display: grid; gap: 2px; min-width: 0; }
+html[data-ui="n"] .n-home-lines[hidden] { display: none; }
+html[data-ui="n"] .n-home-bg { margin: 0; color: var(--ink-2); font-size: var(--fs-small); font-weight: 500; text-wrap: balance; }
+html[data-ui="n"] .n-home-bg-a { color: var(--teal-ink); font-weight: 700; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .25em; text-decoration-color: var(--teal-line); }
+html[data-ui="n"] .n-home-bg-a:hover { color: var(--ink); text-decoration-color: currentColor; }
+/* the level switch: two words, the one you are on is bold with a thick line, the other has a thin one (never capsules) */
+html[data-ui="n"] .n-home-sw { display: inline-flex; align-items: center; justify-self: start; gap: var(--space-4); width: max-content; max-width: 100%; }
+html[data-ui="n"] .n-home-sw-a { display: inline-flex; align-items: center; min-height: 38px; white-space: nowrap; color: var(--ink-2); font-size: 1.0625rem; font-weight: 500; line-height: 1.3; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .35em; text-decoration-color: var(--line-strong); }
+html[data-ui="n"] .n-home-sw-a:hover { color: var(--ink); text-decoration-color: var(--ink-2); }
+html[data-ui="n"] .n-home-sw-a.is-current { color: var(--ink); font-weight: 800; text-decoration-thickness: 3px; text-decoration-color: var(--teal-dark); }
+html[data-ui="n"] .n-home-sw-sep { width: 1px; height: 20px; background: var(--line-strong); }
+
+/* ── the body: a column that reads top to bottom; the short level is narrower and larger, the full level is wider ── */
+html[data-ui="n"] .n-home[data-level="simple"] { --n-home-fs: 1.125rem; }
+html[data-ui="n"] .n-home[data-level="full"] { --n-home-fs: 1rem; }
+html[data-ui="n"] .n-home-body { box-sizing: border-box; max-width: 680px; padding-top: var(--space-3); font-size: var(--n-home-fs, 1rem); line-height: 1.7; color: var(--ink); }
+html[data-ui="n"] .n-home[data-level="full"] .n-home-body { max-width: 900px; }
+@media (min-width: 861px) {
+  html[data-ui="n"] .n-home[data-level="simple"] { --n-home-fs: 1.25rem; }
+}
+html[data-ui="n"] .n-home-body :is(p, ul, ol, dl, dd, h2, h3) { margin: 0; }
+html[data-ui="n"] .n-home-body :is(ul, ol) { padding: 0; list-style: none; }
+html[data-ui="n"] .n-home-sec { margin-top: var(--space-8); }
+html[data-ui="n"] .n-home-sec.n-home-state { margin-top: 0; }
+html[data-ui="n"] .n-home-h { margin-bottom: var(--space-3); font-size: var(--fs-section); font-weight: 800; line-height: 1.3; color: var(--head); text-wrap: balance; scroll-margin-top: calc(var(--top-h) + var(--space-4)); }
+html[data-ui="n"] .n-home-h:focus { outline: none; }
+html[data-ui="n"] .n-home-h:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; border-radius: 4px; }
+html[data-ui="n"] .n-home-line { color: var(--ink-2); }
+html[data-ui="n"] .n-home-line + .n-home-line { margin-top: var(--space-2); }
+html[data-ui="n"] .n-home-line a { overflow-wrap: anywhere; }
+html[data-ui="n"] .n-home-lead { margin-bottom: var(--space-3); color: var(--ink); font-size: 1.0625em; font-weight: 600; text-wrap: balance; }
+/* the sections of the long answers: their blocks lose the hairline and the big gap they have when they stand alone */
+html[data-ui="n"] .n-home-sec .n-home-block { margin-top: var(--space-6); padding-top: 0; border-top: 0; }
+html[data-ui="n"] .n-home-sec .n-home-lede { margin-top: 0; max-width: 66ch; color: var(--ink-2); font-size: var(--fs-body); line-height: 1.6; }
+html[data-ui="n"] .n-home-sec .n-home-bh { font-size: var(--fs-row); font-weight: 700; }
+
+/* ── 1. how things stand: the verdict, the one segmented bar with its words, the sentence of what is left out, the categories ── */
+html[data-ui="n"] .n-home-body .n-home-sentence { margin: 0; }
+html[data-ui="n"] .n-home-bar { display: flex; gap: 3px; height: 28px; margin-top: var(--space-5); }
+html[data-ui="n"] .n-home-bar.is-small { height: 12px; margin-top: 0; }
+html[data-ui="n"] .n-home-seg { display: block; flex-basis: 0; min-width: 8px; border-radius: 4px; }
+html[data-ui="n"] .n-home-bar.is-small .n-home-seg { min-width: 5px; border-radius: 3px; }
+html[data-ui="n"] .n-home-seg.is-concern { background: var(--attn-bar); }
+/* the pale peach of "למעקב" is 1.5:1 against the pale page (3:1 is the least for a shape that carries meaning): a hairline of the concern colour round it makes the shape 3.1:1; the words and counts of the legend say the same */
+html[data-ui="n"] .n-home-seg.is-watch { background: var(--watch-bar); box-shadow: inset 0 0 0 1.5px var(--attn-bar); }
+html[data-ui="n"] .n-home-seg.is-good { background: var(--good-bar); }
+html[data-ui="n"] .n-home-legend { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-5); margin-top: var(--space-3); }
+html[data-ui="n"] .n-home-legend li { display: inline-flex; align-items: baseline; gap: var(--space-1); }
+html[data-ui="n"] .n-home-key { display: inline-block; flex: none; width: 14px; height: 14px; margin-inline-end: var(--space-1); border-radius: 3px; align-self: center; }
+html[data-ui="n"] .n-home-key.is-concern { background: var(--attn-bar); }
+html[data-ui="n"] .n-home-key.is-watch { background: var(--watch-bar); box-shadow: inset 0 0 0 1.5px var(--attn-bar); }
+html[data-ui="n"] .n-home-key.is-good { background: var(--good-bar); }
+html[data-ui="n"] .n-home-legend .n-home-ln { min-width: 0; color: var(--ink); font-size: 1.25em; line-height: 1.5; }
+html[data-ui="n"] .n-home-state .n-home-lede { margin-top: var(--space-4); max-width: 60ch; font-size: var(--fs-body); }
+html[data-ui="n"] .n-home-state .n-home-lede.n-home-offi { margin-top: var(--space-2); }
+html[data-ui="n"] .n-home-cats-wrap { margin-top: var(--space-6); }
+html[data-ui="n"] .n-home-cap { margin-bottom: var(--space-1); color: var(--ink-3); font-size: var(--fs-small); font-weight: 600; }
+html[data-ui="n"] .n-home-cat { display: grid; grid-template-columns: minmax(11rem, 15rem) minmax(0, 1fr) minmax(5rem, 11rem); align-items: center; gap: var(--space-1) var(--space-4); padding: var(--space-3) 0; border-top: 1px solid var(--line); }
+/* a category in the by-category rows and in the groups of what needs attention: its badge, then its name */
+html[data-ui="n"] .n-home-cat-id { display: flex; align-items: center; gap: var(--space-3); min-width: 0; }
+html[data-ui="n"] .n-home-grp-h .n-home-grp-ico { align-self: center; margin-inline-end: var(--space-2); }
+html[data-ui="n"] .n-home-cat-name { color: var(--teal-ink); font-weight: 700; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .25em; text-decoration-color: var(--teal-line); }
+html[data-ui="n"] .n-home-cat-name:hover { color: var(--ink); text-decoration-color: currentColor; }
+html[data-ui="n"] .n-home-cat-say { color: var(--ink-2); font-size: var(--fs-body); }
+html[data-ui="n"] .n-home-cat .n-home-bar { min-width: 0; }
+
+/* ── 2 and 3: the rows of what goes well and what needs attention: what is measured, the town and the country as two bars, which way is good ── */
+html[data-ui="n"] .n-home-list { margin-top: var(--space-2); }
+html[data-ui="n"] .n-home-item { position: relative; margin-inline: calc(var(--space-3) * -1); padding: var(--space-5) var(--space-3); border-radius: 12px; }
+html[data-ui="n"] .n-home-item::before { content: ""; position: absolute; inset-inline: var(--space-3); top: 0; height: 1px; background: var(--line); }
+html[data-ui="n"] .n-home-item:first-child::before { display: none; }
+html[data-ui="n"] .n-home-item:hover { background: var(--surface-2); }
+html[data-ui="n"] .n-home-what { margin-bottom: var(--space-3); font-size: 1.1875em; font-weight: 700; line-height: 1.45; color: var(--head); }
+html[data-ui="n"] .n-home-what-a { color: inherit; text-decoration: none; }
+html[data-ui="n"] .n-home-what-a::after { content: ""; position: absolute; inset: 0; border-radius: 12px; }
+html[data-ui="n"] .n-home .n-home-what-a:focus-visible { outline: none; }
+html[data-ui="n"] .n-home .n-home-what-a:focus-visible::after { outline: 2px solid var(--focus); outline-offset: -2px; }
+html[data-ui="n"] .n-home-bars { display: grid; grid-template-columns: minmax(0, 1fr) minmax(4rem, min(7.5rem, 40%)); grid-template-areas: "t v" "n w"; align-items: center; column-gap: var(--space-4); row-gap: var(--space-1); }
+html[data-ui="n"] .n-home-bars > .n-home-track { grid-area: t; }
+html[data-ui="n"] .n-home-bars > .n-home-val { grid-area: v; justify-self: end; font-size: 1.375em; line-height: 1.1; text-align: end; }
+html[data-ui="n"] .n-home-unit { display: block; font-size: var(--fs-small); font-weight: 600; color: var(--ink-2); line-height: 1.2; }
+html[data-ui="n"] .n-home-bars > .n-home-who { grid-area: w; justify-self: end; display: inline-flex; align-items: center; gap: var(--space-2); font-size: var(--fs-small); font-weight: 600; color: var(--ink-2); overflow-wrap: anywhere; }
+html[data-ui="n"] .n-home-bars > .n-home-natkey { grid-area: n; display: inline-flex; align-items: center; gap: var(--space-2); font-size: var(--fs-small); color: var(--ink-2); }
+html[data-ui="n"] .n-home-natval { color: var(--ink); font-variant-numeric: tabular-nums; }
+html[data-ui="n"] .n-home-track { position: relative; display: block; height: 14px; border-radius: 4px; background: var(--track); }
+/* the marks of a bar and their keys: the town is the bar (a square in the key), the country is a diamond, the official target a tick (the key of the target stands in its own line) */
+html[data-ui="n"] .n-home-dot { flex: none; display: inline-block; width: 10px; height: 10px; border-radius: 2px; }
+html[data-ui="n"] .n-home-dot.is-town { background: var(--c-city); }
+html[data-ui="n"] .n-home-dot.is-nat { width: 9px; height: 9px; border-radius: 1px; background: var(--c-nat); transform: rotate(45deg); }
+html[data-ui="n"] .n-home-dot.is-tgt { width: 3px; height: 12px; border-radius: 0; background: var(--c-target); margin-inline-end: var(--space-2); vertical-align: -1px; }
+html[data-ui="n"] .n-home-natmark { position: absolute; top: 50%; width: 11px; height: 11px; margin-inline-start: -5.5px; margin-top: -5.5px; border-radius: 2px; background: var(--c-nat); box-shadow: 0 0 0 2px var(--surface); transform: rotate(45deg); }
+/* the official target on the town's bar: a thin tick in the colour of targets (no new colour), a hairline of the page colour on both sides so it reads on the fill and on the empty track */
+html[data-ui="n"] .n-home-tick { position: absolute; top: -4px; bottom: -4px; width: 3px; margin-inline-start: -1.5px; background: var(--c-target); box-shadow: 0 0 0 1px var(--surface); }
+html[data-ui="n"] .n-home-fill { display: block; height: 100%; border-radius: 4px; }
+html[data-ui="n"] .n-home-fill.is-town { background: var(--c-city); }
+html[data-ui="n"] .n-home-fill.is-nat { background: var(--c-nat); }
+html[data-ui="n"] .n-home-val { font-size: 1.0625em; font-weight: 700; font-variant-numeric: tabular-nums; }
+html[data-ui="n"] .n-home-says { display: grid; gap: 0; }
+html[data-ui="n"] .n-home-tgt { margin-top: var(--space-3); color: var(--ink-2); font-size: var(--fs-body); }
+html[data-ui="n"] .n-home-tgt-w { color: var(--ink); font-weight: 700; }
+html[data-ui="n"] .n-home-tgt-aside { display: block; }          /* the one note about the country (a met target the country has not reached) is a line of its own: the target line itself stays one line */
+html[data-ui="n"] .n-home-tgt + .n-home-rowst { margin-top: var(--space-1); }
+html[data-ui="n"] .n-home-rowst { margin-top: var(--space-3); color: var(--ink-2); font-size: var(--fs-body); }
+html[data-ui="n"] .n-home-way { display: flex; align-items: center; gap: var(--space-2); margin-top: var(--space-3); color: var(--ink-2); }
+html[data-ui="n"] .n-home-way svg { flex: none; width: 20px; height: 20px; }
+html[data-ui="n"] .n-home-note { margin-top: var(--space-2); font-size: 1rem; color: var(--ink-2); }
+html[data-ui="n"] .n-home-small { color: var(--ink-2); }
+html[data-ui="n"] .n-home-small .n-home-val { color: var(--ink); font-size: 1.125em; }
+html[data-ui="n"] .n-home-grp { margin-top: 0; border-top: 1px solid var(--line); }
+html[data-ui="n"] .n-home-grp:last-child { border-bottom: 1px solid var(--line); }
+html[data-ui="n"] .n-home-grp > summary.n-home-grp-h { display: flex; flex-wrap: nowrap; align-items: center; gap: var(--space-3); padding: var(--space-4) var(--space-2); list-style: none; cursor: pointer; border-radius: 12px; }
+html[data-ui="n"] .n-home-grp > summary.n-home-grp-h::-webkit-details-marker { display: none; }
+html[data-ui="n"] .n-home-grp > summary.n-home-grp-h:hover { background: var(--surface-2); }
+html[data-ui="n"] .n-home-grp > summary.n-home-grp-h:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+html[data-ui="n"] .n-home-grp-chev { flex: none; width: 20px; height: 20px; color: var(--ink-3); }
+html[data-ui="n"] .n-home-grp[open] > summary .n-home-grp-chev { transform: rotate(180deg); }
+html[data-ui="n"] .n-home-grp-name { min-width: 0; }
+html[data-ui="n"] .n-home-grp > summary .n-home-grp-n { margin-inline-start: auto; text-align: end; }
+html[data-ui="n"] .n-home-grp-go { margin: 0 var(--space-2) var(--space-2); font-size: var(--fs-small); }
+html[data-ui="n"] .n-home-grp-h { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 var(--space-3); font-size: var(--fs-row); font-weight: 800; line-height: 1.4; color: var(--head); }
+html[data-ui="n"] .n-home-grp-h a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .25em; text-decoration-color: var(--attn-bar); }
+html[data-ui="n"] .n-home-grp-h a:hover { text-decoration-color: currentColor; }
+html[data-ui="n"] .n-home-grp-n { color: var(--ink-3); font-size: var(--fs-small); font-weight: 600; }
+
+/* ── 5. what to do: one step on the short level, the first three on the full level ── */
+html[data-ui="n"] .n-home-do { font-size: 1.4375em; font-weight: 700; line-height: 1.45; color: var(--head); text-wrap: balance; }
+html[data-ui="n"] .n-home-steps { margin-top: var(--space-2); }
+html[data-ui="n"] .n-home-step { padding-block: var(--space-5); border-top: 1px solid var(--line); }
+html[data-ui="n"] .n-home-step:first-child { border-top-color: transparent; padding-top: var(--space-2); }
+html[data-ui="n"] .n-home-step .n-home-do { font-size: 1.1875em; }
+html[data-ui="n"] .n-home-why { margin-top: var(--space-2); color: var(--ink); }
+html[data-ui="n"] .n-home-facts2 { display: grid; gap: var(--space-2); margin-top: var(--space-4); }
+html[data-ui="n"] .n-home-facts2 > div { display: grid; grid-template-columns: 9rem minmax(0, 1fr); gap: var(--space-3); align-items: baseline; }
+html[data-ui="n"] .n-home-facts2 dt { font-size: 1rem; color: var(--ink-2); }
+html[data-ui="n"] .n-home-facts2 dd { font-weight: 600; }
+
+/* ── the full level's index: text links to the sections that exist, wrapping on a phone, never capsules ── */
+html[data-ui="n"] .n-home-index { display: flex; flex-wrap: wrap; align-items: center; gap: 0 var(--space-4); margin-top: var(--space-6); }
+html[data-ui="n"] .n-home-index-a { display: inline-flex; align-items: center; min-height: 40px; color: var(--teal-ink); font-size: var(--fs-small); font-weight: 600; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .25em; text-decoration-color: var(--teal-line); }
+html[data-ui="n"] .n-home-index-a:hover { color: var(--ink); text-decoration-color: currentColor; }
+html[data-ui="n"] .n-home-index-sep { width: 1px; height: 14px; background: var(--line-strong); }
+
+/* ── the foot: where the figures come from once, how to read, the way to report a mistake, print and share ── */
+html[data-ui="n"] .n-home-foot { margin-top: var(--space-8); padding-top: var(--space-5); border-top: 1px solid var(--line); }
+html[data-ui="n"] .n-home-prov { color: var(--ink-2); font-size: 1rem; line-height: 1.6; }
+html[data-ui="n"] .n-home-how { margin-top: var(--space-2); color: var(--ink-2); font-size: 1rem; line-height: 1.6; }
+html[data-ui="n"] .n-home-foot .n-home-howto { max-width: none; font-size: 1rem; line-height: 1.6; }
+html[data-ui="n"] .n-home-acts { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-5); margin-top: var(--space-3); }
+html[data-ui="n"] .n-home-acts :is(a, button) { min-height: 44px; font-size: 1.0625rem; }
+
+/* ── a narrow window or a phone ── */
+@media (max-width: 860px) {
+  html[data-ui="n"] .n-home-block { margin-top: var(--space-7); }
+  html[data-ui="n"] .n-home-sec { margin-top: var(--space-7); }
+  html[data-ui="n"] .n-home-lr-head { display: none; }
+  html[data-ui="n"] .n-home-lr a { grid-template-columns: minmax(0, 1fr) auto; gap: 2px var(--space-4); }
+  html[data-ui="n"] .n-home-lr-track { grid-column: 1 / -1; grid-row: 2; }
+  html[data-ui="n"] .n-home-tri { padding-inline: var(--space-3); }
+  html[data-ui="n"] .n-home-lg-better { margin-inline-start: 0; }
+  html[data-ui="n"] .n-home-spot { grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
+  html[data-ui="n"] .n-home-spotpic { max-width: 220px; }
+  html[data-ui="n"] .n-home-ask-note { font-size: var(--fs-micro); }
+}
+@media (max-width: 560px) {
+  html[data-ui="n"] .n-home-suggest { display: none; }
+  html[data-ui="n"] .n-home-legend { gap: var(--space-1) var(--space-3); font-size: 1rem; }
+  html[data-ui="n"] .n-home-cat { grid-template-columns: minmax(0, 1fr); }
+  html[data-ui="n"] .n-home-facts2 > div { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  html[data-ui="n"] .n-home-item { padding-inline: var(--space-2); margin-inline: calc(var(--space-2) * -1); }
+}
+/* under 700 px there is no room beside the name (and in a short tablet window no height for it): the actions become a row of icons on the line of the eyebrow (the words stay for screen readers) */
+@media (max-width: 700px), (min-width: 701px) and (max-width: 1180px) and (max-height: 860px) {
+  html[data-ui="n"] .n-home-hero .n-home-hero-in > * { grid-column: 1 / -1; }
+  html[data-ui="n"] .n-home-hero .n-home-hero-in > .n-home-hero-eyebrow { grid-column: 1; grid-row: 1; align-self: center; }
+  html[data-ui="n"] .n-home-hero .n-home-hero-in > .n-home-hero-actions { grid-column: 2; grid-row: 1; align-self: center; }
+  html[data-ui="n"] .n-home-hero .n-home-hero-row { flex-direction: row; gap: 0 4px; }
+  html[data-ui="n"] .n-home-hero .n-home-hero-row > a, html[data-ui="n"] .n-home-hero .n-home-hero-row > button { min-width: 44px; min-height: 44px; justify-content: center; }
+  html[data-ui="n"] .n-home-hero .n-home-hero-row button[aria-pressed] { min-width: 44px; min-height: 44px; justify-content: center; padding: 0; }
+  html[data-ui="n"] .n-home-hero .n-home-hero-row button[aria-pressed] span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  html[data-ui="n"] .n-home-hero .n-home-hero-row > * > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  html[data-ui="n"] .n-home-hero .n-home-hero-in { column-gap: var(--space-3); }
+}
+@media (pointer: coarse) {
+  html[data-ui="n"] .n-home-link, html[data-ui="n"] .n-home-suggest a, html[data-ui="n"] .n-home-basis-link, html[data-ui="n"] .n-home-peers-add, html[data-ui="n"] .n-home-sm li a, html[data-ui="n"] .n-home-index-a, html[data-ui="n"] .n-home-cat-name, html[data-ui="n"] .n-home-line a, html[data-ui="n"] .n-home-prov a, html[data-ui="n"] .n-home-how a { display: inline-flex; align-items: center; min-height: 44px; }
+  html[data-ui="n"] .n-home-lcell { min-height: 44px; }
+}
+
+/* Windows high contrast: the bars keep their meaning through system colours and outlines (the words and numbers beside them say the same), the current level needs a shape of its own */
+@media (forced-colors: active) {
+  html[data-ui="n"] .n-home-seg, html[data-ui="n"] .n-home-key, html[data-ui="n"] .n-home-fill { forced-color-adjust: none; border: 1px solid CanvasText; }
+  html[data-ui="n"] .n-home-seg.is-concern, html[data-ui="n"] .n-home-key.is-concern { background: CanvasText; }
+  html[data-ui="n"] .n-home-seg.is-watch, html[data-ui="n"] .n-home-key.is-watch { background: GrayText; box-shadow: none; }
+  html[data-ui="n"] .n-home-seg.is-good, html[data-ui="n"] .n-home-key.is-good { background: Highlight; }
+  html[data-ui="n"] .n-home-fill.is-town { background: CanvasText; }
+  html[data-ui="n"] .n-home-fill.is-nat { background: GrayText; }
+  html[data-ui="n"] .n-home-track { border: 1px solid GrayText; }
+  html[data-ui="n"] .n-home-tick { forced-color-adjust: none; background: CanvasText; box-shadow: none; }
+  html[data-ui="n"] .n-home-sw-a.is-current { text-decoration-color: Highlight; }
+  html[data-ui="n"] .n-home-ask { border: 1px solid CanvasText; }
+  html[data-ui="n"] .n-home-spotpic { display: none; }
+  html[data-ui="n"] .n-home-item:hover { outline: 1px solid Highlight; }
+  html[data-ui="n"] .n-home-db-dot, html[data-ui="n"] .n-home-lr-dot { forced-color-adjust: none; }
+  html[data-ui="n"] .n-home :is(a, button, summary, input):focus-visible { outline-color: Highlight; }
+}
+
+/* print. The short level is one A4 sheet (the page is white, the bars keep their ends); the full level is a clean document: no switch, no index, no question field, the source line at the end */
+@media print {
+  html[data-ui="n"] details.n-home-grp::details-content { content-visibility: visible; }
+  html[data-ui="n"] .n-home-grp-chev, html[data-ui="n"] .n-home-grp-go { display: none; }
+  html[data-ui="n"]:has(.n-home) #foot { display: none; }
+  html[data-ui="n"] .n-home-welcome, html[data-ui="n"] .n-home-acts, html[data-ui="n"] .n-home-spot, html[data-ui="n"] .n-home-askwrap { display: none; }
+  html[data-ui="n"] .n-home-body { max-width: none; padding-top: 0; font-size: 10pt; line-height: 1.4; color: var(--ink); }
+  /* the short level is one A4 page, also for a town with long figure names (a weak town such as 99 spilled its last line onto a second page) */
+  html[data-ui="n"] .n-home[data-level="simple"] .n-home-body { font-size: 9.5pt; line-height: 1.35; }
+  html[data-ui="n"] .n-home[data-level="simple"] .n-home-sec { margin-top: 4pt; }
+  html[data-ui="n"] .n-home[data-level="simple"] .n-home-item { padding-block: 1pt; }
+  html[data-ui="n"] .n-home-hero { padding-top: 0; padding-bottom: 4pt; }
+  html[data-ui="n"] .n-home-hero { font-size: 9pt; line-height: 1.25; }
+  html[data-ui="n"] .n-home-hero .n-home-lines { font-size: 8.5pt; gap: 1pt; margin-top: 2pt; }          /* the room kept for the picture is not kept on paper */
+  html[data-ui="n"] .n-home-hero .n-home-name { font-size: 20pt; }
+  html[data-ui="n"] .n-home-body .n-home-sentence { font-size: 16pt; }
+  html[data-ui="n"] .n-home-sec { margin-top: 7pt; break-inside: avoid; }
+  html[data-ui="n"] .n-home-sec.n-home-state { margin-top: 4pt; }
+  html[data-ui="n"] .n-home-h { margin-bottom: 2pt; font-size: 12pt; }
+  html[data-ui="n"] .n-home-bar { height: 14px; margin-top: 6pt; }
+  html[data-ui="n"] .n-home-bar.is-small { height: 9px; margin-top: 0; }
+  html[data-ui="n"] .n-home-cat { padding-block: 2pt; break-inside: avoid; }
+  html[data-ui="n"] .n-home-item { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "w b" "y b"; gap: 1pt 14pt; align-items: center; margin-inline: 0; padding: 3pt 0; break-inside: avoid; }
+  html[data-ui="n"] .n-home-item > .n-home-what { grid-area: w; margin: 0; font-size: 10pt; line-height: 1.3; }
+  html[data-ui="n"] .n-home-item > .n-home-bars { grid-area: b; gap: 3px 8px; }
+  html[data-ui="n"] .n-home-item > .n-home-says, html[data-ui="n"] .n-home-item > .n-home-small { grid-area: y; }
+  html[data-ui="n"] .n-home-says > .n-home-way, html[data-ui="n"] .n-home-says > .n-home-rowst, html[data-ui="n"] .n-home-says > .n-home-tgt { margin: 0; }
+  html[data-ui="n"] .n-home-track { height: 9px; }
+  html[data-ui="n"] .n-home-item::before { display: none; }
+  html[data-ui="n"] .n-home-way { margin-top: 4pt; }
+  html[data-ui="n"] .n-home-tgt { font-size: 8.5pt; line-height: 1.25; }
+  html[data-ui="n"] .n-home-rowst { font-size: 8.5pt; line-height: 1.25; }
+  html[data-ui="n"] .n-home-tgt-aside { display: none; }          /* the one sheet keeps the target and where the figure stands, not the second sentence */
+  /* the two bars take less height, and a row that says why it needs attention puts the status with its cause under the title and the bars, and the way beside it: the short level stays one sheet */
+  html[data-ui="n"] .n-home-bars { line-height: 1.15; }
+  /* the four categories of the overview stand two by two on paper (name, bar, sentence), so that the short level stays one sheet */
+  html[data-ui="n"] .n-home-cats { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14pt; }
+  html[data-ui="n"] .n-home-cat { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1pt; padding-block: 3pt; }
+  html[data-ui="n"] .n-home-cat-ico { display: none; }
+  html[data-ui="n"] .n-home-cat-say { font-size: 8.5pt; }
+  html[data-ui="n"] .n-home-cats-wrap { margin-top: 4pt; }
+  html[data-ui="n"] .n-home-bars { row-gap: 0; column-gap: 6pt; grid-template-columns: minmax(0, 1fr) auto; }
+  html[data-ui="n"] .n-home-bars > .n-home-val { font-size: 9.5pt; line-height: 1.15; }
+  html[data-ui="n"] .n-home-bars > .n-home-who, html[data-ui="n"] .n-home-bars > .n-home-natkey { font-size: 8pt; line-height: 1.15; }
+  html[data-ui="n"] .n-home-unit { display: inline; font-size: 8pt; margin-inline-start: 2pt; }
+  html[data-ui="n"] .n-home-dot { width: 7px; height: 7px; }
+  html[data-ui="n"] .n-home-dot.is-tgt { width: 2px; height: 9px; }
+  html[data-ui="n"] .n-home-natmark, html[data-ui="n"] .n-home-dot { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html[data-ui="n"] .n-home-item:has(.n-home-rowst) { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); grid-template-areas: "w b" "s b" "s y" "s r"; }
+  html[data-ui="n"] .n-home-item:has(.n-home-rowst) > .n-home-says { display: contents; }
+  html[data-ui="n"] .n-home-item:has(.n-home-rowst) .n-home-says > .n-home-tgt { grid-area: y; }
+  html[data-ui="n"] .n-home-item:has(.n-home-rowst) .n-home-says > .n-home-rowst { grid-area: s; }
+  html[data-ui="n"] .n-home-item:has(.n-home-rowst) .n-home-says > .n-home-way { grid-area: r; margin: 0; font-size: 8.5pt; }
+  html[data-ui="n"] .n-home-item:has(.n-home-rowst) .n-home-says > .n-home-note { grid-column: 1 / -1; margin: 0; }
+  html[data-ui="n"] .n-home-way svg { width: 12px; height: 12px; }
+  html[data-ui="n"] .n-home-sec .n-home-lede, html[data-ui="n"] .n-home-state .n-home-lede { max-width: none; margin-top: 2pt; }
+  html[data-ui="n"] .n-home-grp { margin-top: 6pt; }
+  html[data-ui="n"] .n-home-do { font-size: 12pt; }
+  html[data-ui="n"] .n-home-step .n-home-do { font-size: 11pt; }
+  html[data-ui="n"] .n-home[data-level="simple"] .n-home-facts2 { display: flex; flex-wrap: wrap; gap: 0 18pt; margin-top: 2pt; }
+  html[data-ui="n"] .n-home-facts2 { margin-top: 3pt; gap: 1pt; }
+  html[data-ui="n"] .n-home-foot { margin-top: 4pt; padding-top: 3pt; font-size: 8.5pt; }
+  html[data-ui="n"] .n-home-prov, html[data-ui="n"] .n-home-how, html[data-ui="n"] .n-home-foot .n-home-howto { margin-top: 1pt; font-size: 8.5pt; line-height: 1.25; }
+  html[data-ui="n"] .n-home-how a, html[data-ui="n"] .n-home-prov a { display: none; }
+  html[data-ui="n"] .n-home .rv, html[data-ui="n"] .n-home .viz .grow-x { opacity: 1 !important; transform: none !important; }
+  html[data-ui="n"] .n-home-track, html[data-ui="n"] .n-home-fill, html[data-ui="n"] .n-home-tick, html[data-ui="n"] .n-home-seg, html[data-ui="n"] .n-home-key { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  /* what stays off the paper: the long list of neighbours with its heading, the links, the bar of missing figures. The chart of the figure that differs most (with its key) and the ladder of the domains (with its heading and its words) are printed: a key or a caption with no chart under it is worse than none */
+  html[data-ui="n"] .n-home .v-cmp-lol, html[data-ui="n"] .n-home-bh2, html[data-ui="n"] .n-home-peers-add, html[data-ui="n"] .n-home-cb, html[data-ui="n"] .n-home-more { display: none; }
+  html[data-ui="n"] .n-home-lr-track, html[data-ui="n"] .n-home-lr-mid, html[data-ui="n"] .n-home-lr-stem, html[data-ui="n"] .n-home-lr-dot, html[data-ui="n"] .n-home-lg i { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html[data-ui="n"] .n-home-block, html[data-ui="n"] .n-home-mg li, html[data-ui="n"] .n-home-lr, html[data-ui="n"] .n-home-step { break-inside: avoid; }
+  html[data-ui="n"] .n-home-sec .n-home-block { margin-top: 4pt; }
+  html[data-ui="n"] .n-home-sm li, html[data-ui="n"] .n-home-peers li { padding-block: 4px; }
+  html[data-ui="n"] .n-home-mg li, html[data-ui="n"] .n-home-step { padding-block: 2pt; }
+  html[data-ui="n"] .n-home-lede, html[data-ui="n"] .n-home-bs { font-size: 9pt; }
+}
+
+/* on a wide window the story column sits in the middle of the page, not against the menu with an empty half on the other side */
+html[data-ui="n"] .n-home-body { margin-inline: auto; }
+html[data-ui="n"] .n-home[data-level="simple"] .n-home-body { max-width: 900px; }
+
+/* the short level keeps the paired bars (the owner has nothing against charts; the load was the problem): it shows few rows, one column, and room around each */
+@media screen { html[data-ui="n"] .n-home[data-level="simple"] .n-home-item { padding-block: var(--space-4); } }
+
+/* clarity of the overview: a category row is its name, then the bar and, right under the bar, the sentence about it (one thing, not three columns far apart) */
+@media screen and (min-width: 640px) {
+  html[data-ui="n"] .n-home-cat { grid-template-columns: minmax(12rem, 18rem) minmax(0, 1fr); grid-template-areas: "id bar" "id say"; align-items: center; row-gap: var(--space-2); }
+  html[data-ui="n"] .n-home-cat-id { grid-area: id; }
+  html[data-ui="n"] .n-home-cat > .n-home-bar { grid-area: bar; }
+  html[data-ui="n"] .n-home-cat-say { grid-area: say; margin: 0; font-size: var(--fs-small); color: var(--ink-2); }
+  html[data-ui="n"] .n-home-cat > .n-home-bar .n-home-seg, html[data-ui="n"] .n-home-cat > .n-home-bar { height: 12px; }
+}
+
+/* a figure is one row of a ledger (both levels): on the left half of the window the name with its status and the way that is good; on the right the bar with its keys and the target. A phone keeps the stack */
+@media screen { @container (min-width: 720px) {
+  html[data-ui="n"] .n-home-item { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); column-gap: var(--space-6); align-items: start; padding-block: var(--space-3); }
+  html[data-ui="n"] .n-home-item > .n-home-says { display: contents; }
+  html[data-ui="n"] .n-home-item > .n-home-what { grid-column: 1; grid-row: 1; margin-bottom: var(--space-1); font-size: 1.0625em; }
+  html[data-ui="n"] .n-home-item > .n-home-bars { grid-column: 2; grid-row: 1 / span 2; }
+  html[data-ui="n"] .n-home-item .n-home-says > .n-home-rowst { grid-column: 1; grid-row: 2; margin-top: 0; font-size: var(--fs-small); }
+  html[data-ui="n"] .n-home-item .n-home-says > .n-home-way { grid-column: 1; margin-top: var(--space-1); font-size: var(--fs-small); }
+  html[data-ui="n"] .n-home-item .n-home-says > .n-home-way svg { width: 16px; height: 16px; }
+  html[data-ui="n"] .n-home-item .n-home-says > .n-home-tgt { grid-column: 2; grid-row: 3; margin-top: var(--space-1); font-size: var(--fs-small); }
+  html[data-ui="n"] .n-home-item .n-home-says > .n-home-note { grid-column: 2; grid-row: 3; margin-top: var(--space-2); font-size: var(--fs-small); }
+  html[data-ui="n"] .n-home-item .n-home-says > .n-home-tgt + .n-home-rowst { margin-top: 0; }
+} }
+html[data-ui="n"] .n-home-list { container-type: inline-size; }
+html[data-ui="n"] .n-home[data-level="simple"] .n-home-do { font-size: 1.1875em; }
+
+/* the head breathes: the facts, the quiet lines about the data and the town, and the level switch are three groups, not one stack under the picture */
+@media screen {
+  html[data-ui="n"] .n-home-lines { gap: var(--space-2); margin-top: var(--space-3); }
+  html[data-ui="n"] .n-home-lines > * { line-height: 1.8; }
+  html[data-ui="n"] .n-home-sw { margin-top: var(--space-4); margin-bottom: var(--space-2); }
+}
+
+/* a wide window uses its width (the owner: no big empty margins on both sides). The short level is a two-column overview: the state of the town (verdict, bar, categories) on one side,
+   what goes well and what needs attention beside it; the rest runs under both. The full level is a wider ledger. Rows adapt to the width of their own column (container query above) */
+@media screen and (min-width: 1400px) {
+  html[data-ui="n"] .n-home[data-level="simple"] .n-home-body { max-width: 1280px; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); column-gap: var(--space-8); align-items: start; }
+  html[data-ui="n"] .n-home[data-level="simple"] .n-home-body > * { grid-column: 1 / -1; }
+  html[data-ui="n"] .n-home[data-level="simple"] .n-home-body > #n-sec-state { grid-column: 1; grid-row: 1; margin-top: var(--space-6); }
+  html[data-ui="n"] .n-home[data-level="simple"] .n-home-body > #n-sec-good { grid-column: 1; grid-row: 2; }
+  html[data-ui="n"] .n-home[data-level="simple"] .n-home-body > #n-sec-weak { grid-column: 2; grid-row: 1 / span 2; margin-top: var(--space-6); }
+}
+@media screen and (min-width: 1280px) { html[data-ui="n"] .n-home[data-level="full"] .n-home-body { max-width: 1100px; } }
+@media screen and (min-width: 1500px) { html[data-ui="n"] .n-home[data-level="full"] .n-home-body { max-width: 1280px; } }
+
+/* the page follows the window: the story column fills the width it is given (a cap only for a very large screen); the sentences keep their own line length, the rows and the two columns adapt to the width of their own box */
+@media screen {
+  html[data-ui="n"] .n-home .n-home-body, html[data-ui="n"] .n-home[data-level="simple"] .n-home-body, html[data-ui="n"] .n-home[data-level="full"] .n-home-body { max-width: min(100%, 1560px); }
+}

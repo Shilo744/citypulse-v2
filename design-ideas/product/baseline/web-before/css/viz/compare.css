@@ -1,0 +1,164 @@
+/* compare: comparison charts (diverging bars, dumbbell, lollipop rank, distribution). Prefix .v-cmp-.
+   Colours come from the tokens in app.css only, so dark mode follows. Motion comes from the shared vocabulary in motion.css (grow-x, grow-y, pop, draw, fade, rise);
+   this file never defines a keyframe. A mark that carries a motion class is never given a hover transform or its own transition: hover effects sit on a parent or a sibling. */
+
+.v-cmp {
+  --v-cmp-sector: color-mix(in srgb, var(--c-nat) 55%, var(--ink));
+  --v-cmp-ses: color-mix(in srgb, var(--c-nat) 50%, var(--surface));
+  --v-cmp-dotc: color-mix(in srgb, var(--c-nat) 88%, var(--surface));
+  --v-cmp-stem: color-mix(in srgb, var(--c-nat) 42%, var(--surface));
+  --v-cmp-city-ink: color-mix(in srgb, var(--c-city) 78%, var(--ink));
+  width: 100%; min-width: 0; font-family: var(--font);
+}
+.v-cmp-probe { visibility: hidden; pointer-events: none; }
+.v-cmp-empty { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-radius: var(--r-md); background: var(--surface-2); color: var(--muted); font-size: .9rem; }
+.v-cmp-empty svg { flex: none; }
+.tt .v-cmp-tipnote { margin-top: 4px; font-size: .78rem; line-height: 1.4; color: var(--ink-3); }
+
+/* ── legend under a chart (the shared legendRow, with round dots) ── */
+.v-cmp .legend.v-cmp-legend { margin-top: 12px; align-items: center; }
+.v-cmp .legend.v-cmp-legend i { width: 10px; height: 10px; border-radius: 50%; }
+.v-cmp .legend.v-cmp-legend i.sq { border-radius: 3px; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 14%, transparent); }
+.v-cmp .legend.v-cmp-legend i.is-ring { background: transparent !important; }
+.v-cmp-foot { gap: 8px 16px; }
+.v-cmp-note { color: var(--ink-3); font-size: .8rem; font-variant-numeric: tabular-nums; }
+.v-cmp-dir { display: inline-flex; align-items: center; gap: 16px; color: var(--ink-3); font-size: .8rem; margin-inline-start: auto; }
+.v-cmp-dir > span { display: inline-flex; align-items: center; gap: 4px; }
+.v-cmp-dir .is-better svg { color: var(--good-bar); }
+.v-cmp-dir .is-worse svg { color: var(--attn-bar); }
+
+/* ═══════════════ 1. diverging bars ═══════════════ */
+.v-cmp-div { container-type: inline-size; }
+.v-cmp-div-head, .v-cmp-row { display: grid; grid-template-columns: 38fr 42fr 20fr; align-items: center; }
+.v-cmp-div-head { padding: 0 12px 8px; font-size: 11.5px; font-weight: 600; color: var(--ink-3); letter-spacing: .01em; }
+.v-cmp-hd { grid-column: 2; grid-row: 1; display: inline-flex; align-items: center; gap: 4px; line-height: 1; white-space: nowrap; }
+.v-cmp-hd.is-better { justify-self: start; }
+.v-cmp-hd.is-worse { justify-self: end; }
+.v-cmp-hd.is-zero { justify-self: center; color: var(--ink-3); font-weight: 500; }
+.v-cmp-hd.is-better svg { color: var(--good-bar); }
+.v-cmp-hd.is-worse svg { color: var(--attn-bar); }
+.v-cmp-rows { list-style: none; margin: 0; padding: 0; }
+.v-cmp-rows > li { border-top: 1px solid color-mix(in srgb, var(--line) 85%, transparent); }
+.v-cmp-rows > li:first-child { border-top-color: var(--line-2); }
+.v-cmp-row {
+  position: relative; min-height: 52px; padding: 8px 12px; border-radius: 12px; color: inherit; text-decoration: none;
+  transition: background-color .16s var(--ease);
+  --t: var(--none-bar); --ti: var(--none-ink);
+}
+.v-cmp-row[data-tone="good"] { --t: var(--good-bar); --ti: var(--good-ink); }
+.v-cmp-row[data-tone="attn"], .v-cmp-row[data-tone="watch"] { --t: var(--attn-bar); --ti: var(--attn-ink); }
+.v-cmp-row:hover, .v-cmp-row:focus-visible { background: var(--surface-2); text-decoration: none; }
+.v-cmp-row:focus-visible { outline: 3px solid var(--teal); outline-offset: -1px; border-radius: 12px; }
+.v-cmp-lab { display: grid; gap: 2px; min-width: 0; padding-inline-end: 16px; }
+.v-cmp-lab b { font-weight: 600; font-size: 14.5px; line-height: 1.3; color: var(--ink); overflow-wrap: break-word; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+.v-cmp-lab small { font-size: 12.5px; line-height: 1.35; color: var(--ink-3); overflow-wrap: break-word; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+.v-cmp-lane { position: relative; align-self: stretch; min-height: 34px; direction: ltr; }
+.v-cmp-ax { position: absolute; left: 50%; top: -8px; bottom: -8px; width: 1px; margin-left: -.5px; background: var(--line-strong); }
+.v-cmp-grow { position: absolute; top: 50%; height: 10px; margin-top: -5px; width: max(10px, calc(var(--f, 0) * 50%)); }
+.v-cmp-row[data-side="1"] .v-cmp-grow { left: 50%; }
+.v-cmp-row[data-side="-1"] .v-cmp-grow { right: 50%; }
+.v-cmp-row[data-side="0"] .v-cmp-grow { left: calc(50% - 5px); width: 10px; }
+.v-cmp-bar { display: block; width: 100%; height: 100%; border-radius: 99px; background: var(--t); transition: filter .16s var(--ease), transform .16s var(--ease); }
+.v-cmp-row[data-side="1"] .v-cmp-bar { background: linear-gradient(to right, color-mix(in srgb, var(--t) 52%, var(--surface)), var(--t) 70%); }
+.v-cmp-row[data-side="-1"] .v-cmp-bar { background: linear-gradient(to left, color-mix(in srgb, var(--t) 52%, var(--surface)), var(--t) 70%); }
+.v-cmp-row[data-side="0"] .v-cmp-bar { background: var(--none-bar); }
+.v-cmp-row[data-tone="watch"] .v-cmp-bar { background: color-mix(in srgb, var(--t) 24%, var(--surface)); box-shadow: inset 0 0 0 1.5px var(--t); }
+.v-cmp-row:hover .v-cmp-bar, .v-cmp-row:focus-visible .v-cmp-bar { filter: brightness(1.08) saturate(1.25); transform: scaleY(1.22); }
+.v-cmp-val { padding-inline-start: 12px; text-align: start; font-size: 15px; font-weight: 800; line-height: 1.2; font-variant-numeric: tabular-nums; color: var(--ti); white-space: nowrap; }
+.v-cmp-row[data-side="na"] .v-cmp-val { color: var(--ink-3); font-weight: 600; }
+
+@container (max-width: 560px) {
+  .v-cmp-div-head { grid-template-columns: minmax(0, 1fr); padding-inline: 8px; }
+  .v-cmp-hd { grid-column: 1; }
+  .v-cmp-row { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "lab val" "lane lane"; row-gap: 4px; padding: 8px 8px 12px; min-height: 64px; }
+  .v-cmp-lab { grid-area: lab; padding-inline-end: 12px; }
+  .v-cmp-val { grid-area: val; padding-inline-start: 0; text-align: end; align-self: start; padding-top: 1px; }
+  .v-cmp-lane { grid-area: lane; min-height: 20px; }
+  .v-cmp-ax { top: -4px; bottom: -4px; }
+}
+
+/* ═══════════════ 2. dumbbell ═══════════════ */
+.v-cmp-db-plot { width: 100%; }
+.v-cmp-db-row { outline: none; transition: opacity .18s var(--ease); }
+.v-cmp-db.is-hot .v-cmp-db-row:not(.on) { opacity: .35; }
+.v-cmp-db-sep { fill: none; stroke: var(--line); stroke-width: 1; }
+.v-cmp-db-bg { fill: transparent; stroke: transparent; stroke-width: 2.5; pointer-events: all; transition: fill .16s var(--ease); }
+.v-cmp-db-row.on .v-cmp-db-bg { fill: var(--surface-2); }
+.v-cmp-db-row:focus-visible .v-cmp-db-bg { stroke: var(--teal); fill: var(--surface-2); }
+.v-cmp svg text.v-cmp-db-name { fill: var(--ink); font-size: 13px; font-weight: 600; }
+.v-cmp svg text.v-cmp-db-note { fill: var(--ink-3); font-size: 11.5px; font-weight: 500; }
+.v-cmp svg text.v-cmp-db-val { fill: var(--ink-2); font-size: 12.5px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.v-cmp svg text.v-cmp-db-val.is-city { fill: var(--v-cmp-city-ink); }
+.v-cmp svg text.v-cmp-db-tick { fill: var(--ink-3); font-size: 11.5px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.v-cmp svg text.v-cmp-db-none { fill: var(--ink-3); font-size: 12px; font-weight: 500; }
+.v-cmp-db-grid { fill: none; stroke: var(--line); stroke-width: 1; stroke-dasharray: 2 4; }
+.v-cmp-db-track { fill: var(--track); opacity: .85; }
+.v-cmp-db-conn { opacity: .5; }
+.v-cmp-db-knock { fill: var(--surface); }
+.v-cmp-db-ring { fill: var(--surface); stroke-width: 2.5; }
+.v-cmp-db-halo { opacity: 0; transition: opacity .16s var(--ease); pointer-events: none; }
+.v-cmp-db-row.on .v-cmp-db-halo { opacity: .2; }
+
+/* ═══════════════ 3. lollipop rank ═══════════════ */
+.v-cmp-lol { --rk: 30px; --nm: 34%; --vl: 62px; --end: 16px; position: relative; container-type: inline-size; }
+.v-cmp-lol-rows { list-style: none; margin: 0; padding: 0; }
+.v-cmp-lol-rows.has-ref { padding-top: 28px; }
+.v-cmp-lrow, .v-cmp-lol-ov { display: grid; grid-template-columns: var(--rk) var(--nm) minmax(0, 1fr) var(--vl); padding-inline: 8px; }
+.v-cmp-lol-ov { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+/* the row is 40px tall to be a fair touch target; the 3px transparent borders keep the visible pill at 34px */
+.v-cmp-lrow { align-items: center; height: 40px; border: 3px solid transparent; border-inline: 0; background-clip: padding-box; border-radius: 13px; color: inherit; text-decoration: none; transition: background-color .16s var(--ease); }
+.v-cmp-lrow:hover, .v-cmp-lrow:focus-visible { background-color: var(--surface-2); text-decoration: none; }
+.v-cmp-lrow:focus-visible { outline: 3px solid var(--teal); outline-offset: -2px; }
+.v-cmp-lrow.is-self { background-color: color-mix(in srgb, var(--c-city) 11%, var(--surface)); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--c-city) 40%, transparent); }
+.v-cmp-lrow.is-self:hover { background-color: color-mix(in srgb, var(--c-city) 17%, var(--surface)); }
+.v-cmp-rk { text-align: center; font-size: 12px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.v-cmp-nm { display: flex; align-items: center; gap: 8px; min-width: 0; padding-inline: 4px 12px; font-size: 14px; color: var(--ink); }
+.v-cmp-nm .t { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.is-self .v-cmp-nm { font-weight: 700; }
+.v-cmp-badge { flex: none; font-style: normal; font-size: 10.5px; font-weight: 800; line-height: 1; padding: 3px 8px; border-radius: 99px; background: var(--c-city); color: var(--surface); }
+.v-cmp-ln { position: relative; height: 100%; }
+.v-cmp-stem { position: absolute; right: 0; top: 50%; height: 2px; margin-top: -1px; border-radius: 2px; width: calc(var(--f, 0) * (100% - var(--end))); background: var(--v-cmp-stem); }
+.v-cmp-dot { position: absolute; z-index: 2; top: 50%; width: 12px; height: 12px; margin-top: -6px; border-radius: 50%; right: calc(var(--f, 0) * (100% - var(--end)) - 6px); background: var(--v-cmp-dotc); box-shadow: 0 0 0 2px var(--surface); }
+.is-self .v-cmp-dot { width: 14px; height: 14px; margin-top: -7px; right: calc(var(--f, 0) * (100% - var(--end)) - 7px); background: var(--c-city); box-shadow: 0 0 0 2px var(--surface), 0 0 0 5px color-mix(in srgb, var(--c-city) 24%, transparent); }
+.is-self .v-cmp-stem { background: color-mix(in srgb, var(--c-city) 55%, var(--surface)); }
+.v-cmp-lrow.is-hollow .v-cmp-dot { background: var(--surface); box-shadow: inset 0 0 0 2px var(--v-cmp-dotc), 0 0 0 2px var(--surface); }
+.v-cmp-lrow.is-hollow .v-cmp-lv, .v-cmp-lrow.is-hollow .v-cmp-nm { color: var(--ink-3); }
+.v-cmp-lv { padding-inline-start: 8px; text-align: start; font-size: 14px; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; }
+.v-cmp-ref-line { position: absolute; top: 28px; bottom: 3px; right: calc(var(--natf, 0) * (100% - var(--end))); width: 2px; margin-right: -1px; background: repeating-linear-gradient(to bottom, var(--c-nat) 0 5px, transparent 5px 9px); }
+.v-cmp-ref-at { position: absolute; top: 1px; right: calc(var(--natf, 0) * (100% - var(--end))); width: 0; display: flex; justify-content: center; }
+.v-cmp-ref-tag { flex: none; font-style: normal; font-size: 10.5px; font-weight: 700; line-height: 1; padding: 4px 8px; border-radius: 99px; background: var(--surface); color: var(--ink-2); box-shadow: inset 0 0 0 1px var(--c-nat); white-space: nowrap; }
+@container (max-width: 460px) {
+  .v-cmp-lol-rows, .v-cmp-lol-ov { --rk: 24px; --nm: 46%; --vl: 52px; --end: 14px; }
+  .v-cmp-nm { font-size: 13.5px; gap: 4px; padding-inline: 4px 8px; }
+  .v-cmp-badge { padding-inline: 6px; }
+}
+
+/* ═══════════════ 4. distribution ═══════════════ */
+.v-cmp-dist-plot { width: 100%; }
+.v-cmp-bin { outline: none; }
+.v-cmp-hit { fill: transparent; stroke: transparent; stroke-width: 2.5; pointer-events: all; }
+.v-cmp-bin:focus-visible .v-cmp-hit { stroke: var(--teal); }
+.v-cmp-col { fill: var(--c-bin); transition: fill .16s var(--ease), opacity .16s var(--ease); }
+.v-cmp-bin.is-city .v-cmp-col { fill: var(--c-city); }
+.v-cmp-bin.on .v-cmp-col { fill: color-mix(in srgb, var(--c-bin) 50%, var(--ink-3)); }
+.v-cmp-bin.is-city.on .v-cmp-col { fill: var(--v-cmp-city-ink); }
+.v-cmp-dist.is-hot .v-cmp-bin:not(.on) .v-cmp-col { opacity: .4; }
+.v-cmp-band { fill: var(--c-band); }
+.v-cmp-axis-line, .v-cmp-tick-mark { fill: none; stroke: var(--line-2); stroke-width: 1; }
+.v-cmp svg text.v-cmp-tick-t { fill: var(--ink-3); font-size: 11.5px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.v-cmp-curve { fill: none; stroke: color-mix(in srgb, var(--ink-3) 70%, transparent); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; }
+.v-cmp-vline { fill: none; stroke-width: 2; pointer-events: none; }
+.v-cmp-vline.is-nat { stroke: var(--c-nat); }
+.v-cmp-vline.is-target { stroke: var(--c-target); stroke-width: 1.8; stroke-dasharray: 5 4; }
+.v-cmp-pin-stem { fill: none; stroke: var(--c-city); stroke-width: 2; pointer-events: none; }
+.v-cmp-pin-knock { fill: var(--surface); }
+.v-cmp-pin-dot { fill: var(--c-city); }
+.v-cmp-chip { outline: none; cursor: default; }
+.v-cmp-chip-bg { fill: var(--surface); stroke: var(--line-strong); stroke-width: 1; }
+.v-cmp svg text.v-cmp-chip-t { fill: var(--ink-2); font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.v-cmp-chip.is-nat .v-cmp-chip-bg { stroke: var(--c-nat); }
+.v-cmp-chip.is-target .v-cmp-chip-bg { stroke: var(--c-target); }
+.v-cmp svg .v-cmp-chip.is-target text.v-cmp-chip-t { fill: var(--ink); }
+.v-cmp svg .v-cmp-chip.is-city .v-cmp-chip-bg { fill: var(--c-city); stroke: none; }
+.v-cmp svg .v-cmp-chip.is-city text.v-cmp-chip-t { fill: var(--surface); }
+.v-cmp-chip:focus-visible .v-cmp-chip-bg { stroke: var(--teal); stroke-width: 2.5; }

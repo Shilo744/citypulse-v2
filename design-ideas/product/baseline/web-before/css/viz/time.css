@@ -1,0 +1,108 @@
+/* time: charts over the years (line with band, columns, spark area, trajectory, small multiples). Prefix .v-time-
+   Colour only through tokens. Motion only through the shared classes (draw, fade, pop, grow-y, rise, ping); nothing here keyframes anything.
+   The three mixes below are the only derived colours; they follow the theme because they are built from tokens. */
+.v-time, .v-time-sm, .v-time-spark { --t-old: color-mix(in srgb, var(--c-city) 40%, var(--surface)); --t-event: color-mix(in srgb, var(--ink-3) 9%, transparent); --t-band: color-mix(in srgb, var(--c-peer) 11%, transparent); --t-band-edge: color-mix(in srgb, var(--c-peer) 34%, transparent); }
+.v-time { display: block; width: 100%; min-width: 0; }
+
+/* ── text inside the charts ── */
+.v-time svg text { font-variant-numeric: tabular-nums; }
+.v-time svg .t-axis { font-size: 11.5px; font-weight: 500; }
+.v-time svg .t-axis.strong { fill: var(--ink); font-weight: 700; }
+.v-time svg .t-end { font-size: 12.5px; font-weight: 600; fill: var(--ink-2); }
+.v-time svg .t-end.strong { font-weight: 800; fill: var(--ink); }
+.v-time svg .t-val { font-size: 12.5px; font-weight: 600; fill: var(--ink-2); }
+.v-time svg .t-val.strong { font-weight: 800; fill: var(--ink); }
+.v-time svg .t-note { font-size: 11px; font-weight: 600; fill: var(--ink-3); }
+.v-time svg .t-cap { font-size: 10.5px; font-weight: 600; fill: var(--ink-3); }
+.v-time svg .t-evt { font-size: 11px; font-weight: 600; fill: var(--ink-2); }
+.v-time svg .t-chip { font-size: 11px; font-weight: 700; fill: var(--surface); }
+/* a label that may sit over a line gets a halo of the surface colour, so the line never cuts through the letters */
+.v-time svg .halo { paint-order: stroke; stroke: var(--surface); stroke-width: 3.5px; stroke-linejoin: round; }
+
+/* ── the plot ── */
+.v-time-svg { overflow: visible; touch-action: pan-y; border-radius: 8px; }
+.viz.v-time .v-time-svg:focus-visible { outline: 2px solid var(--teal); outline-offset: 4px; }
+.v-time .v-time-grid line { stroke: var(--line); stroke-width: 1; shape-rendering: crispEdges; }
+.v-time .v-time-grid line.base { stroke: var(--line-2); }
+.v-time-line { fill: none; stroke-linejoin: round; stroke-linecap: round; }
+.v-time-line.fade { stroke-linecap: butt; }
+.v-time-area { stroke: none; }
+.v-time-band path.fill { fill: var(--t-band); stroke: none; }
+.v-time-band path.edge { fill: none; stroke: var(--t-band-edge); stroke-width: 1; stroke-linejoin: round; }
+.v-time-target { fill: none; stroke: var(--c-target); stroke-width: 1.75; stroke-dasharray: 5 4; }
+.v-time-proj { stroke: var(--c-city); stroke-width: 2.25; stroke-dasharray: 2 5; stroke-linecap: round; fill: none; }
+.v-time-tchip rect { fill: var(--c-target); }
+
+/* events: a pale band or a hairline, and its name in the strip above the plot */
+.v-time-evband { fill: var(--t-event); }
+.v-time-evline { stroke: var(--line-strong); stroke-width: 1; shape-rendering: crispEdges; }
+.v-time-evchips rect { fill: var(--surface); stroke: var(--line-2); stroke-width: 1; }
+
+/* hover: a crosshair, a dot on every series, one tooltip (js/viz/time.js moves them) */
+.v-time-hover { pointer-events: none; opacity: 0; transition: opacity .14s var(--ease); }
+.v-time-svg.is-hot .v-time-hover { opacity: 1; }
+.v-time-cross { stroke: var(--ink-3); stroke-width: 1; stroke-opacity: .65; shape-rendering: crispEdges; }
+.v-time-hdot { stroke: var(--surface); stroke-width: 2; opacity: 0; transition: opacity .12s; }
+.v-time-hdot.on { opacity: 1; }
+.v-time-hit { fill: transparent; cursor: crosshair; touch-action: pan-y; }
+
+/* columns: the hovered one stays, the others step back */
+.v-time-col { transition: opacity .16s var(--ease); }
+.v-time-svg.is-hot .v-time-col:not(.hot) { opacity: .38; }
+.v-time-col.hot path:not(.hollow) { fill: var(--c-city) !important; }
+.v-time-natticks .casing { stroke: var(--surface); stroke-width: 5.5; stroke-linecap: round; }
+.v-time-natticks .tick { stroke: var(--c-nat); stroke-width: 2.5; stroke-linecap: round; }
+
+/* nothing to draw */
+.v-time-empty { display: grid; place-items: center; text-align: center; color: var(--muted); font-size: .9rem; border: 1px dashed var(--line-2); border-radius: var(--r-md); padding: 16px; }
+
+/* ── spark area ── */
+.v-time-spark { display: block; overflow: visible; direction: ltr; max-width: 100%; }
+.v-time-spark-line { fill: none; stroke: var(--c-city); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.v-time-spark-nat { fill: none; stroke: var(--c-nat); stroke-width: 1.5; stroke-linejoin: round; stroke-linecap: round; stroke-opacity: .8; }
+.v-time-spark-area { stroke: none; }
+.v-time-spark-empty { stroke: var(--line-2); stroke-width: 1.5; stroke-dasharray: 3 4; stroke-linecap: round; }
+
+/* ── trajectory ── */
+.v-time-traj { margin: 0; }
+.v-time-trajbase { stroke: var(--line-2); stroke-width: 1; shape-rendering: crispEdges; }
+.v-time-trajnat { stroke: var(--c-nat); stroke-width: 1.5; stroke-dasharray: 2 4; stroke-linecap: round; stroke-opacity: .85; }
+.v-time-path { stroke: var(--c-target); stroke-width: 2; stroke-dasharray: 5 5; stroke-linecap: butt; fill: none; }
+.v-time-flag .pole { stroke: var(--c-target); stroke-width: 1.75; stroke-linecap: round; }
+.v-time-flag .pennant { fill: var(--c-target); }
+.v-time-mark { outline: none; cursor: default; }
+.v-time-mark:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; border-radius: 6px; }
+.v-time-mark-hit { fill: transparent; }
+
+/* ── small multiples ── */
+.v-time-sm { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+/* cols = at most that many columns, fewer when a cell would get narrower than 200px */
+.v-time-sm.has-cols { grid-template-columns: repeat(auto-fill, minmax(max(200px, calc((100% - (var(--sm-cols) - 1) * 12px) / var(--sm-cols) - 0.5px)), 1fr)); }
+.v-time-sm > li { min-width: 0; display: flex; }
+.v-time-sm > li.v-time-empty { grid-column: 1 / -1; }
+.v-time-sm-cell { flex: 1; min-width: 0; display: grid; align-content: start; gap: 8px; padding: 16px 16px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); color: var(--ink); text-decoration: none; transition: transform .2s var(--ease), box-shadow .22s var(--ease), border-color .15s; }
+a.v-time-sm-cell:hover, a.v-time-sm-cell:focus-visible { transform: translateY(-3px); box-shadow: var(--shadow-up); border-color: var(--teal-line); text-decoration: none; }
+.v-time-sm-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.v-time-sm-label { font-size: .9rem; font-weight: 600; line-height: 1.35; color: var(--ink-2); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.v-time-sm-dot { flex: none; width: 10px; height: 10px; margin-top: 5px; border-radius: 50%; background: var(--none-bar); }
+.v-time-sm-dot.is-good { background: var(--good-bar); }
+.v-time-sm-dot.is-attn { background: var(--attn-bar); }
+.v-time-sm-dot.is-watch { background: transparent; box-shadow: inset 0 0 0 2px var(--attn-bar); }
+.v-time-sm-dot.hollow { background: transparent; box-shadow: inset 0 0 0 2px var(--none-bar); }
+.v-time-sm-val { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; }
+.v-time-sm-num { font-size: 1.75rem; font-weight: 800; line-height: 1.1; letter-spacing: -.01em; color: var(--ink); font-variant-numeric: tabular-nums; }
+.v-time-sm-num.none { color: var(--muted); }
+.v-time-sm-val small { font-size: .76rem; color: var(--muted); }
+.v-time-sm-delta { margin-inline-start: auto; align-self: center; display: inline-flex; align-items: center; gap: 4px; font-size: .82rem; font-weight: 700; line-height: 1.6; white-space: nowrap; color: var(--none-ink); }
+.v-time-sm-delta svg { width: 12px; height: 12px; }
+.v-time-sm-delta.is-good { color: var(--good-ink); }
+.v-time-sm-delta.is-attn { color: var(--attn-ink); }
+.v-time-sm-spark { height: 48px; direction: ltr; margin-top: 4px; }
+.v-time-sm-spark .v-time-spark { overflow: visible; }
+.v-time-sm-none { display: block; padding-top: 14px; font-size: .82rem; color: var(--muted); }
+.v-time-sm-foot { display: flex; justify-content: space-between; direction: ltr; font-size: .72rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+@media (prefers-reduced-motion: reduce) {
+  .v-time-sm-cell, .v-time-col, .v-time-hover { transition: none; }
+  a.v-time-sm-cell:hover, a.v-time-sm-cell:focus-visible { transform: none; }
+}

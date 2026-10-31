@@ -1,0 +1,27 @@
+{
+  "name": "citypulse-v2",
+  "version": "2.0.0",
+  "private": true,
+  "description": "CityPulse V2 - public-health management model for any Israeli locality, built from official open data",
+  "scripts": {
+    "start": "node server.js",
+    "collect": "node src/collect/run.js",
+    "localities": "node src/collect/build_localities.js",
+    "evidence": "node src/collect/build_evidence.js",
+    "store": "node src/collect/build_store.js",
+    "refresh": "node src/collect/run.js && node src/collect/build_store.js",
+    "docs": "node src/tools/gen_docs.js",
+    "smoke": "node src/tools/ui_smoke.js",
+    "smoke:wide": "node src/tools/ui_smoke.js --wide",
+    "a11y": "node src/tools/a11y_check.js",
+    "motion": "node src/tools/motion_check.js",
+    "matrix:n": "node src/tools/product_matrix.js",
+    "contact:n": "node src/tools/contact_sheet.js",
+    "smoke:n": "node src/tools/ui_smoke.js --n",
+    "a11y:n": "node src/tools/a11y_check.js --n",
+    "motion:n": "node src/tools/motion_check.js --n",
+    "shot": "node src/tools/shot.js",
+    "test": "node --test"
+  },
+  "engines": { "node": ">=20" }
+}

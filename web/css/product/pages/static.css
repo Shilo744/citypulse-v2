@@ -1,0 +1,152 @@
+/* n-pg-static-: static information pages (glossary, privacy, accessibility) in mode N.
+   Rules start with html[data-ui="n"]. Colours via tokens only. No @keyframes. No side stripes. */
+
+html[data-ui="n"] .n-pg-static-wrap {
+  padding-block: var(--space-6) var(--space-8);
+}
+
+html[data-ui="n"] .n-pg-static-body {
+  max-inline-size: 68ch;
+  margin-inline: auto;
+  font-size: var(--fs-body);
+  line-height: 1.7;
+  color: var(--ink);
+}
+
+html[data-ui="n"] .n-pg-static-body h2 {
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  margin-block: var(--space-6) var(--space-2);
+  color: var(--ink);
+}
+
+html[data-ui="n"] .n-pg-static-body p,
+html[data-ui="n"] .n-pg-static-body ul,
+html[data-ui="n"] .n-pg-static-body ol {
+  margin-block: var(--space-2) var(--space-3);
+}
+
+/* glossary term entries */
+html[data-ui="n"] .n-pg-static-terms {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  margin-block: var(--space-4) var(--space-6);
+}
+
+html[data-ui="n"] .n-pg-static-term {
+  padding-block-start: var(--space-4);
+  border-block-start: 1px solid var(--border);
+}
+
+html[data-ui="n"] .n-pg-static-term-title {
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  margin-block: 0 var(--space-2);
+  color: var(--ink);
+}
+
+html[data-ui="n"] .n-pg-static-term-short {
+  color: var(--ink);
+  margin-block: 0 var(--space-1);
+}
+
+html[data-ui="n"] .n-pg-static-term-long {
+  color: var(--ink-2);
+  font-size: var(--fs-small);
+  margin-block: 0;
+}
+
+html[data-ui="n"] .n-pg-static-note {
+  color: var(--ink-3);
+  font-size: var(--fs-small);
+  border-block-start: 1px solid var(--border);
+  padding-block-start: var(--space-4);
+  margin-block-start: var(--space-6);
+}
+
+/* privacy: key list */
+html[data-ui="n"] .n-pg-static-keys {
+  list-style: none;
+  padding: 0;
+  margin-block: var(--space-2) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+html[data-ui="n"] .n-pg-static-key {
+  padding-block: var(--space-1);
+}
+
+html[data-ui="n"] .n-pg-static-key-name {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+html[data-ui="n"] .n-pg-static-key-why {
+  color: var(--ink-2);
+}
+
+/* generic plain list (accessibility, privacy) */
+html[data-ui="n"] .n-pg-static-plain {
+  padding-inline-start: var(--space-4);
+  margin-block: var(--space-2) var(--space-3);
+}
+
+html[data-ui="n"] .n-pg-static-plain li {
+  margin-block: var(--space-1);
+}
+
+/* accessibility: contact button */
+html[data-ui="n"] .n-pg-static-contact {
+  display: inline-block;
+  color: var(--teal-ink);
+  text-decoration: underline;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  font-size: var(--fs-body);
+}
+
+html[data-ui="n"] .n-pg-static-contact:hover {
+  color: var(--ink);
+}
+
+/* last-updated line */
+html[data-ui="n"] .n-pg-static-updated {
+  color: var(--ink-3);
+  font-size: var(--fs-small);
+  margin-block-start: var(--space-6);
+}
+
+@media (max-width: 860px) {
+  html[data-ui="n"] .n-pg-static-body {
+    max-inline-size: 100%;
+  }
+}
+
+/* a phone: the terms sit closer (the glossary is one long list, and 32 px plus 16 px between two entries made it twice as long as it reads) */
+@media (max-width: 600px) {
+  html[data-ui="n"] .n-pg-static-wrap {
+    padding-block: var(--space-3) var(--space-6);
+  }
+  html[data-ui="n"] .n-pg-static-terms {
+    gap: var(--space-4);
+    margin-block: 0 var(--space-4);
+  }
+  html[data-ui="n"] .n-pg-static-term {
+    padding-block-start: var(--space-3);
+  }
+  html[data-ui="n"] .n-pg-static-body .n-pg-static-term-title {          /* the general h2 rule of the page (margin above 32 px) is stronger than the title's own: on a phone the title sits on its entry */
+    margin-block: 0 var(--space-1);
+  }
+}
+
+@media print {
+  html[data-ui="n"] .n-pg-static-contact-slot {
+    display: none;
+  }
+}

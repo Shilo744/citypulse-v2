@@ -1,0 +1,123 @@
+/* One domain in mode N (prefix n-pg-domain-): the header on the pale band, its ring and meter as wide as the screen allows, the row of actions. Colour only through tokens. */
+html[data-ui="n"] { --n-pg-domain-ring: 170px; }
+
+html[data-ui="n"] .hero.dm-hero { padding-block: var(--space-5); }
+html[data-ui="n"] .hero.dm-hero .hero-grid { gap: var(--space-4) var(--space-6); }
+html[data-ui="n"] .hero.dm-hero h1 { font-size: clamp(1.75rem, 3.4vw, 2.5rem); }
+html[data-ui="n"] .dm-ring .v-ring-cap { font-size: 12px !important; }
+html[data-ui="n"] .hero.dm-hero .eyebrow { font-size: var(--fs-small); }
+html[data-ui="n"] .hero.dm-hero .lede { margin-top: var(--space-3); font-size: var(--fs-body); }
+html[data-ui="n"] .hero.dm-hero .hero-meta { margin-top: var(--space-3); }
+html[data-ui="n"] .hero.dm-hero .n-pg-domain-back { margin-bottom: var(--space-3); }
+html[data-ui="n"] .dm-ico { width: 60px; height: 60px; }
+html[data-ui="n"] .dm-ico svg { width: 30px; height: 30px; }
+html[data-ui="n"] .hero.dm-hero .dm-note { margin-top: var(--space-3); padding-top: var(--space-3); }
+html[data-ui="n"] .n-pg-domain-actions { margin-top: var(--space-3); }
+
+/* the sparklines and the numerals of the three headline figures sit on the pale ground: the ink and line tokens of the theme (the old navy re-pointing is released by the band) */
+html[data-ui="n"] .dm-hf-s svg { color: var(--ink-3); }
+html[data-ui="n"] .dm-bigico { width: min(100%, 160px); color: color-mix(in srgb, var(--ink) 14%, transparent); }
+
+/* the ring and its key sit together in the middle of their column, not at its two far edges */
+html[data-ui="n"] .dm-ring > .v-ring-donut { justify-content: center; }
+html[data-ui="n"] .dm-ring .v-ring-legend { flex: 0 1 auto; min-width: 150px; }
+
+/* the years above the matrix: never under 12 px */
+html[data-ui="n"] .v-mx-hy { font-size: 12px; }
+
+@media (max-width: 860px) {
+  html[data-ui="n"] .hero.dm-hero .hero-grid { grid-template-columns: minmax(0, 1fr); }
+  html[data-ui="n"] .dm-vis:has(> .dm-bigico:only-child) { display: none; }          /* a domain with no ring and no figures: the faint icon alone has nothing to say on a narrow screen */
+}
+@media (max-width: 560px) {
+  html[data-ui="n"] { --n-pg-domain-ring: 112px; }
+  html[data-ui="n"] .hero.dm-hero { padding-block: var(--space-4); }
+  html[data-ui="n"] .hero.dm-hero .dm-vis { gap: var(--space-3); margin-top: 0; }
+  html[data-ui="n"] .dm-ring > .v-ring-donut { flex-wrap: nowrap; gap: var(--space-3); }
+  html[data-ui="n"] .dm-ring .v-ring-legend { flex: 1 1 0; min-width: 0; }
+  html[data-ui="n"] .dm-ring-hint { text-align: start; }
+}
+@media print {
+  html[data-ui="n"] .n-pg-domain-actions { display: none; }
+}
+
+/* the word under the priority ring: never under 12 px */
+html[data-ui="n"] .dm-score small { font-size: var(--fs-micro); }
+
+/* the pictogram of the category in the header of its page replaces the round line icon of the old page (pages/domain.js); the tile is the kit's, here only its size */
+html[data-ui="n"] .dm-ico.n-pg-domain-art { width: 88px; height: 88px; background: none; box-shadow: none; }
+html[data-ui="n"] .dm-ico.n-pg-domain-art .n-pg-domain-cat { width: 100%; height: 100%; }
+html[data-ui="n"] .dm-ico.n-pg-domain-art .n-pg-domain-cat svg { width: 56%; height: 56%; }
+@media (max-width: 560px) { html[data-ui="n"] .dm-ico.n-pg-domain-art { width: 64px; height: 64px; } }
+
+/* ── the figures in topics (pages/domain.js groupFigures): one group per topic, closed, with a summary row that stays visible: the name, one sentence, a short bar of the statuses ──
+   Groups are told apart by hairlines, not boxes. The bar is the look of the one on the town page (segments side by side, the attention colour first, a figure that is not judged hollow). */
+html[data-ui="n"] .n-pg-domain-groups { margin-top: var(--space-3); }
+html[data-ui="n"] .n-pg-domain-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0 var(--space-5); padding-block: var(--space-2); }
+html[data-ui="n"] .n-pg-domain-order { margin: 0; color: var(--ink-3); font-size: var(--fs-small); }
+html[data-ui="n"] .n-pg-domain-all { min-height: 36px; padding: 0; border: 0; background: none; color: var(--teal-ink); font: inherit; font-size: var(--fs-small); font-weight: 600; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .25em; text-decoration-color: var(--teal-line); cursor: pointer; }
+html[data-ui="n"] .n-pg-domain-all:hover { color: var(--ink); text-decoration-color: currentColor; }
+html[data-ui="n"] .n-pg-domain-all:focus-visible, html[data-ui="n"] .n-pg-domain-sum:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 6px; }
+html[data-ui="n"] .n-pg-domain-group { border-top: 1px solid var(--line); }
+html[data-ui="n"] .n-pg-domain-group:last-child { border-bottom: 1px solid var(--line); }
+html[data-ui="n"] .n-pg-domain-sum { display: grid; grid-template-columns: 24px minmax(0, 24rem) minmax(7.5rem, 22rem); align-items: center; gap: var(--space-2) var(--space-5); padding: var(--space-4) var(--space-2); list-style: none; cursor: pointer; border-radius: 12px; }
+html[data-ui="n"] .n-pg-domain-sum::-webkit-details-marker { display: none; }
+html[data-ui="n"] .n-pg-domain-sum:hover { background: var(--surface-2); }
+html[data-ui="n"] .n-pg-domain-id { display: grid; gap: 2px; min-width: 0; }
+html[data-ui="n"] .n-pg-domain-name { font-size: var(--fs-row); font-weight: 800; line-height: 1.35; color: var(--head); }
+html[data-ui="n"] .n-pg-domain-say { color: var(--ink-2); font-size: var(--fs-body); line-height: 1.5; }
+html[data-ui="n"] .n-pg-domain-n { font-weight: 800; color: var(--ink); }
+html[data-ui="n"] .n-pg-domain-n.t-attn { color: var(--attn-ink); }
+html[data-ui="n"] .n-pg-domain-bar { display: flex; gap: 3px; height: 12px; min-width: 0; }
+html[data-ui="n"] .n-pg-domain-seg { display: block; flex-basis: 0; min-width: 5px; border-radius: 3px; }
+html[data-ui="n"] .n-pg-domain-seg.is-concern { background: var(--attn-bar); }
+html[data-ui="n"] .n-pg-domain-seg.is-watch { background: var(--watch-bar); box-shadow: inset 0 0 0 1.5px var(--attn-bar); }
+html[data-ui="n"] .n-pg-domain-seg.is-good { background: var(--good-bar); }
+html[data-ui="n"] .n-pg-domain-seg.is-none { background: transparent; box-shadow: inset 0 0 0 1.5px var(--none-bar); }
+html[data-ui="n"] .n-pg-domain-chev { justify-self: start; width: 20px; height: 20px; color: var(--ink-3); }
+html[data-ui="n"] .n-pg-domain-group[open] > .n-pg-domain-sum .n-pg-domain-chev { transform: rotate(180deg); }
+html[data-ui="n"] .n-pg-domain-body { padding-block-end: var(--space-3); }
+html[data-ui="n"] .n-pg-domain-body .dm-rows, html[data-ui="n"] .n-pg-domain-body .v-time-sm { margin-top: 0; }
+@media (max-width: 560px) {
+  html[data-ui="n"] .n-pg-domain-sum { grid-template-columns: 24px minmax(0, 1fr); gap: var(--space-3) var(--space-3); padding-inline: 0; }
+  html[data-ui="n"] .n-pg-domain-bar { grid-column: 2; grid-row: 2; }
+}
+@media (pointer: coarse) {
+  html[data-ui="n"] .n-pg-domain-all { min-height: 44px; }
+}
+@media (forced-colors: active) {
+  html[data-ui="n"] .n-pg-domain-seg { background: ButtonText; }
+  html[data-ui="n"] .n-pg-domain-seg.is-none { background: Canvas; box-shadow: inset 0 0 0 2px ButtonText; }
+}
+/* print: every group is open (pages/domain.js opens them before the printer; this is the same when a browser prints without the event) */
+@media print {
+  html[data-ui="n"] .n-pg-domain-all, html[data-ui="n"] .n-pg-domain-chev, html[data-ui="n"] .n-pg-domain-tgt-aside { display: none; }
+  html[data-ui="n"] .n-pg-domain-sum { padding-inline: 0; break-after: avoid; }
+  html[data-ui="n"] .n-pg-domain-body .row-item.dm-row { break-inside: avoid; }
+}
+@media print {
+  html[data-ui="n"] details.n-pg-domain-group::details-content { content-visibility: visible; }
+}
+
+/* the official target of a figure, one quiet line under the status of its row (kit/guide.js): the bold word says where the figure stands, no colour of its own */
+html[data-ui="n"] .n-pg-domain-tgt { margin: var(--space-1) 0 0; color: var(--ink-2); font-size: var(--fs-small); line-height: 1.5; }
+html[data-ui="n"] .n-pg-domain-tgt-w { color: var(--ink); font-weight: 700; }
+html[data-ui="n"] .n-pg-domain-tgt-aside { display: block; }
+@media print { html[data-ui="n"] .n-pg-domain-tgt-aside { display: none; } }
+/* the two ticks on the bar of a row: the country stays a thin stroke (old css), the official target is a small flag above the bar: a different shape in the same two colours, in the bar and in its key */
+html[data-ui="n"] .dm-figs .dm-tb-tick.t { inset-block-start: -9px; width: 0; height: 0; margin-left: -5px; border-radius: 0; background: none; border-inline: 5px solid transparent; border-top: 9px solid var(--c-target); }
+html[data-ui="n"] .dm-figs .dm-tb-key i.k-target { width: 0; height: 0; border-radius: 0; background: none; border-inline: 4px solid transparent; border-top: 8px solid var(--c-target); }
+
+/* ── reflow at 320 px (WCAG 1.4.10, also with the text at 200 percent): the old category page keeps a few things on one line, and its years matrix keeps a cell of 26 px even where 13 years cannot fit ── */
+@media (max-width: 640px) {
+  /* the old phone rule gives every cell at least 26 px (13 years = 386 px in a 288 px column, so the last years were cut off on the right at 390 and 320 px); the matrix draws its own cell from its width (never under 18 px), so the same sum is kept with that floor, and the years the matrix left out of the axis stay out */
+  html[data-ui="n"] .dm-mx .v-mx-heat { --cell: clamp(18px, calc((100vw - 40px - (var(--n) - 1) * var(--hg)) / var(--n)), 44px) !important; }
+  html[data-ui="n"] .dm-mx .v-mx-hy.off { visibility: hidden; }
+}
+@media (max-width: 340px) {
+  html[data-ui="n"] .dm-hz { white-space: normal; }
+}
+
+/* targets (WCAG 2.5.8): the name of a figure in the years matrix and in the lists of changes is at least 24 px high (same padding and negative margin as on the trends page) */
+html[data-ui="n"] a.v-mx-hlab { padding-block: 4px; margin-block: -4px; }
+html[data-ui="n"] .dm-names a { padding-block: 2px; }

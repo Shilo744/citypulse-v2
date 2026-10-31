@@ -1,0 +1,87 @@
+/* Mode N opening band (SPEC 3.6): the pale sky ground, the picture window, the title zone, the calm "nothing here" spot, and the re-grounding of the old navy .hero.
+   Prefix n-band-. The one new motion verb, .wash, lives here (SPEC A4): opacity only, 1.2 s, no @keyframes. */
+
+/* ── the sky layer (washes in); the words above it are there at once ── */
+html[data-ui="n"] .n-band { position: relative; isolation: isolate; color: var(--ink); background: var(--sky-c); }
+html[data-ui="n"] .n-band-sky { position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, var(--sky-a), var(--sky-b) 62%, var(--sky-c)); pointer-events: none; }
+html[data-ui="n"].js-motion .wash { opacity: 0; transition: opacity 1.2s var(--ease); }
+html[data-ui="n"].js-motion .wash.in { opacity: 1; }
+@media print { html[data-ui="n"].js-motion .wash { opacity: 1; transition: none; } }
+
+html[data-ui="n"] .n-band-in { position: relative; display: grid; gap: var(--n-band-gap, var(--space-2)); align-content: start; min-width: 0; }
+html[data-ui="n"] .n-band-eyebrow { color: var(--teal-ink); font-weight: 700; font-size: var(--fs-small); letter-spacing: .02em; }
+html[data-ui="n"] .n-band-back { display: inline-flex; align-items: center; gap: var(--space-1); justify-self: start; min-height: 32px; color: var(--teal-ink); font-weight: 600; font-size: var(--fs-small); }
+html[data-ui="n"] .n-band-back svg { width: 16px; height: 16px; fill: none; stroke: currentColor; }
+html[data-ui="n"] .n-band-lede { color: var(--ink-2); font-size: var(--fs-body); max-width: 62ch; }
+
+/* ── title zone: every ordinary page, 96 to 120 px, hairline underneath, no picture ── */
+html[data-ui="n"] .n-band-title { padding: var(--space-5) var(--n-gutter) var(--space-4); min-height: var(--band-title-h); border-bottom: 1px solid var(--line); }
+html[data-ui="n"] .n-band-h1 { font-size: clamp(1.75rem, 3vw, 2.25rem); font-weight: 800; line-height: 1.15; letter-spacing: -.01em; color: var(--ink); text-wrap: balance; }
+
+/* ── home / entry band: eyebrow, name, facts, basis, actions, ask field, and the picture window under it ── */
+html[data-ui="n"] .n-band-home { padding: var(--space-5) var(--n-gutter) calc(var(--n-art-h) - 64px); overflow: clip; }
+html[data-ui="n"] .n-band-name { font-size: var(--fs-name); font-weight: 800; line-height: 1.05; letter-spacing: -.02em; color: var(--ink); text-wrap: balance; }
+html[data-ui="n"] .n-band-facts { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-5); color: var(--ink-2); font-weight: 600; }
+html[data-ui="n"] .n-band-basis { color: var(--ink-2); font-size: var(--fs-small); }
+html[data-ui="n"] .n-band-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-5); }
+html[data-ui="n"] .n-band-actions > a, html[data-ui="n"] .n-band-actions > button { display: inline-flex; align-items: center; gap: var(--space-2); min-height: 32px; padding: 0; border: 0; background: none; color: var(--ink-2); font-weight: 600; font-size: var(--fs-small); cursor: pointer; text-decoration: none; }
+html[data-ui="n"] .n-band-actions > a:hover, html[data-ui="n"] .n-band-actions > button:hover { color: var(--teal-ink); text-decoration: underline; }
+html[data-ui="n"] .n-band-actions svg { width: 18px; height: 18px; fill: none; stroke: currentColor; }
+html[data-ui="n"] .n-band-ask { margin-top: var(--space-3); max-width: 760px; position: relative; z-index: 2; }
+html[data-ui="n"] .n-band-art { position: absolute; inset-inline: 0; bottom: 0; height: var(--n-art-h); z-index: 0; pointer-events: none; background: transparent;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, black 42%), linear-gradient(to right, transparent 0, black 6%, black 94%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, black 42%), linear-gradient(to right, transparent 0, black 6%, black 94%, transparent 100%);
+  -webkit-mask-composite: source-in; mask-composite: intersect; }
+html[data-ui="n"] .n-band-art picture, html[data-ui="n"] .n-band-art img { display: block; width: 100%; height: 100%; }
+html[data-ui="n"] .n-band-art img { object-fit: cover; object-position: 50% 64%; }
+@media (max-height: 500px) { html[data-ui="n"] .n-band-art { display: none; } html[data-ui="n"] .n-band-home { padding-bottom: var(--space-5); } }
+html[data-ui="n"] .n-band-calm .n-band-art { opacity: .55; }
+html[data-ui="n"] .n-band-noart { padding-bottom: var(--space-5); }
+
+/* ── the calm spot: no data, not found, error ── */
+html[data-ui="n"] .n-band-spot { display: grid; grid-template-columns: minmax(0, 220px) minmax(0, 1fr); gap: var(--space-6); align-items: center; padding: var(--space-6) 0; }
+html[data-ui="n"] .n-band-spotpic { display: block; }
+html[data-ui="n"] .n-band-spotpic img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; mix-blend-mode: multiply; -webkit-mask-image: radial-gradient(closest-side, black 78%, transparent); mask-image: radial-gradient(closest-side, black 78%, transparent); }          /* the picture has a faint rectangle of its own: the blend and the soft edge take it away */
+html[data-ui="n"][data-theme="dark"] .n-band-spotpic img { mix-blend-mode: screen; }
+html[data-ui="n"] .n-band-spottext { display: grid; gap: var(--space-3); justify-items: start; }
+html[data-ui="n"] .n-band-spottitle { font-size: var(--fs-nonanswer); font-weight: 700; line-height: 1.2; color: var(--ink); }
+html[data-ui="n"] .n-band-spottext p { color: var(--ink-2); font-size: var(--fs-lede); max-width: 52ch; }
+html[data-ui="n"] .n-band-spot .n-band-actions { margin-top: var(--space-2); }
+
+/* ── the old navy .hero, re-grounded: the pale sky, the theme's tokens, no card (the property list is the one of css/layout.css) ── */
+html[data-ui="n"] .hero.n-band-hero {
+  --ink: unset; --ink-2: unset; --ink-3: unset; --muted: unset; --head: unset; --surface: unset; --surface-2: unset; --line: unset; --line-2: unset; --line-strong: unset; --track: unset;
+  --good-bar: unset; --good-ink: unset; --attn-bar: unset; --attn-ink: unset; --none-bar: unset; --c-city: unset; --c-nat: unset; --c-target: unset; --teal-ink: unset; --teal-dark: unset;
+  color: var(--ink); background: linear-gradient(180deg, var(--sky-a), var(--sky-b) 62%, var(--sky-c)); border-radius: 0; box-shadow: none; border-bottom: 1px solid var(--line);
+  padding: var(--space-6) var(--n-gutter) var(--space-6); overflow: clip;
+}
+html[data-ui="n"] .hero.n-band-hero::before { content: none; }
+html[data-ui="n"] .hero.n-band-hero .eyebrow { color: var(--teal-ink); }
+html[data-ui="n"] .hero.n-band-hero h1 { color: var(--ink); font-weight: 800; font-size: clamp(1.75rem, 3.4vw, 2.5rem); line-height: 1.12; letter-spacing: -.015em; }
+html[data-ui="n"] .hero.n-band-hero .lede, html[data-ui="n"] .hero.n-band-hero .hero-verdict { color: var(--ink-2); font-size: var(--fs-lede); }
+html[data-ui="n"] .hero.n-band-hero .chip { color: var(--ink-2); }
+html[data-ui="n"] .hero.n-band-hero .chip svg { color: var(--teal-ink); }
+html[data-ui="n"] .hero.n-band-hero a { color: var(--teal-ink); }
+html[data-ui="n"] .hero.n-band-hero .btn { background: var(--surface); border-color: var(--line-strong); color: var(--ink); }
+html[data-ui="n"] .hero.n-band-hero .btn:hover { background: var(--surface); border-color: var(--teal-dark); color: var(--teal-ink); }
+html[data-ui="n"] .hero.n-band-hero .btn.primary { background: var(--teal-dark); border-color: var(--teal-dark); color: var(--on-primary); }
+html[data-ui="n"] .hero.n-band-hero .btn.primary:hover { background: var(--nav); border-color: var(--nav); color: var(--on-nav-strong); }
+html[data-ui="n"] .hero.n-band-hero .hero-grid { gap: var(--space-5) var(--space-7); }
+
+@media (max-width: 860px) {
+  html[data-ui="n"] .n-band-title { padding-block: var(--space-4) var(--space-3); }
+  html[data-ui="n"] .n-band-spot { grid-template-columns: 1fr; gap: var(--space-4); padding: var(--space-5) 0; }
+  html[data-ui="n"] .n-band-spotpic { max-width: 220px; }
+  html[data-ui="n"] .hero.n-band-hero { padding-block: var(--space-5); }
+}
+@media (pointer: coarse) {
+  html[data-ui="n"] .n-band-actions > a, html[data-ui="n"] .n-band-actions > button, html[data-ui="n"] .n-band-back { min-height: 44px; }
+}
+@media (forced-colors: active) {
+  html[data-ui="n"] .n-band-sky, html[data-ui="n"] .n-band-art { display: none; }
+  html[data-ui="n"] .hero.n-band-hero { border-bottom: 1px solid CanvasText; background: Canvas; }
+}
+@media print {
+  html[data-ui="n"] .n-band-sky, html[data-ui="n"] .n-band-art { display: none; }
+  html[data-ui="n"] .n-band-home, html[data-ui="n"] .n-band-title, html[data-ui="n"] .hero.n-band-hero { padding-inline: 0; padding-bottom: var(--space-3); background: none; }
+}

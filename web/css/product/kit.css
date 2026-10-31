@@ -1,0 +1,111 @@
+/* n-kit-: the shared kit (actions row, explained words, dialogs, mistake report, provenance). Every rule starts with html[data-ui="n"].
+   Text links with an icon, never capsules; the colours are tokens; no motion of its own (the dialogs simply appear). */
+
+html[data-ui="n"] .n-kit-live { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+html[data-ui="n"] .n-kit-act[hidden], html[data-ui="n"] .n-kit-input[hidden] { display: none; }
+
+/* one action: an icon and a word, underlined on hover */
+html[data-ui="n"] .n-kit-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 24px; }
+html[data-ui="n"] .n-kit-act { display: inline-flex; align-items: center; gap: 8px; min-height: 32px; padding: 4px 0; border: 0; background: none; color: var(--teal-ink); font: inherit; font-size: var(--fs-small, .875rem); font-weight: 600; line-height: 1.4; cursor: pointer; text-decoration: none; text-align: start; }
+html[data-ui="n"] .n-kit-act svg { flex: none; width: 18px; height: 18px; }
+html[data-ui="n"] .n-kit-act:hover { color: var(--ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .28em; }
+html[data-ui="n"] .n-kit-act:active { opacity: .8; }
+html[data-ui="n"] .n-kit-act[aria-busy="true"] { opacity: .6; cursor: progress; }
+
+/* an explained word: underlined text, a button inside the sentence */
+html[data-ui="n"] .n-kit-term { padding: 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; text-decoration: underline dotted; text-decoration-color: var(--teal-ink); text-decoration-thickness: 2px; text-underline-offset: .22em; }
+/* a short figure ("8%") is a button of at least 24 px wide (WCAG 2.5.8): the padding is given back by an equal negative margin, so the line reads as it did and the dotted line stays under the text only */
+html[data-ui="n"] .n-kit-term { padding-inline: 4px; margin-inline: -4px; }
+html[data-ui="n"] .n-kit-term:hover { color: var(--teal-ink); text-decoration-style: solid; }
+@media (pointer: fine) {          /* a target of at least 24 px (WCAG 2.5.8) in a sentence: the negative margin keeps the line as it was (a finger gets 44 px below) */
+  html[data-ui="n"] .n-kit-term { padding-block: 1px; margin-block: -1px; }
+}
+
+/* the tags of the old comparison charts (the town's own row, the national reference) are plain text, not capsules: the same as home.css says for the town page; on the figure page they were blue and outlined pills */
+html[data-ui="n"] #view .v-cmp-badge { padding: 0; border-radius: 0; background: none; color: var(--ink-3); font-size: 12px; font-weight: 600; }
+html[data-ui="n"] #view .v-cmp-ref-tag { padding: 2px 4px; border-radius: 0; background: var(--bg); box-shadow: none; color: var(--ink-2); font-size: 12px; }
+/* the value chips of the old charts ("יעד", "ארצי 75%", "80.6%" at the end of a line; "קורונה" and "המלחמה" over the plot) are rectangles with the radius of half their height, that is capsules with text in them: the same chips with a small corner */
+html[data-ui="n"] #view :is(.v-time-tchip, .v-time-evchips) rect, html[data-ui="n"] #view .v-cmp-chip-bg { rx: 4px; ry: 4px; }
+/* the position bubble of the meter ("מקום 11 מתוך 143"): radius 10 on a 28 px bar is a capsule with text in it; a plain label with a small corner keeps its pointer */
+html[data-ui="n"] #view .v-ring-bubble { border-radius: 4px; }
+html[data-ui="n"] #view .v-cmp-lrow.is-self { box-shadow: none; border-radius: 0; }
+
+/* the plain-text controls inside dialogs and answers */
+html[data-ui="n"] .n-kit-link { color: var(--teal-ink); font-weight: 600; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .25em; }
+html[data-ui="n"] .n-kit-link:hover { color: var(--ink); }
+html[data-ui="n"] .n-kit-textbtn { min-height: 32px; padding: 4px 0; border: 0; background: none; color: var(--ink-2); font: inherit; font-size: var(--fs-small, .875rem); font-weight: 600; cursor: pointer; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .25em; }
+html[data-ui="n"] .n-kit-textbtn:hover { color: var(--ink); }
+
+/* focus: the same ring everywhere, never clipped by the row it sits in */
+html[data-ui="n"] :is(.n-kit-act, .n-kit-term, .n-kit-link, .n-kit-textbtn, .n-kit-input):focus-visible { outline: 2px solid var(--focus, var(--teal-dark)); outline-offset: 2px; border-radius: 6px; }
+
+/* dialogs: the platform traps the focus and closes on Esc; the page behind is dimmed */
+html[data-ui="n"] dialog.n-kit-dlg { box-sizing: border-box; width: min(30rem, calc(100vw - 2 * var(--pg, 16px))); max-height: calc(100vh - 2 * var(--pg, 16px)); max-height: calc(100dvh - 2 * var(--pg, 16px)); margin: auto; padding: 0; overflow: auto; overscroll-behavior: contain; border: 1px solid var(--line-strong); border-radius: var(--r-lg, 16px); background: var(--surface); color: var(--ink); box-shadow: var(--shadow-up); text-align: start; }
+html[data-ui="n"] dialog.n-kit-dlg.is-wide { width: min(40rem, calc(100vw - 2 * var(--pg, 16px))); }
+html[data-ui="n"] dialog.n-kit-dlg::backdrop { background: var(--scrim); }
+html[data-ui="n"] .n-kit-dlg-in { display: grid; gap: 16px; padding: 24px; }
+html[data-ui="n"] .n-kit-dlg-title { margin: 0; color: var(--head, var(--ink)); font-size: 1.375rem; font-weight: 800; line-height: 1.25; }
+html[data-ui="n"] .n-kit-dlg-body { display: grid; gap: 12px; font-size: var(--fs-body, 1rem); line-height: 1.6; color: var(--ink-2); }
+html[data-ui="n"] .n-kit-dlg-body p { margin: 0; }
+html[data-ui="n"] .n-kit-def { color: var(--ink); font-size: 1.0625rem; }
+html[data-ui="n"] .n-kit-def-long { font-size: var(--fs-small, .875rem); color: var(--ink-3); }
+html[data-ui="n"] .n-kit-dlg-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px; padding-top: 12px; border-top: 1px solid var(--line); }
+
+/* the mistake report */
+html[data-ui="n"] .n-kit-form { display: grid; gap: 14px; }
+html[data-ui="n"] .n-kit-field { display: grid; gap: 6px; }
+html[data-ui="n"] .n-kit-field > span { color: var(--ink); font-size: var(--fs-small, .875rem); font-weight: 600; }
+html[data-ui="n"] .n-kit-input { box-sizing: border-box; width: 100%; min-height: 44px; padding: 10px 12px; border: 1.5px solid var(--line-strong); border-radius: var(--r-md, 12px); background: var(--surface); color: var(--ink); font: inherit; line-height: 1.5; text-align: start; }
+html[data-ui="n"] textarea.n-kit-input { resize: vertical; }
+html[data-ui="n"] .n-kit-input[aria-invalid="true"] { border-color: var(--attn-ink); }
+html[data-ui="n"] .n-kit-msg { min-height: 1.4em; margin: 0; color: var(--ink-2); font-size: var(--fs-small, .875rem); font-weight: 600; }
+html[data-ui="n"] .n-kit-msg.is-err { color: var(--attn-ink); }
+html[data-ui="n"] .n-kit-msg.is-ok { color: var(--good-ink); }
+html[data-ui="n"] .n-kit-note { margin: 0; color: var(--ink-3); font-size: var(--fs-small, .875rem); }
+html[data-ui="n"] .n-kit-form .btn { justify-self: start; }
+/* the sending state keeps the focus on the button, so it is aria-disabled, not disabled: it looks like the disabled .btn of css/app.css and a second press is ignored in the handler */
+html[data-ui="n"] .n-kit-form .btn[aria-disabled="true"] { opacity: .55; cursor: not-allowed; }
+
+/* provenance: one quiet line under an answer */
+html[data-ui="n"] .n-kit-prov { max-width: 72ch; margin: 0; padding-top: 12px; border-top: 1px solid var(--line); color: var(--ink-3); font-size: var(--fs-small, .875rem); line-height: 1.6; }
+
+/* phones: 44 px targets, and the optional icon-only row */
+@media (pointer: coarse) {
+  html[data-ui="n"] .n-kit-act, html[data-ui="n"] .n-kit-textbtn { min-height: 44px; }
+  html[data-ui="n"] .n-kit-term { padding-block: .3em; }
+  html[data-ui="n"] .n-kit-link { display: inline-block; padding-block: .6em; }
+}
+@media (max-width: 560px) {
+  html[data-ui="n"] .n-kit-actions--icons { gap: 4px 8px; }
+  html[data-ui="n"] .n-kit-actions--icons .n-kit-act { min-width: 44px; min-height: 44px; justify-content: center; }
+  html[data-ui="n"] .n-kit-actions--icons .n-kit-act-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  html[data-ui="n"] .n-kit-dlg-in { padding: 20px; }
+}
+
+@media (forced-colors: active) {
+  html[data-ui="n"] dialog.n-kit-dlg { border: 2px solid CanvasText; }
+  html[data-ui="n"] .n-kit-input { border: 1px solid CanvasText; }
+  html[data-ui="n"] :is(.n-kit-act, .n-kit-term, .n-kit-link, .n-kit-textbtn, .n-kit-input):focus-visible { outline-color: Highlight; }
+}
+@media print {
+  html[data-ui="n"] .n-kit-actions, html[data-ui="n"] dialog.n-kit-dlg { display: none; }
+  html[data-ui="n"] .n-kit-term { text-decoration: none; }
+}
+
+/* ── the pictogram of a category (kit/catart.js): one quiet tile with a single line drawing, next to the name, decoration only. The size is --cat (set by the caller); the drawing is 58 percent of the tile ── */
+html[data-ui="n"] .n-kit-cat { display: inline-grid; place-items: center; flex: none; width: var(--cat, 28px); height: var(--cat, 28px); border-radius: 24%; background: var(--cat-tile); color: var(--cat-ink); }
+html[data-ui="n"] .n-kit-cat svg { display: block; width: 58%; height: 58%; flex: none; opacity: 1; }
+html[data-ui="n"] .n-kit-cat.is-sm svg { width: 64%; height: 64%; }
+
+/* ── the extra rows of a card that shows on a mark (kit/tips.js): same rows as the shared card, a hairline between what the chart says and what is added, grey words for the source and the definition ── */
+html[data-ui="n"] .tt .n-kit-tipx { margin-top: 3px; }
+html[data-ui="n"] .tt > :not(.n-kit-tipx) + .n-kit-tipx { margin-top: 7px; padding-top: 7px; border-top: 1px solid var(--line); }
+html[data-ui="n"] .tt .n-kit-tipx .tr b { font-weight: 600; text-align: start; }
+html[data-ui="n"] .tt .n-kit-tipx .tr .k { white-space: nowrap; }
+html[data-ui="n"] .tt .n-kit-tipsub { display: block; font-weight: 400; font-size: .78rem; color: var(--ink-3); }
+html[data-ui="n"] .tt .n-kit-tipnote { color: var(--ink-3); font-size: .78rem; line-height: 1.4; }
+html[data-ui="n"] .tt .n-kit-tiplist { font-size: .82rem; line-height: 1.4; }
+html[data-ui="n"] .tt .n-kit-tiplist b { display: block; color: var(--ink-3); font-weight: 600; font-size: .78rem; }
+html[data-ui="n"] .tt .n-kit-tiplist div + div { margin-top: 2px; }
+html[data-ui="n"] .tt .n-kit-tiplist b.n-kit-tiplead { display: inline; color: var(--ink); font-size: inherit; }
+html[data-ui="n"] .tt .n-kit-tipmore { color: var(--ink-3); }

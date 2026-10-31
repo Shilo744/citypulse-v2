@@ -1,0 +1,19 @@
+/* CityPulse product ("mode N"): one barrel for n.html. Order matters: tokens first, then the shell, the band, the kit and the states, then the screens.
+   Every rule inside carries html[data-ui="n"] so that it beats the shared old stylesheets (tests/product-shell.test.mjs holds that). */
+@import url("product/tokens.css");
+@import url("product/shell.css");
+@import url("product/band.css");
+@import url("product/kit.css");
+@import url("product/states.css");
+@import url("product/entry.css");
+@import url("product/home.css");
+@import url("product/brief.css");
+@import url("product/pages/domain.css");
+@import url("product/pages/indicator.css");
+@import url("product/pages/trends.css");
+@import url("product/pages/compare.css");
+@import url("product/pages/ask.css");
+@import url("product/pages/actions.css");
+@import url("product/pages/coverage.css");
+@import url("product/pages/method.css");
+@import url("product/pages/static.css");

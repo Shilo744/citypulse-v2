@@ -1,0 +1,247 @@
+/* Lab direction "entry": a warm, illustrated front door (js/lab/entry/, prefix .le-). Colour only through tokens (the few page tokens below are the colours of the artwork
+   and of the white search field, defined once with their dark twin); motion only through the vocabulary of css/motion.css (.rv rise, .fade inside a .viz, counting numerals);
+   no side stripes, no cards inside cards, no text in capsules. Reduced motion, print and no-JS show the final state (the hidden start states live under html.js-motion). */
+
+/* ── page tokens ── */
+.le {
+  --le-gutter: clamp(20px, 5vw, 56px); --le-w: 1160px;
+  --le-paper: #f8f5ee; --le-cream: #f7f0e3;                                                  /* the warm paper of the page, the cream of the paper spot illustrations */
+  --le-sky-a: #e6f0e8; --le-sky-b: #d8ebe3; --le-sky-c: #f2ecdb;                             /* the day sky of the picture: top, middle, horizon */
+  --le-field: #fff; --le-field-ink: #1c2b3f; --le-field-ink-3: #5d6d82; --le-field-line: #e2e9ef; --le-field-line-2: #cbd6e0; --le-field-soft: #e6f4f3;          /* the search field is white in both themes */
+  --le-go: #167a7c; --le-go-hover: #0f2a4d;                                                  /* its button, and the open button of the sample: deep teal with white text */
+  --le-band: color-mix(in srgb, var(--teal-soft) 62%, var(--le-paper));
+  --le-rule: color-mix(in srgb, var(--ink) 13%, transparent);
+  position: relative; background: var(--le-paper); color: var(--ink); font-family: var(--font); overflow-x: clip;
+}
+:root[data-theme="dark"] .le {
+  --le-paper: var(--bg); --le-sky-a: #06284f; --le-sky-b: #072a52; --le-sky-c: #082b51;
+  --le-band: color-mix(in srgb, var(--le-sky-b) 50%, var(--bg)); --le-rule: color-mix(in srgb, var(--ink) 16%, transparent);
+}
+.le-wrap { width: min(var(--le-w), 100% - 2 * var(--le-gutter)); margin-inline: auto; }
+.le a { text-underline-offset: 4px; }
+
+/* ── 1. the hero: the sky carries the words, the picture rises under them and dissolves into the sky ── */
+.le-hero {
+  --le-art-h: clamp(300px, 31vw, 720px);                                                   /* the height of the picture's window (a fixed share of the width, so that the crop stays the same) */
+  --le-fade: clamp(96px, 8.5vw, 150px);                                                    /* how far the picture dissolves at its top edge */
+  --le-fade-b: clamp(36px, 4.5vw, 80px);                                                   /* and at its bottom edge, into the paper of the page */
+  --le-overlap: clamp(18px, 2.4vw, 36px);                                                    /* how far the window reaches up behind the last line of text */
+  --le-pos: 83%;                                                                          /* which part of the picture the window shows (vertical position of the crop) */
+  position: relative; isolation: isolate; color: var(--head);
+  padding-bottom: calc(var(--le-art-h) - var(--le-overlap));
+}
+.le-sky { position: absolute; inset: 0 0 calc(var(--le-art-h) - var(--le-fade) - 2px) 0; z-index: -2; overflow: hidden;
+  background: linear-gradient(to bottom, var(--le-sky-a) 0, var(--le-sky-b) 55%, var(--le-sky-c) 100%); }
+.le-wash { position: absolute; inset: 0; background: radial-gradient(72% 74% at 50% 100%, color-mix(in srgb, var(--surface) 70%, transparent), transparent 72%); }
+:root[data-theme="dark"] .le-wash { background: radial-gradient(74% 80% at 50% 100%, color-mix(in srgb, var(--teal) 24%, transparent), transparent 72%); }
+html.js-motion .le-sky .le-wash { transition-duration: 1.2s; transition-delay: 0s; }          /* the sky comes first, slowly */
+.le-stars { position: absolute; inset: 0; display: none; }
+:root[data-theme="dark"] .le-stars { display: block; }
+.le-star { position: absolute; width: var(--sz); height: var(--sz); border-radius: 50%; background: color-mix(in srgb, var(--ink) var(--a), transparent); }
+
+.le-art { --le-ramp: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, .03) calc(var(--le-fade) * .10), rgba(0, 0, 0, .14) calc(var(--le-fade) * .26), rgba(0, 0, 0, .38) calc(var(--le-fade) * .46), rgba(0, 0, 0, .7) calc(var(--le-fade) * .68), rgba(0, 0, 0, .93) calc(var(--le-fade) * .88), #000 var(--le-fade));
+  position: absolute; inset: auto 0 0 0; height: var(--le-art-h); z-index: -1; overflow: hidden;
+  -webkit-mask-image: var(--le-ramp), linear-gradient(to top, transparent 0, #000 var(--le-fade-b));
+  mask-image: var(--le-ramp), linear-gradient(to top, transparent 0, #000 var(--le-fade-b));
+  -webkit-mask-composite: source-in; mask-composite: intersect; }
+.le-pic { position: absolute; inset: 0; display: block; opacity: 0; transition: opacity .8s var(--ease); }
+.le-pic.is-ready { opacity: 1; }
+@media print { .le-pic { opacity: 1; } }
+.le-pic img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% var(--le-pos); }
+.le-pic-dusk { display: none; }
+:root[data-theme="dark"] .le-pic-day { display: none; }
+:root[data-theme="dark"] .le-pic-dusk { display: block; }
+html.js-motion .le-art .rv:not(.in) { transform: translateY(22px); }                       /* the picture rises a few pixels, once */
+html.js-motion .le-art .rv { transition-duration: 1.2s; transition-delay: .1s; }
+
+/* the logo row */
+.le-top { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 72px; padding-block: 12px; }
+.le-brand { display: inline-flex; align-items: center; gap: 12px; color: var(--head); text-decoration: none; }
+.le-brand:hover { text-decoration: none; }
+.le-brand .brand-logo { width: 42px; height: auto; }
+.le-brand-t b { display: block; font-size: 1.3rem; font-weight: 800; letter-spacing: -.01em; line-height: 1.1; }
+.le-brand-t small { display: block; margin-top: 3px; font-size: .8rem; color: var(--ink-2); }
+.le-nav { display: flex; align-items: center; gap: 4px; }
+.le-navlink, .le-nav .theme-btn { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 4px 14px; border: 0; border-radius: 12px; background: transparent; color: var(--head); font: inherit; font-size: .95rem; font-weight: 600; text-decoration: none; transition: background .15s; }
+.le-navlink:hover, .le-nav .theme-btn:hover { background: color-mix(in srgb, var(--head) 9%, transparent); color: var(--head); text-decoration: none; border-color: transparent; }
+.le-navlink svg, .le-nav .theme-btn svg { width: 19px; height: 19px; flex: none; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+
+/* the words */
+.le-copy { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; text-align: center; padding-top: clamp(0px, 1vw, 12px); }
+.le-eyebrow { font-size: .95rem; font-weight: 700; color: var(--teal-ink); }
+.le-h1 { margin: 10px 0 0; max-width: 20em; font-size: clamp(2.1rem, 5.1vw, 3.95rem); line-height: 1.07; font-weight: 900; letter-spacing: -.025em; color: var(--head); text-wrap: balance; }
+.le-h1a, .le-h1b { display: block; }
+.le-h1b { color: var(--teal-ink); }
+.le-w { display: inline-block; }
+/* the order of the entrance: sky, picture, eyebrow, the words of the headline one by one, lede, search, quick picks, numbers */
+html.js-motion .le-copy > .rv { transition-delay: var(--le-t, 0ms); }
+.le-eyebrow { --le-t: 80ms; } .le-lede { --le-t: 640ms; } .le-copy > .le-search { --le-t: 760ms; } .le-copy > .le-quick { --le-t: 860ms; } .le-stats { --le-t: 940ms; }
+html.js-motion .le-h1 .rv { transition-duration: .9s; transition-delay: calc(180ms + var(--w, 0) * 60ms); }
+html.js-motion .le-h1 .rv:not(.in) { transform: translateY(.5em); }
+.le-lede { margin: 16px 0 0; max-width: 780px; font-size: clamp(1.02rem, 1.45vw, 1.17rem); line-height: 1.6; color: var(--ink-2); text-wrap: balance; }
+.le .le-search { position: relative; width: min(760px, 100%); max-width: none; margin-top: 26px; text-align: start; }          /* (.land-search of the real entry page is also on this box, for the "/" shortcut: its max-width is overridden here) */
+
+/* the search field: big, white, dark text in both themes */
+.le .le-search .searchbox { --surface: var(--le-field); --ink: var(--le-field-ink); --ink-3: var(--le-field-ink-3); --muted: var(--le-field-ink-3); --line: var(--le-field-line); --line-strong: var(--le-field-line-2); --teal-soft: var(--le-field-soft); --shadow-up: 0 16px 36px rgba(15, 42, 77, .22);
+  min-height: 68px; padding-inline: 24px 9px; gap: 14px; border: 1px solid color-mix(in srgb, var(--le-field-ink) 14%, transparent); border-radius: 22px;
+  box-shadow: 0 1px 2px rgba(15, 42, 77, .08), 0 22px 44px -14px rgba(15, 42, 77, .34); }
+.le .le-search .searchbox:focus-within { border-color: var(--le-go); box-shadow: 0 0 0 4px color-mix(in srgb, var(--le-go) 28%, transparent), 0 22px 44px -14px rgba(15, 42, 77, .34); }
+.le .le-search .searchbox > svg { width: 24px; height: 24px; color: var(--le-field-ink-3); }
+.le .le-search .searchbox input { font-size: 1.22rem; font-weight: 500; color: var(--le-field-ink); }
+.le .le-search .searchbox input::placeholder { color: var(--le-field-ink-3); opacity: 1; }
+.le .le-search .searchbox .go { min-height: 52px; padding: 8px 30px; border-radius: 15px; background: var(--le-go); color: #fff; font-size: 1.05rem; transition: background .15s; }
+.le .le-search .searchbox .go:hover { background: var(--le-go-hover); }
+
+/* popular towns, the last locality, one quiet line of numbers */
+.le-quick { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 2px 22px; min-height: 30px; margin-top: 16px; font-size: .98rem; color: var(--ink-2); }
+.le-quick a, .le-resume { color: var(--head); font-weight: 600; text-decoration: underline; text-decoration-color: color-mix(in srgb, currentColor 34%, transparent); text-decoration-thickness: 1.5px; text-underline-offset: 6px; }
+.le-quick a { padding-block: 4px; }
+.le-quick a:hover, .le-resume:hover { text-decoration-color: currentColor; color: var(--head); }
+.le-resume { display: inline-flex; align-items: center; gap: 9px; margin-inline-end: 18px; padding-block: 4px; }
+.le-resume svg { width: 16px; height: 16px; flex: none; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+.le-stats { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 28px; min-height: 26px; margin-top: 12px; font-size: .92rem; color: var(--ink-2); }
+.le-stat b { margin-inline-end: 3px; font-size: 1.14rem; font-weight: 800; color: var(--head); font-variant-numeric: tabular-nums; }
+
+/* ── sections under the hero ── */
+.le-sec { padding-block: clamp(48px, 6vw, 84px); }
+.le-head { max-width: 64ch; margin-bottom: clamp(32px, 4.4vw, 56px); }
+.le-sec .le-eyebrow { font-size: .9rem; }
+.le-h2 { margin: 8px 0 0; font-size: clamp(1.8rem, 3.5vw, 2.7rem); line-height: 1.1; font-weight: 900; letter-spacing: -.02em; color: var(--head); text-wrap: balance; }
+.le-lead { margin: 14px 0 0; max-width: 58ch; font-size: 1.1rem; line-height: 1.65; color: var(--ink-2); }
+.le-lead b, .le-more b, .le-spot-k b, .le-sample-note b { font-weight: 800; color: var(--head); font-variant-numeric: tabular-nums; }
+
+/* 2. what is checked: six spot illustrations, no boxes (at dusk they sit on cream, softly rounded) */
+.le-spots { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); column-gap: clamp(14px, 2.4vw, 34px); row-gap: 0; }
+.le-spot { display: grid; grid-template-rows: subgrid; grid-row: span 4; row-gap: 0; align-content: start; min-width: 0; text-align: center; }          /* a subgrid: the pictures, names, captions and counts of all six line up even when a name wraps */
+.le-spot-art { width: min(100%, 178px); aspect-ratio: 1; margin: 0 auto 16px; transition: transform .32s var(--ease); }
+.le-spot:hover .le-spot-art { transform: translateY(-9px); }
+.le-spot-img { display: block; width: 100%; height: auto; }
+.le-spot-img.on-dark { display: none; }
+:root[data-theme="dark"] .le-spot-img.on-light { display: none; }
+:root[data-theme="dark"] .le-spot-img.on-dark { display: block; border-radius: 30px; background: var(--le-cream); }
+.le-spot-n { font-size: 1.06rem; font-weight: 800; line-height: 1.25; color: var(--head); }
+.le-spot-c { margin-top: 6px; font-size: .93rem; line-height: 1.5; color: var(--ink-2); text-wrap: balance; }
+.le-spot-k { margin-top: 10px; padding-bottom: 38px; font-size: .9rem; font-weight: 700; color: var(--teal-ink); }
+.le-spot-k b { font-size: 1.1rem; font-weight: 900; color: var(--teal-ink); }
+.le-more { margin-top: clamp(8px, 2vw, 24px); padding-top: 22px; border-top: 1px solid var(--le-rule); font-size: 1rem; line-height: 1.65; color: var(--ink-2); }
+
+/* 3. why it can be trusted: three promises, typographic, each with a real specimen of how it looks in the product */
+.le-promises { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 44px clamp(28px, 4.4vw, 68px); }
+.le-promise { display: flex; flex-direction: column; min-width: 0; padding-top: 24px; border-top: 1px solid var(--le-rule); }
+.le-no { margin-bottom: 18px; font-size: clamp(3.6rem, 6vw, 5.2rem); line-height: .86; font-weight: 900; letter-spacing: -.04em; color: var(--teal); font-variant-numeric: tabular-nums; }
+.le-promise-h { font-size: 1.36rem; line-height: 1.25; font-weight: 800; color: var(--head); text-wrap: balance; }
+.le-promise-p { margin-top: 10px; font-size: 1.02rem; line-height: 1.7; color: var(--ink-2); }
+.le-spec { display: flex; align-items: center; gap: 10px; margin-top: auto; padding-top: 24px; font-size: .92rem; line-height: 1.5; color: var(--ink-2); }
+.le-srcline { display: inline-flex; align-items: flex-start; gap: 8px; color: var(--teal-ink); text-decoration: underline; text-decoration-color: color-mix(in srgb, currentColor 40%, transparent); }
+.le-srcline:hover { text-decoration-color: currentColor; }
+.le-srcline svg { width: 16px; height: 16px; flex: none; margin-top: 3px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+.le-hollow { flex: none; width: 17px; height: 17px; border: 2px solid var(--none-bar); border-radius: 50%; }
+.le-spec .ai-badge { font-size: .9rem; }
+.le-trust-more { display: flex; margin-top: clamp(36px, 5vw, 56px); }
+.le-trust-more a { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: var(--teal-ink); text-decoration: underline; text-decoration-color: color-mix(in srgb, currentColor 40%, transparent); text-underline-offset: 6px; }
+.le-trust-more a:hover { text-decoration-color: currentColor; }
+.le-trust-more svg { width: 17px; height: 17px; flex: none; margin-inline-start: -2px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+
+/* 4. what it looks like: one calm tinted band with the real figures of one locality */
+.le-sample { padding-block: clamp(52px, 6.4vw, 88px); background: var(--le-band); }
+.le-sample-in { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 clamp(40px, 6vw, 96px); align-items: start; }
+.le-sample-text { min-width: 0; padding-bottom: 44px; }
+.le .le-open { margin-top: 28px; min-height: 52px; padding-inline: 26px; border-color: var(--le-go); background: var(--le-go); color: #fff; font-size: 1.02rem; white-space: normal; text-align: center; }          /* the same deep teal as the search button, white text, in both themes */
+.le .le-open:hover { border-color: var(--le-go-hover); background: var(--le-go-hover); color: #fff; }
+.le-open svg { width: 19px; height: 19px; }
+.le-sample-note { margin-top: 18px; font-size: .9rem; line-height: 1.6; color: var(--ink-2); }
+.le-sample-note a { color: var(--teal-ink); text-decoration: underline; }
+.le-row { min-width: 0; padding-bottom: 44px; }
+.le-row.is-compare, .le-row.is-plan { padding-top: 34px; padding-bottom: 0; border-top: 1px solid var(--le-rule); }
+.le-row-h { font-size: .92rem; font-weight: 800; color: var(--teal-ink); }
+.le-row-b { display: grid; gap: 14px; margin-top: 10px; min-width: 0; }
+.le-row-t { min-width: 0; }
+.le-row-big { font-size: clamp(1.5rem, 2.5vw, 2rem); line-height: 1.18; font-weight: 900; letter-spacing: -.015em; color: var(--head); }
+.le-row-big b { color: var(--attn-ink); font-variant-numeric: tabular-nums; }
+.le-row-p { margin-top: 4px; font-size: 1rem; line-height: 1.55; color: var(--ink-2); }
+.le-row-p.is-name { margin-top: 0; font-size: 1.1rem; font-weight: 800; line-height: 1.4; color: var(--head); }
+.le-row-p b { color: var(--head); font-variant-numeric: tabular-nums; }
+.le-row-n { margin-top: 6px; font-size: .88rem; line-height: 1.5; color: var(--ink-3); }
+.le-row-v { min-width: 0; }
+.le-row-v .v-ring-donut { justify-content: flex-start; gap: 14px 24px; }
+.le-row-v .v-ring-legend { flex-basis: 170px; }
+.le-row-v .v-ring-prog { align-items: flex-start; }
+.le-row.is-plan .le-row-b { grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 24px; }
+
+/* 5. the closing search, the sources, the footer */
+.le-closing { position: relative; z-index: 3; padding-block: clamp(72px, 10vw, 128px) clamp(44px, 6vw, 80px); text-align: center; }
+.le-closing-in { display: flex; flex-direction: column; align-items: center; }
+.le-closing .le-lead { margin-inline: auto; }
+.le-sources { padding-block: clamp(36px, 5vw, 64px) clamp(48px, 6vw, 80px); }
+.le-sources .le-h2 { font-size: clamp(1.4rem, 2.4vw, 1.8rem); }
+.le-sources .le-lead { font-size: 1rem; }
+.le-srcs { column-count: 3; column-gap: clamp(28px, 4.4vw, 64px); }
+.le-src-g { break-inside: avoid; margin-bottom: 30px; }
+.le-src-p { padding-bottom: 10px; border-bottom: 1px solid var(--le-rule); font-size: .96rem; font-weight: 800; color: var(--head); }
+.le-src-g ul { display: grid; gap: 9px; margin: 12px 0 0; padding: 0; list-style: none; }
+.le-src-g li { font-size: .92rem; line-height: 1.5; color: var(--ink-2); }
+.le-src-g a { color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 3px; }
+.le-src-g a:hover { color: var(--teal-ink); text-decoration-color: currentColor; }
+.le-foot { border-top: 1px solid var(--le-rule); padding-block: 30px 44px; font-size: .88rem; color: var(--ink-2); }
+.le-foot-in { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 32px; }
+.le-foot-brand { display: inline-flex; align-items: center; gap: 10px; color: var(--head); font-size: 1.05rem; text-decoration: none; }
+.le-foot-brand:hover { text-decoration: none; }
+.le-foot-brand .brand-logo { width: 26px; height: auto; }
+.le-foot-t { flex: 1 1 280px; margin: 0; }
+.le-foot-r { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 22px; }
+.le-foot-r a { color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--line-strong); }
+.le-foot-d { margin: 0; color: var(--ink-3); }
+
+/* ── tablets and phones ── */
+@media (max-width: 1000px) {
+  .le-spots { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .le-sample-in { grid-template-columns: 1fr; }
+  .le-row, .le-sample-text { padding-bottom: 36px; }
+  .le-row.is-compare, .le-row.is-plan { padding-top: 32px; padding-bottom: 36px; }
+  .le-row.is-plan { padding-bottom: 0; }
+}
+@media (max-width: 860px) {
+  .le-promises { grid-template-columns: 1fr; gap: 36px; }
+  .le-promise { padding-top: 20px; }
+  .le-no { font-size: 3.2rem; margin-bottom: 12px; }
+  .le-srcs { column-count: 2; }
+}
+@media (max-width: 720px) {
+  /* the portrait picture: the town under the search box, cropped to the clinic, the playground and the family; its sky has its own colours */
+  .le { --le-sky-a: #c1e3e1; --le-sky-b: #e2ede5; --le-sky-c: #f8efe1; }
+  :root[data-theme="dark"] .le { --le-sky-a: #072a54; --le-sky-b: #082e58; --le-sky-c: #093059; }
+  .le-hero { --le-art-h: min(98vw, 600px); --le-fade: clamp(80px, 24vw, 130px); --le-fade-b: 40px; --le-overlap: 30px; --le-pos: 100%; }
+  .le-top { min-height: 64px; padding-block: 8px; }
+  .le-brand .brand-logo { width: 38px; }
+  .le-brand-t small { display: none; }
+  .le-nav .theme-btn { font-size: 0; gap: 0; padding-inline: 12px; min-width: 44px; justify-content: center; }
+  .le-nav .theme-btn svg { width: 21px; height: 21px; }
+  .le-copy { padding-top: 6px; }
+  .le-h1 { font-size: clamp(1.75rem, 7.7vw, 2.5rem); line-height: 1.1; }
+  .le-lede { margin-top: 12px; font-size: 1rem; line-height: 1.55; }
+  .le .le-search { margin-top: 22px; }
+  .le .le-search .searchbox { min-height: 58px; padding-inline: 16px 7px; gap: 10px; border-radius: 18px; }
+  .le .le-search .searchbox > svg { width: 21px; height: 21px; }
+  .le .le-search .searchbox input { font-size: 1.1rem; }
+  .le .le-search .searchbox .go { min-height: 46px; padding: 6px 18px; font-size: 1rem; }
+  .le-quick { gap: 0 16px; margin-top: 12px; }
+  .le-quick a { min-height: 44px; display: inline-flex; align-items: center; }
+  .le-resume { min-height: 44px; margin-inline-end: 0; flex-basis: 100%; justify-content: center; }
+  .le-stats { gap: 2px 16px; margin-top: 4px; font-size: .84rem; }
+  .le-stat b { font-size: 1.05rem; }
+  .le-sec { padding-block: 56px; }
+  .le-spots { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 14px; }
+  .le-spot-art { width: min(100%, 136px); margin-bottom: 12px; }
+  .le-spot-k { padding-bottom: 28px; }
+  .le-srcs { column-count: 1; }
+  .le-row.is-plan .le-row-b { grid-template-columns: 1fr; gap: 14px; }
+  .le-open { width: 100%; }
+  .le-foot-in { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 520px) {
+  .le-quick .le-extra, .le-stats .le-opt { display: none; }
+}
+@media (max-width: 360px) {
+  .le-brand-t b { font-size: 1.15rem; }
+  .le-navlink { padding-inline: 8px; }
+}

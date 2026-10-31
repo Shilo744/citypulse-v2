@@ -1,0 +1,26 @@
+/* Lab direction "questions4" (prefix .q4-): the opening of the entry page on top of the questions page with its bloom. The sky, the picture and the headline come from entry.css (.le-);
+   the questions, the answer and the evidence from questions.css (.lq-) and questions3.css. Colour only through tokens; motion only through css/motion.css. */
+.q4 { --le-paper: var(--bg); --le-sky-a: #f1f5fa; --le-sky-b: #e8eff7; --le-sky-c: #f4f7fb; margin: -20px -28px -72px; padding: 0 28px 72px; background: var(--le-paper); }
+:root[data-theme="dark"] .q4 { --le-sky-a: #06284f; --le-sky-b: #072a52; --le-sky-c: #082b51; }
+.q4 .le-pic img { filter: saturate(.5) contrast(1.02); }
+.q4 .q4-hero { --le-art-h: clamp(150px, 15vw, 200px); --le-pos: 80%; margin-inline: -28px; padding-top: 26px; }
+.q4-copy { padding-inline: 28px; }
+.q4-town { margin-top: 2px; font-size: clamp(2.4rem, 5vw, 3.8rem); }
+.q4-facts { margin: 8px 0 0; font-size: 1.02rem; }
+.q4-basis { margin: 4px 0 0; font-size: 1rem; }
+.q4-basis a { display: inline-flex; align-items: center; gap: 6px; min-height: 30px; font-weight: 700; color: var(--teal-dark); text-decoration: underline; text-decoration-color: var(--teal-line); text-underline-offset: 5px; }
+.q4-basis a:hover { text-decoration-color: currentColor; }
+:root[data-theme="dark"] .q4-basis a { color: var(--teal-ink); }
+.q4-basis svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+
+/* the question field: the pill of the entry page's search, with a deep teal button */
+.q4 .q4-ask { display: flex; align-items: center; gap: 14px; width: min(680px, 100%); min-height: 58px; margin-top: 16px; padding-inline: 22px 8px; border: 1px solid color-mix(in srgb, var(--le-field-ink) 14%, transparent); border-radius: 20px; background: var(--le-field); box-shadow: 0 16px 36px -10px rgba(15, 42, 77, .24); transition: border-color .15s, box-shadow .15s; }
+.q4 .q4-ask:focus-within { border-color: var(--le-go); box-shadow: 0 0 0 4px color-mix(in srgb, var(--le-go) 28%, transparent), 0 22px 44px -14px rgba(15, 42, 77, .34); }
+.q4-ask > svg { flex: none; width: 23px; height: 23px; color: var(--le-field-ink-3); fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+.q4-ask input { flex: 1; min-width: 0; padding: 10px 0; border: 0; outline: 0; background: transparent; font: 500 1.15rem var(--font); color: var(--le-field-ink); }
+.q4-ask input::placeholder { color: var(--le-field-ink-3); opacity: 1; }
+.q4-go { flex: none; min-height: 46px; padding: 6px 26px; border: 0; border-radius: 14px; background: var(--le-go); color: #fff; font: 700 1.02rem var(--font); cursor: pointer; transition: background .15s; }
+.q4-go:hover { background: var(--le-go-hover); }
+
+.q4 .lq-main { margin-top: 18px; }
+@media (max-width: 760px) { .q4 { margin-inline: -16px; padding-inline: 16px; } .q4 .q4-hero { margin-inline: -16px; } .q4-copy { padding-inline: 16px; } .q4 .q4-ask { min-height: 54px; padding-inline: 16px 6px; } }

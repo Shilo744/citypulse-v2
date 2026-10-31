@@ -1,0 +1,43 @@
+/* Compare in mode N (prefix n-pg-compare-): the old hero on the pale band; the numbered round badges become plain numerals with a hairline under them (the town itself is the blue dot of the charts). */
+html[data-ui="n"] .hero.tr-hero.tr-calm { padding-block: var(--space-5); }
+html[data-ui="n"] .hero.tr-hero .tr-hero-top { max-width: 760px; }
+html[data-ui="n"] .hero.tr-hero .tr-hero-top .hero-verdict { max-width: 60ch; }
+html[data-ui="n"] .n-pg-compare-lede { margin: 0; max-width: 62ch; font-size: var(--fs-body); color: var(--ink-2); }
+html[data-ui="n"] .n-pg-compare-read { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-5); margin-bottom: var(--space-7); }
+html[data-ui="n"] .n-pg-compare-read:empty { display: none; }
+html[data-ui="n"] .n-pg-compare-read .tr-led { margin-top: 0; padding-top: 0; border-top: 0; }
+html[data-ui="n"] .n-pg-compare-read .hero-meta { margin: 0; }
+html[data-ui="n"] .n-pg-compare-actions { margin-top: var(--space-3); }
+html[data-ui="n"] .n-pg-compare-back { margin-bottom: var(--space-2); }
+
+html[data-ui="n"] .tr-mk { width: auto; height: auto; min-width: 1.1em; padding: 0 2px 1px; border-radius: 0; background: none; color: var(--ink); box-shadow: none; border-bottom: 2px solid var(--tr-pk); font-weight: 700; line-height: 1.25; }
+html[data-ui="n"] .tr-mk.is-me { width: 10px; height: 10px; min-width: 0; padding: 0; border: 0; border-radius: 50%; background: var(--tr-me); }
+html[data-ui="n"] .tr-mk.is-hollow { background: none; color: var(--ink-2); border-bottom-style: dashed; box-shadow: none; }
+html[data-ui="n"] .tr-mk.is-me.is-hollow { border: 0; box-shadow: inset 0 0 0 2px var(--tr-me); }
+
+/* the labels of the domain grid: never under 12 px */
+html[data-ui="n"] .v-mx-cl, html[data-ui="n"] .v-mx-hy { font-size: 12px; }
+
+/* the sticky key stays under the top bar */
+html[data-ui="n"] .tr-keybar { top: var(--top-h); }
+
+@media (max-width: 560px) {
+  html[data-ui="n"] .hero.tr-hero.tr-calm { padding-block: var(--space-4); }
+}
+/* the table of every figure: the numbers sit next to their label, not at the far end of a 1200 px row */
+html[data-ui="n"] #tr-rows-sec .tbl th.n, html[data-ui="n"] #tr-rows-sec .tbl td.n { width: 5.5rem; }
+@media (min-width: 1100px) {
+  html[data-ui="n"] #tr-rows-sec .tbl { max-width: 960px; }
+}
+
+@media print {
+  html[data-ui="n"] .n-pg-compare-actions, html[data-ui="n"] .viewtoggle { display: none; }          /* the switch between chart and table does nothing on paper */
+}
+
+/* targets (WCAG 2.5.8): the name of a town in the table is a link alone in its cell; padding above and below an inline link moves nothing */
+html[data-ui="n"] .v-mx-rowh a { padding-block: 3px; padding-inline: 5px; margin-inline: -5px; }          /* a short name ("רהט", 22 px) is at least 24 px wide; the margin gives the room back */
+/* the ledger's counts filter the list of figures: the line above the list says what is shown and how to see all of them */
+html[data-ui="n"] .n-pg-compare-pick { margin: 0 0 var(--space-3); color: var(--ink); font-weight: 700; }
+html[data-ui="n"] .n-pg-compare-all { margin-inline-start: var(--space-2); min-height: 32px; padding: 0 var(--space-1); border: 0; background: none; color: var(--teal-ink); font: inherit; text-decoration: underline; cursor: pointer; }
+html[data-ui="n"] .tr-led .tr-col[aria-pressed="true"] .kf-label { text-decoration: underline; text-underline-offset: .25em; }
+html[data-ui="n"] .tr-row[hidden], html[data-ui="n"] .tr-dom[hidden] { display: none; }

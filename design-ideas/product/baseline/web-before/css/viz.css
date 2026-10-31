@@ -1,0 +1,15 @@
+/* Chart styles. The shared base is here; each chart family has its own file under viz/ (one owner per file). */
+@import url("viz/rings.css");
+@import url("viz/compare.css");
+@import url("viz/time.css");
+@import url("viz/matrix.css");
+@import url("viz/spatial.css");
+
+:where(.viz) { position: relative; max-width: 100%; }          /* :where keeps the base at zero specificity: a family file may set its own width or max-width on a chart host with one class */
+.viz svg { display: block; overflow: visible; direction: ltr; max-width: 100%; }
+.viz svg text { fill: var(--ink-3); font: 500 11.5px var(--font); }
+.viz svg text.val { fill: var(--ink); font-weight: 700; font-size: 12.5px; }
+.viz svg .grid line { stroke: var(--line); stroke-width: 1; }
+.viz svg .axis line { stroke: var(--line-2); stroke-width: 1; }
+.viz svg [tabindex]:focus-visible, .viz [tabindex]:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; }
+.cnt { font-variant-numeric: tabular-nums; }
