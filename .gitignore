@@ -4,3 +4,5 @@ node_modules/
 research/_tmp-*/
 data/cache/
 *.log
+dist/
+.wrangler/

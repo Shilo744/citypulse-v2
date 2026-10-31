@@ -21,7 +21,15 @@
     "a11y:n": "node src/tools/a11y_check.js --n",
     "motion:n": "node src/tools/motion_check.js --n",
     "shot": "node src/tools/shot.js",
-    "test": "node --test"
+    "test": "node --test",
+    "build": "node scripts/export-static.js",
+    "dev:worker": "wrangler dev",
+    "deploy": "wrangler deploy"
   },
-  "engines": { "node": ">=20" }
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "wrangler": "^4.156.0"
+  }
 }

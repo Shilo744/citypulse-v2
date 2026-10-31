@@ -3,7 +3,8 @@
 const fs = require("fs");
 const path = require("path");
 
-const ROOT = path.join(__dirname, "..", "..");
+const HERE = typeof __dirname === "string" ? __dirname : "/src/lib";          // the Worker bundle has no real directory: the paths are only names there
+const ROOT = path.join(HERE, "..", "..");
 const DATA = path.join(ROOT, "data");
 
 function readVars(file) {
@@ -55,4 +56,18 @@ module.exports = {
     reserveUsd: Number(vars.LLM_RESERVE_USD || 0.3),      // calls stop while the key has less than this left
     maxPerHour: Number(vars.LLM_MAX_PER_HOUR || 40)       // and never more than this many calls in an hour
   }
+};
+
+// The Worker has no .dev.vars: its settings arrive as bindings (secrets and plain variables). Called with them once per request; a missing value changes nothing.
+module.exports.configure = function configure(env = {}) {
+  const v = (k) => (typeof env[k] === "string" ? env[k].trim() : "");
+  const c = module.exports, l = c.llm;
+  if (v("LLM_API_KEY")) l.key = v("LLM_API_KEY");
+  if (v("LLM_BASE_URL")) l.baseUrl = v("LLM_BASE_URL");
+  if (v("LLM_MODEL_SEARCH")) l.models.search = v("LLM_MODEL_SEARCH");
+  if (v("LLM_MODEL_REASON")) l.models.reason = v("LLM_MODEL_REASON");
+  if (v("LLM_RESERVE_USD")) l.reserveUsd = Number(v("LLM_RESERVE_USD"));
+  if (v("LLM_MAX_PER_HOUR")) l.maxPerHour = Number(v("LLM_MAX_PER_HOUR"));
+  if (v("PUBLIC_BASE_URL")) c.PUBLIC_BASE_URL = v("PUBLIC_BASE_URL").replace(/\/$/, "");
+  if (v("SHARE_TARGET")) c.SHARE_TARGET = v("SHARE_TARGET");
 };

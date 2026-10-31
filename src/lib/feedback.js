@@ -137,4 +137,4 @@ function createFeedbackStore({ file, maxBytes = DEFAULT_MAX_BYTES, limitPerHour 
   return { submit };
 }
 
-module.exports = { createFeedbackStore };
+module.exports = { createFeedbackStore, validate };

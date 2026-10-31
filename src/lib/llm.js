@@ -23,7 +23,8 @@ const _setLedger = (f) => { ledgerFile = f; };
 let bal = { at: 0, v: null };
 let recent = [];                                                    // timestamps of the calls of the last hour
 
-const readLedger = () => { try { return JSON.parse(fs.readFileSync(ledgerFile, "utf8")); } catch (e) { return {}; } };
+let memLedger = null;                                               // the Worker keeps the ledger in memory for the length of a request and saves it to KV itself
+const readLedger = () => { if (memLedger) return memLedger; try { return JSON.parse(fs.readFileSync(ledgerFile, "utf8")); } catch (e) { return {}; } };
 
 function costOf(model, usage) {
   if (usage && typeof usage.cost === "number") return usage.cost;
@@ -33,14 +34,14 @@ function costOf(model, usage) {
 
 function record(role, model, usage, cost) {
   try {
-    fs.mkdirSync(path.dirname(ledgerFile), { recursive: true });
+    if (!memLedger) fs.mkdirSync(path.dirname(ledgerFile), { recursive: true });
     const l = readLedger(); l.byRole = l.byRole || {};
     const r = (l.byRole[role] = l.byRole[role] || { calls: 0, prompt: 0, completion: 0, costUsd: 0 });
     const p = (usage && usage.prompt_tokens) || 0, c = (usage && usage.completion_tokens) || 0;
     r.calls += 1; r.prompt += p; r.completion += c; r.costUsd = Math.round((r.costUsd + cost) * 1e6) / 1e6; r.model = model;
     l.calls = (l.calls || 0) + 1; l.prompt = (l.prompt || 0) + p; l.completion = (l.completion || 0) + c;
     l.costUsd = Math.round(((l.costUsd || 0) + cost) * 1e6) / 1e6; l.updated = new Date().toISOString();
-    fs.writeFileSync(ledgerFile, JSON.stringify(l));
+    if (memLedger) memLedger = l; else fs.writeFileSync(ledgerFile, JSON.stringify(l));
   } catch (e) { /* the ledger is a convenience */ }
 }
 
@@ -114,4 +115,8 @@ async function chatJson(messages, opts) {
 
 const usageSummary = () => ({ ...readLedger(), models: { ...cfg.llm.models }, reserveUsd: cfg.llm.reserveUsd, balance: bal.v });
 
-module.exports = { chat, chatJson, extractJson, available, balance, modelFor, usageSummary, ROLES, _setRequest, _setLedger, _reset: () => { bal = { at: 0, v: null }; recent = []; } };
+// the Worker: a request starts from the state saved in KV (useState) and hands the state back to be saved (state)
+const useState = (s) => { const x = s || {}; memLedger = x.ledger || {}; recent = Array.isArray(x.recent) ? x.recent : []; bal = x.bal && typeof x.bal.at === "number" ? x.bal : { at: 0, v: null }; };
+const state = () => ({ ledger: memLedger || {}, recent: recent.filter((t) => Date.now() - t < 3600e3), bal });
+
+module.exports = { useState, state, chat, chatJson, extractJson, available, balance, modelFor, usageSummary, ROLES, _setRequest, _setLedger, _reset: () => { bal = { at: 0, v: null }; recent = []; } };

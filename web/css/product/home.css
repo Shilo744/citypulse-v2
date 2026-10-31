@@ -538,7 +538,7 @@ html[data-ui="n"] .n-home[data-level="simple"] .n-home-do { font-size: 1.1875em;
 @media screen {
   html[data-ui="n"] .n-home-lines { gap: var(--space-2); margin-top: var(--space-3); }
   html[data-ui="n"] .n-home-lines > * { line-height: 1.8; }
-  html[data-ui="n"] .n-home-sw { margin-top: var(--space-4); margin-bottom: var(--space-2); }
+  html[data-ui="n"] .n-home-sw { margin-top: var(--space-4); margin-bottom: 0; }
 }
 
 /* a wide window uses its width (the owner: no big empty margins on both sides). The short level is a two-column overview: the state of the town (verdict, bar, categories) on one side,

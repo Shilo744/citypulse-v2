@@ -42,7 +42,13 @@ function makeBodyEtag(buf) {
 let store = null, storeMtime = 0;
 const modelCache = new Map();
 
+let injectedStore = null, modelProvider = null;
+// the Worker has no disk: it hands the store (built once from the bundled data) and a way to get a town's ready-made model (a static file, fetched before the request needs it)
+const setStore = (s) => { injectedStore = s || null; };
+const setModelProvider = (fn) => { modelProvider = fn || null; };
+
 function getStore() {
+  if (injectedStore) return injectedStore;
   const fs = require("fs"), path = require("path"), cfg = require("./lib/config");
   const file = path.join(cfg.STORE, "store.json");
   const m = fs.statSync(file).mtimeMs;
@@ -51,6 +57,7 @@ function getStore() {
 }
 
 function getModel(key) {
+  if (modelProvider) return modelProvider(key);
   const st = getStore();
   if (modelCache.has(key)) return modelCache.get(key);
   const m = buildCityModel(st, key);
@@ -265,4 +272,4 @@ function readJsonSafe(req, limit) {
   });
 }
 
-module.exports = { handle, getStore, getModel, indicatorDetail, compare, publicCatalog, geo };
+module.exports = { setStore, setModelProvider, handle, getStore, getModel, indicatorDetail, compare, publicCatalog, geo };

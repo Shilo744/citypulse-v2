@@ -9,14 +9,19 @@ const crypto = require("crypto");
 const UA = "Mozilla/5.0 (compatible; CityPulse/2.0; +public-health research)";
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-function request(url, { method = "GET", headers = {}, body = null, timeout = 120000, redirects = 5 } = {}) {
+// the Worker has no node:https that behaves: it plugs a fetch-based transport in (setTransport) and everything above this line of code stays the same
+let transport = null;
+const setTransport = (fn) => { transport = fn || null; };
+function request(url, opts = {}) { return transport ? transport(url, opts) : nodeRequest(url, opts); }
+
+function nodeRequest(url, { method = "GET", headers = {}, body = null, timeout = 120000, redirects = 5 } = {}) {
   return new Promise((resolve, reject) => {
     const u = new URL(url);
     const lib = u.protocol === "http:" ? http : https;
     const req = lib.request(u, { method, headers: { "User-Agent": UA, Accept: "*/*", ...headers }, timeout }, (res) => {
       if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location && redirects > 0) {
         res.resume();
-        return resolve(request(new URL(res.headers.location, u).href, { method, headers, body, timeout, redirects: redirects - 1 }));
+        return resolve(nodeRequest(new URL(res.headers.location, u).href, { method, headers, body, timeout, redirects: redirects - 1 }));
       }
       const chunks = [];
       res.on("data", (c) => chunks.push(c));
@@ -90,4 +95,4 @@ async function ckanPackage(id) {
   return j.result;
 }
 
-module.exports = { request, getJson, getBuffer, getBufferCached, withRetry, sleep, ckanEach, ckanPackage, CKAN, UA };
+module.exports = { request, setTransport, getJson, getBuffer, getBufferCached, withRetry, sleep, ckanEach, ckanPackage, CKAN, UA };

@@ -92,12 +92,14 @@ async function compose(model) {
   };
 }
 
+let io = null;                                                      // the Worker keeps the cache in KV: read(key) and write(key, rec), both synchronous (it loads before and saves after)
+const setIO = (x) => { io = x || null; };
 const file = (key) => path.join(DIR, key + ".json");
 // a briefing written before the guard knew a word ("מדאיגה", "מחמירים") is not served: it counts as not written and is made again on the next request
 const hasForbidden = (b) => !!b && FORBIDDEN_RE.test([b.headline, b.first, b.caution, ...(b.points || []).flatMap((p) => [p.title, p.text])].filter(Boolean).join("\n"));
 function cached(key, builtAt) {
   if (!SAFE_KEY.test(key)) return null;
-  try { const r = JSON.parse(fs.readFileSync(file(key), "utf8")); return r.builtAt === builtAt && !hasForbidden(r.briefing) ? r : null; } catch (e) { return null; }
+  try { const r = io ? io.read(key) : JSON.parse(fs.readFileSync(file(key), "utf8")); if (!r) return null; return r.builtAt === builtAt && !hasForbidden(r.briefing) ? r : null; } catch (e) { return null; }
 }
 
 const inflight = new Map();
@@ -110,11 +112,11 @@ async function briefing(store, model, { force = false } = {}) {
   const p = (async () => {
     const out = await compose(model);
     const rec = { city: { key, name: model.city.name }, builtAt: store.builtAt, at: new Date().toISOString(), ...out };
-    try { fs.mkdirSync(DIR, { recursive: true }); fs.writeFileSync(file(key), JSON.stringify(rec)); } catch (e) { /* the cache is a convenience */ }
+    try { if (io) io.write(key, rec); else { fs.mkdirSync(DIR, { recursive: true }); fs.writeFileSync(file(key), JSON.stringify(rec)); } } catch (e) { /* the cache is a convenience */ }
     return rec;
   })().finally(() => inflight.delete(key));
   inflight.set(key, p);
   return p;
 }
 
-module.exports = { briefing, cached, hasForbidden, catalog, resolve, compose, SYSTEM, enough: (model) => judged(model) >= MIN_JUDGED };
+module.exports = { setIO, briefing, cached, hasForbidden, catalog, resolve, compose, SYSTEM, enough: (model) => judged(model) >= MIN_JUDGED };
