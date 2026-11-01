@@ -223,7 +223,7 @@ export default {
     cfg.configure(env);
     const url = new URL(request.url), p = url.pathname;
     try {
-      if (p === "/") return env.ASSETS.fetch(new Request(new URL("/index.html", url.origin), request));          // html_handling is "none": the front page is asked for by its name
+      if (p === "/") return env.ASSETS.fetch(new Request(new URL("/n.html", url.origin), request));          // html_handling is "none": the front page is asked for by its name; here it is the product (the old app stays at /index.html)
       if (p === "/openapi.json") {
         const r = await env.ASSETS.fetch(new Request(new URL("/_d/openapi.json", url.origin)));
         return text((await r.text()).replace(/BASEURL/g, cfg.PUBLIC_BASE_URL || url.origin), "application/json; charset=utf-8", 200, { "Access-Control-Allow-Origin": "*", "Cache-Control": "no-cache" });

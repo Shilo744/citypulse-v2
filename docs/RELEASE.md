@@ -2,7 +2,7 @@
 
 Today `http://localhost:8800/` is the old app (`web/index.html`) and `http://localhost:8800/n.html` is the product. Making the product the default is not done and needs the owner's word (section 8). The build never changes the default and deletes nothing.
 
-All commands run in Git Bash from `C:/Bob/health project/citypulse-v2`. The three `sed` lines of the flip (with their check lines), the three of the rollback and the re-baseline command were re-run on copies of the files in the documentation pass of 2026-10-30 (`d1`): after the rollback the copies were byte-identical to the live files, and the re-baseline command reproduces `OLD-HASHES.json` byte for byte on the current tree. The renames, the stub page and the restart need the live tree and server and were not run.
+All commands run in Git Bash from the project folder. The three `sed` lines of the flip (with their check lines), the three of the rollback and the re-baseline command were re-run on copies of the files in the documentation pass of 2026-10-30 (`d1`): after the rollback the copies were byte-identical to the live files, and the re-baseline command reproduces `OLD-HASHES.json` byte for byte on the current tree. The renames, the stub page and the restart need the live tree and server and were not run.
 
 ## 1. Server settings
 

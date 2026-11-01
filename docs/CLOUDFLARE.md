@@ -16,6 +16,7 @@ Nothing runs on a server of its own: the free plan is enough for a demo (100,000
 
 The Worker answers `/api/*` with **the same functions the Node server uses** (`src/api.js`, `src/agent/*`); `scripts/parity.js` and `scripts/parity-ask.js` compare the two hosts request by request (437 requests and 8 questions: no difference but the timestamp `computedAt`).
 `/api/llm` (the spend and the balance of the key) is not served by the Worker.
+The Worker serves the product (`n.html`) at `/`; the old app stays at `/index.html`. (On the local Node server `/` is still the old app until the flip described in `docs/RELEASE.md`.)
 
 ## Commands (from this folder, Node 20+; `npm install` once)
 | | |

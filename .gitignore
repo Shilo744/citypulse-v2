@@ -3,6 +3,10 @@
 node_modules/
 research/_tmp-*/
 data/cache/
+data/feedback*.jsonl
+data/lead/
+data/usage_*
 *.log
 dist/
 .wrangler/
+.claude/
