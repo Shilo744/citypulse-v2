@@ -39,7 +39,7 @@ The Worker serves the product (`n.html`) at `/`; the old app stays at `/index.ht
 The date under every page ("עודכן ...") is the date of the store.
 
 ## Updating from GitHub
-Cloudflare dashboard, Workers & Pages, `citypulse`, Settings, Builds, Connect to Git: pick the repository; build command empty, deploy command `npx wrangler deploy`. Every push to the chosen branch deploys (the build runs `scripts/export-static.js` through `wrangler.jsonc`).
+Cloudflare dashboard, Workers & Pages, `citypulse`, Settings, Builds, Connect to Git: pick the repository (a Worker has one Git link, so a previous one must be disconnected first; disconnecting deletes nothing); production branch `main`, build command empty, deploy command `npx wrangler deploy`, root directory `/`. Every push to the chosen branch deploys (the build runs `scripts/export-static.js` through `wrangler.jsonc`). Check afterwards that the Git link points to the repository that holds this code: a push to any other linked repository would deploy that repository's `wrangler.jsonc` under the same Worker name.
 
 ## Limits to know (free plan)
 - Worker CPU time per request: 10 ms. A request that only hands out a file or a ready model costs almost nothing; `/api/ask` and the indicator pages do real work: check `wrangler tail` for `cpuTime` after changes.

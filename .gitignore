@@ -10,3 +10,4 @@ data/usage_*
 dist/
 .wrangler/
 .claude/
+local-*.cmd
