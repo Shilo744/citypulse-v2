@@ -49,6 +49,35 @@ const builtAt = st.builtAt ? st.builtAt.slice(0, 10) : new Date().toISOString().
 const rows = [`  <url><loc>BASEURL/</loc><lastmod>${builtAt}</lastmod></url>`, ...[...have].sort().map((k) => `  <url><loc>BASEURL/s/${encodeURIComponent(k)}</loc><lastmod>${builtAt}</lastmod></url>`)];
 write("_d/sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${rows.join("\n")}\n</urlset>\n`);
 
+// the description of the API for agent platforms (watsonx Orchestrate imports it as a tool set): two tools, small answers; BASEURL becomes the address of the site
+const kv = (type, description, extra = {}) => ({ type, description, ...extra });
+write("_d/openapi.json", JSON.stringify({
+  openapi: "3.0.3",
+  info: { title: "CityPulse", version: "2.0.0", description: "Official public-health figures for every Israeli locality (Health Ministry, CBS, National Insurance), set against the country and against similar localities. Every figure comes from the data; none is estimated." },
+  servers: [{ url: "BASEURL" }],
+  paths: {
+    "/api/search": { get: {
+      operationId: "searchLocality", summary: "Find a locality by its name",
+      description: "Returns up to 12 localities whose name matches the text (Hebrew). Use it first to get the key of a locality named by the user; the key is what the other tool needs.",
+      parameters: [{ name: "q", in: "query", required: true, description: "Part of the locality name, in Hebrew, for example: שדרות", schema: { type: "string" } }],
+      responses: { 200: { description: "A list of localities", content: { "application/json": { schema: { type: "array", items: { type: "object", properties: { key: kv("string", "The locality key (a number as text)"), name: kv("string", "The locality name") }, additionalProperties: true } } } } } }
+    } },
+    "/api/ask": { post: {
+      operationId: "askAboutLocality", summary: "Answer a question about the public health of one locality",
+      description: "Answers a question in Hebrew about one locality from the official data: where it stands against the country, what needs attention, what changed over the years, how it compares with other localities named in the question. Every number in the answer comes from the data. Show page.answer exactly as written, then the blocks in page.blocks in short; never add, round or compute figures yourself.",
+      requestBody: { required: true, content: { "application/json": { schema: { type: "object", required: ["city", "question"], properties: {
+        city: kv("string", "The key of the locality the question is about (from searchLocality), for example 1031 for שדרות"),
+        question: kv("string", "The question, in Hebrew, as the user asked it. Other localities may be named in it for a comparison."),
+        noModel: kv("boolean", "Always true: the figures are brought by the keyword planner and your own model writes the reply", { default: true })
+      } } } } },
+      responses: { 200: { description: "A page: a title, an answer sentence and blocks (figures, trends, comparison tables) with their sources", content: { "application/json": { schema: { type: "object", properties: {
+        question: kv("string", "The question as received"), via: kv("string", "keywords"), city: { type: "object", properties: { key: { type: "string" }, name: { type: "string" } } },
+        page: { type: "object", description: "title, answer (a sentence, figures inside it are final) and blocks", additionalProperties: true }
+      }, additionalProperties: true } } } }, 400: { description: "Empty question or unknown locality key" } }
+    } }
+  }
+}));
+
 // the 404 page of the server, as a file
 const m = /const PAGE_404 = `([\s\S]*?)`;/.exec(fs.readFileSync(path.join(ROOT, "server.js"), "utf8"));
 if (m) write("404.html", m[1]);

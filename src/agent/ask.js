@@ -124,7 +124,7 @@ function deriveSearch(q, model) {
   return null;
 }
 
-async function answer(store, getModel, { city, question, history } = {}) {
+async function answer(store, getModel, { city, question, history, noModel } = {}) {
   const q = String(question || "").trim();
   if (!q) throw new Error("empty question");
   const model = getModel(String(city || ""));
@@ -138,7 +138,7 @@ async function answer(store, getModel, { city, question, history } = {}) {
   const serverSpeaks = withTowns || !!unresolved;
 
   let spec = null, via = "keywords", note = null;
-  if (llm.available()) {
+  if (llm.available() && !noModel) {          // noModel: the caller (an agent platform with its own model) wants the figures only, by the keyword planner, with no paid call
     try { spec = await planWithModel(model, q, history, found); via = "model"; }
     catch (e) { note = "הבינה המלאכותית לא זמינה כרגע, התשובה נבנתה לפי מילות מפתח (" + String(e.message).slice(0, 60) + ")"; }
     // a sentence the server replaces anyway is not worth a second paid call

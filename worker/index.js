@@ -224,6 +224,10 @@ export default {
     const url = new URL(request.url), p = url.pathname;
     try {
       if (p === "/") return env.ASSETS.fetch(new Request(new URL("/index.html", url.origin), request));          // html_handling is "none": the front page is asked for by its name
+      if (p === "/openapi.json") {
+        const r = await env.ASSETS.fetch(new Request(new URL("/_d/openapi.json", url.origin)));
+        return text((await r.text()).replace(/BASEURL/g, cfg.PUBLIC_BASE_URL || url.origin), "application/json; charset=utf-8", 200, { "Access-Control-Allow-Origin": "*", "Cache-Control": "no-cache" });
+      }
       if (p === "/robots.txt") return text(`User-agent: *\nAllow: /\n\nSitemap: ${cfg.PUBLIC_BASE_URL || url.origin}/sitemap.xml\n`, "text/plain; charset=utf-8");
       if (p === "/sitemap.xml") {
         const r = await env.ASSETS.fetch(new Request(new URL("/_d/sitemap.xml", url.origin)));

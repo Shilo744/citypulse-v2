@@ -12,7 +12,7 @@
     "binding": "ASSETS",
     "not_found_handling": "404-page",
     "html_handling": "none",
-    "run_worker_first": ["/", "/api/*", "/s/*", "/robots.txt", "/sitemap.xml"]
+    "run_worker_first": ["/", "/api/*", "/s/*", "/robots.txt", "/sitemap.xml", "/openapi.json"]
   },
   "kv_namespaces": [{ "binding": "STATE", "id": "eff6dccfbefd4bdb89a4f1fe18681214" }],
   "d1_databases": [{ "binding": "DB", "database_name": "citypulse", "database_id": "07bf59b3-760c-4786-bae6-8d81be4f7c59" }],
