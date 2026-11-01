@@ -13,7 +13,7 @@ The same tools, pointed at `https://citypulse.shilo744.workers.dev` (Worker vers
 | Motion | `node src/tools/motion_check.js --n <address> 9000` | 42 screens, 0 with problems |
 | Touch targets | `chrome_probe.js --mode=targets --base=<address>/n.html` | 0 offenders (11 chart marks exempt as essential) |
 | Reflow at 320 px | `chrome_probe.js --mode=reflow` | no screen overflows |
-| Navigation, level switch, old addresses | `chrome_probe.js --mode=nav` | all 252 checks passed |
+| Navigation, old addresses, no level switch | `chrome_probe.js --mode=nav` | all 252 checks passed |
 | Topic groups | `chrome_probe.js --mode=groups` | all group checks passed |
 | First screen | `CP_BASE=<address> node src/tools/first_screen_probe.js` | the verdict sentence starts at 556 px at 1280x900 (515 px at 1024x768, 682 px at 390x844); no sideways overflow in 13 sizes |
 | Consistency | `consistency_probe.js --base=<address>` | 8 towns, 107 checks, 0 disagreements |
@@ -62,7 +62,7 @@ Budgets, which the town page must keep: 0 third-party requests; at most 60 reque
 Marked `[x]` only where a report or a test gives evidence for the merged product; `[ ]` where it was last checked before the merge or not at all.
 
 - [x] The product is `/n.html`; the old app at `/` is unchanged (`product-old-untouched`).
-- [x] The town page: one page, two levels, the story order, in-place switch with focus kept, `?v=` and `?q=` and the alias, old `overview` and `d/<oldDomain>` addresses landing right (`product-simple`, `product-menu`, `chrome_probe --mode=nav`).
+- [x] The town page: one page, one level, the story order, `?v=` and `?q=` and the alias (all open the same page), old `overview` and `d/<oldDomain>` addresses landing right (`product-simple`, `product-menu`, `chrome_probe --mode=nav`).
 - [x] First screen: verdict sentence at 518 px at 1280x900 (limit 520).
 - [x] Four categories and a background line everywhere a reader sees them; no old category word (`ui_smoke --n` checks the seven old labels on every screen; `product-groups`, `product-menu`).
 - [x] The category page in openable topic groups, counts equal to its ring (`product-topics`, `chrome_probe --mode=groups`).
@@ -85,11 +85,11 @@ Marked `[x]` only where a report or a test gives evidence for the merged product
 
 | Item | Manual steps |
 |---|---|
-| Safari 16.4 and later (Mac and iPhone) | Open `http://<host>:8800/n.html#/c/1031`. Check the font, the level switch, the openable topic groups (`details` with a grid summary), the dialogs, the sticky top bar and the 100vh band on the phone, the share button. Then print preview of the report and of the short level |
+| Safari 16.4 and later (Mac and iPhone) | Open `http://<host>:8800/n.html#/c/1031`. Check the font, the openable topic groups (`details` with a grid summary), the dialogs, the sticky top bar and the 100vh band on the phone, the share button. Then print preview of the report and of the short level |
 | Firefox 115 and later | The same pages; the leaf scrollbar (CSS scrollbar properties differ), `:has()` rules, `color-mix` colours, dialog Esc |
-| NVDA (Windows) and VoiceOver (macOS, iOS) | Town page: Tab to "דלגו לתוכן"; one h1; the level switch announces the new level once; the segmented bar is read as its sentence; a topic group opens with Enter and Space; headings and landmarks; a card on a mark by keyboard focus; the glossary dialog traps focus and Esc returns it |
+| NVDA (Windows) and VoiceOver (macOS, iOS) | Town page: Tab to "דלגו לתוכן"; one h1; the segmented bar is read as its sentence; a topic group opens with Enter and Space; headings and landmarks; a card on a mark by keyboard focus; the glossary dialog traps focus and Esc returns it |
 | Windows High Contrast | The current level in the switch, focus ring, buttons and chart marks stay visible (the `forced-colors` blocks) |
-| A real printer or PDF printer | The report on A4 from Chrome and Edge: two pages, no cut table; the short level of the town page (one page) and a town with long labels (for example 2800 or 6100); the dark theme prints light; the full level |
+| A real printer or PDF printer | The report on A4 from Chrome and Edge: two pages, no cut table; the town page and a town with long labels (for example 2800 or 6100); the dark theme prints light; the full level |
 | Excel | Open a town's CSV by double click: Hebrew letters, numbers as numbers, no `####` |
 | A real keyboard on a device | Tab through the town page and the report without a mouse; `/` opens the search, `?` the help |
 | Phone keyboards | The town search with the on-screen keyboard of iOS and Android: the list stays open under the field, the page does not jump |

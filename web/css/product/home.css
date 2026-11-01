@@ -226,12 +226,8 @@ html[data-ui="n"] .n-home-lines[hidden] { display: none; }
 html[data-ui="n"] .n-home-bg { margin: 0; color: var(--ink-2); font-size: var(--fs-small); font-weight: 500; text-wrap: balance; }
 html[data-ui="n"] .n-home-bg-a { color: var(--teal-ink); font-weight: 700; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .25em; text-decoration-color: var(--teal-line); }
 html[data-ui="n"] .n-home-bg-a:hover { color: var(--ink); text-decoration-color: currentColor; }
-/* the level switch: two words, the one you are on is bold with a thick line, the other has a thin one (never capsules) */
+/* the level switch of the town page is gone (2026-11-01); the class .n-home-sw is now only the swatch of the legend (answers.js), which keeps the rule it has always rendered with */
 html[data-ui="n"] .n-home-sw { display: inline-flex; align-items: center; justify-self: start; gap: var(--space-4); width: max-content; max-width: 100%; }
-html[data-ui="n"] .n-home-sw-a { display: inline-flex; align-items: center; min-height: 38px; white-space: nowrap; color: var(--ink-2); font-size: 1.0625rem; font-weight: 500; line-height: 1.3; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .35em; text-decoration-color: var(--line-strong); }
-html[data-ui="n"] .n-home-sw-a:hover { color: var(--ink); text-decoration-color: var(--ink-2); }
-html[data-ui="n"] .n-home-sw-a.is-current { color: var(--ink); font-weight: 800; text-decoration-thickness: 3px; text-decoration-color: var(--teal-dark); }
-html[data-ui="n"] .n-home-sw-sep { width: 1px; height: 20px; background: var(--line-strong); }
 
 /* ── the body: a column that reads top to bottom; the short level is narrower and larger, the full level is wider ── */
 html[data-ui="n"] .n-home[data-level="simple"] { --n-home-fs: 1.125rem; }
@@ -418,7 +414,6 @@ html[data-ui="n"] .n-home-acts :is(a, button) { min-height: 44px; font-size: 1.0
   html[data-ui="n"] .n-home-fill.is-nat { background: GrayText; }
   html[data-ui="n"] .n-home-track { border: 1px solid GrayText; }
   html[data-ui="n"] .n-home-tick { forced-color-adjust: none; background: CanvasText; box-shadow: none; }
-  html[data-ui="n"] .n-home-sw-a.is-current { text-decoration-color: Highlight; }
   html[data-ui="n"] .n-home-ask { border: 1px solid CanvasText; }
   html[data-ui="n"] .n-home-spotpic { display: none; }
   html[data-ui="n"] .n-home-item:hover { outline: 1px solid Highlight; }

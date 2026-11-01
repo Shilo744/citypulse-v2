@@ -26,7 +26,7 @@ export function probeAll() {
 
 // ── the words of the generic title zone (an eyebrow, an h1 that says WHAT is shown, one line that says how to read it) ──
 export const PAGES = {
-  simple: ["במבט אחד", "המצב ביישוב בקצרה: מה דורש תשומת לב, מה הולך טוב ומה כדאי לעשות קודם."],
+  simple: ["בריאות ביישוב", "מה הולך טוב, מה דורש תשומת לב ומה כדאי לעשות קודם."],
   brief: ["דוח ליישוב", "שני עמודים להדפסה: התשובות העיקריות, המקורות והתאריך."],
   trends: ["מגמות והיסטוריה", "איך כל מדד השתנה לאורך השנים, ומה השתפר ומה הידרדר."],
   compare: ["השוואה ליישובים", "היישוב מול יישובים אחרים, מדד אחרי מדד."],
@@ -51,10 +51,10 @@ async function oldPage(ctx, adapterLoad, make, extra = {}) {
   return v;
 }
 
-// the one page of a town (city/home.js); the alias route passes the short level. The page decides its own band and title; the menu marks it "home" for both routes.
-async function townPage(ctx, opts) {
+// the one page of a town (city/home.js); the alias route (#/c/<key>/simple, an old link to the retired short level) shows the same page. The page decides its own band and title; the menu marks it "home" for both routes.
+async function townPage(ctx) {
   const m = await import("./city/home.js");
-  return { active: "home", ...asView(await m.cityHome(ctx, opts)) };
+  return { active: "home", ...asView(await m.cityHome(ctx)) };
 }
 
 // ── the table ──
@@ -69,7 +69,7 @@ export const ROUTES = {
     }
   },
   home: { load: (ctx) => townPage(ctx) },
-  simple: { load: (ctx) => townPage(ctx, { level: "simple" }) },
+  simple: { load: (ctx) => townPage(ctx) },
   brief: {
     async load(ctx) {
       const m = await soft(() => import("./brief/brief.js"));

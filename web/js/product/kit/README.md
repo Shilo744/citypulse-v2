@@ -71,7 +71,7 @@ The server decides (`src/model/guide.js`, `docs/METHOD.md`: `a.guide`, `a.benchm
 - Storage that throws (private mode, blocked) is safe: the marker lives in memory until the page closes. `markFrom("2", "1031"); readFrom("1031") // "2"`
 
 ## share.js
-- `shareUrl(key, q, loc = location) -> string`: `location.origin + location.pathname + "#/c/<key>?q=<q>"`; after `setShareFeature(true)` (the server announced `features.share` in `/api/health`) `origin + "/s/<key>?q=<q>"`. Without `q` there is no query. `q = "simple"` is the short level of the town page (its alias route), not an answer: `<page>#/c/<key>/simple`, or `origin + "/s/<key>?q=simple"` with share pages. `shareUrl("1031", "2")`
+- `shareUrl(key, q, loc = location) -> string`: `location.origin + location.pathname + "#/c/<key>?q=<q>"`; after `setShareFeature(true)` (the server announced `features.share` in `/api/health`) `origin + "/s/<key>?q=<q>"`. Without `q` there is no query. `q = "simple"` is the retired short level of the town page (its alias route; the town page itself now always shares `weak`), not an answer: `<page>#/c/<key>/simple`, or `origin + "/s/<key>?q=simple"` with share pages. `shareUrl("1031", "2")`
 - `setShareFeature(on)`, `hasSharePages()`, `probeShareFeature(fetchFn?) -> Promise` (reads `/api/health` once; `shareButton` calls it by itself).
 - `shareButton({ key, q, title, label, getUrl }) -> button`: on touch devices with `navigator.share` the system sheet (a cancelled sheet is not an error); otherwise copy, announce "הקישור הועתק" and show it in the label for 2.4 s. When the clipboard is blocked, a dialog shows the link in a selected field. `getUrl()` replaces the link (a compare set).
 - `copyText(text) -> Promise<boolean>`, `showLink(url, opener)`.

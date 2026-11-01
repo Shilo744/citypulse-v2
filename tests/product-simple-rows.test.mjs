@@ -260,7 +260,7 @@ test("property: on the category page the row of a figure that needs attention sa
 });
 
 // ── the page ──
-test("page: on both levels the rows under what needs attention say their cause above the way; the good rows say no status; the lede under the verdict is computed from the data", { skip }, async () => {
+test("page: the rows under what needs attention say their cause above the way; the good rows say no status; the lede under the verdict is computed from the data", { skip }, async () => {
   const backend = (() => { const mm = new Map(); return { getItem: (k) => (mm.has(k) ? mm.get(k) : null), setItem: (k, v) => mm.set(k, String(v)), removeItem: (k) => mm.delete(k) }; })();
   const d = installDom({ storage: backend }), realFetch = globalThis.fetch;
   storage.use(backend);
@@ -269,8 +269,8 @@ test("page: on both levels the rows under what needs attention say their cause a
     indicators: [{ id: "pov_persons", label: "תחולת העוני בקרב נפשות", source: "btl_poverty", definition: "אחוז הנפשות ביישוב שההכנסה נטו שלהן נמוכה מקו העוני.", caution: CAUTION }] }, "/api/health": { ok: true } });
   try {
     const key = "1031", home = await load("city/home.js");
-    for (const [level, query] of [["simple", ""], ["full", "v=full"]]) {
-      const v = await home.cityHome({ key, model: cityModel(key), params: new URLSearchParams(query), go() {}, announce() {}, setTitle() {}, signal: undefined }, level === "simple" ? { level: "simple" } : {});
+    for (const [level, query] of [["full", ""]]) {
+      const v = await home.cityHome({ key, model: cityModel(key), params: new URLSearchParams(query), go() {}, announce() {}, setTitle() {}, signal: undefined });
       const weak = v.node.find((e) => e.id === "n-sec-weak"), items = weak.findAll((e) => e.classes.has("n-home-item"));
       assert.ok(items.length >= 3, level);
       for (const it of items) {

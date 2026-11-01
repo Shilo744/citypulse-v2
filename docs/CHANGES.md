@@ -2,6 +2,10 @@
 
 The project folder is not a git repository, so there is no commit log. This list is rebuilt from the work reports in `design-ideas/product/DONE/` (one per work package, named in brackets) and from the files themselves; times are when a report was written, and a report may be thin (a package that stopped says so). The first work was the seven audits in `design-ideas/product/audit/` on the evening of 2026-10-29. Nothing was deleted from the old app: it is byte-identical to its baseline (`tests/product-old-untouched.test.mjs`) except for the lab card described under "Release". Where a later change retired something, it says so; the current state is `docs/PRODUCT.md`.
 
+## 2026-11-01 (morning): the short level is retired
+
+- At the owner's request the town page has one level, the full details. The switch "במבט אחד | הפרטים המלאים" is gone from the head, `simple/pref.js` and the stored choice (`cp2-view-2`) are deleted, `?v=`, `?q=simple` and the alias `#/c/<key>/simple` still open the page (they show the full level), the share button always shares `?q=weak`, the entry page and the privacy page no longer describe two levels. The tests and the browser probes that drove the switch now check that it is absent. The code of the short rows stays in `city/sections.js` (nothing opens it).
+
 ## 2026-10-29 (evening): plan and foundation
 
 - Seven audit documents and the plan `design-ideas/product/SPEC.md` with `SPEC-ADDENDUM.md` (binding): the product is its own entry file, not a switch inside `index.html`.

@@ -82,10 +82,10 @@ test("shareUrl(key, \"simple\"): the page itself without share pages, /s/<key>?q
   finally { share.setShareFeature(false); }
 });
 
-test("the share button of the town page hands the id \"simple\" to shareUrl on the short level and builds no link of its own", () => {
+test("the share button of the town page always hands the id \"weak\" to shareUrl (the short level is retired) and builds no link of its own", () => {
   const src = fs.readFileSync(path.join(PRODUCT, "city", "home.js"), "utf8");
-  assert.ok(src.includes("shareQ = () => (level === \"simple\" ? \"simple\" : \"weak\")"));
-  assert.ok(src.includes("shareHref = () => shareUrl(key, shareQ())"));
+  assert.ok(src.includes("shareHref = () => shareUrl(key, \"weak\")"));
+  assert.ok(!/shareQ|level === "simple"/.test(src));
   assert.match(fs.readFileSync(path.join(ROOT, "design-ideas", "product", "NEEDS", "w3b-bob.txt"), "utf8"), /simple/);
 });
 

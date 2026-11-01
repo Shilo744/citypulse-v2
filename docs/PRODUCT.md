@@ -6,7 +6,7 @@ Open it: `http://localhost:8800/n.html` (entry page) and `http://localhost:8800/
 
 The interface is Hebrew and right to left. Hebrew strings are quoted here as they appear on screen; this document is English.
 
-**What the product is, in four lines.** A town has one page with two levels, "במבט אחד" and "הפרטים המלאים". The 41 figures of the server's nine domains are shown as four categories and a background line. Every figure is judged against the other towns and, where an official target exists, against that target. Every number on a screen is a field of the model or is computed from fields in code; no language model writes a number.
+**What the product is, in four lines.** A town has one page (its short level "במבט אחד" and the switch to it were retired on 2026-11-01 at the owner's request). The 41 figures of the server's nine domains are shown as four categories and a background line. Every figure is judged against the other towns and, where an official target exists, against that target. Every number on a screen is a field of the model or is computed from fields in code; no language model writes a number.
 
 ## 1. Routes
 
@@ -15,8 +15,8 @@ Hash routes, the same scheme as the old app, so a link written by an old page st
 | Hash | Route id | What it shows | Module |
 |---|---|---|---|
 | `#/` | `entry` | Headline, town search, "המעקב שלי", trust numbers, a live sample sentence, the sources | `entry/entry.js` |
-| `#/c/<key>` | `home` | The town page, both levels (section 2). `?v=simple\|full` picks the level for that visit; `?q=weak\|changed\|peers\|first\|missing` scrolls to a section (an unknown `q` becomes `weak`) | `city/home.js` |
-| `#/c/<key>/simple` | `simple` | An alias: the same page at the short level, without writing the stored choice | `city/home.js` |
+| `#/c/<key>` | `home` | The town page (section 2). `?q=weak\|changed\|peers\|first\|missing` scrolls to a section (an unknown `q` becomes `weak`); an old `?v=` is ignored | `city/home.js` |
+| `#/c/<key>/simple` | `simple` | An alias kept for old links to the retired short level: the same page | `city/home.js` |
 | `#/c/<key>/brief` | `brief` | "דוח ליישוב", two A4 pages. No menu item: the town page reaches it with "הדפסת דוח" | `brief/brief.js` |
 | `#/c/<key>/overview` | `overview` | Redirect (replace) to `#/c/<key>`, `?q=` kept | `routes.js` |
 | `#/c/<key>/d/<categoryId>` | `d` | One category (`child outcomes mental safety`) or the background `context`. An old `d/<one of the nine domain ids>` redirects (replace) to its category | `pages/domain.js` |
@@ -37,17 +37,17 @@ Rules of the router (`app.js`):
 
 One page, `#/c/<key>`, builds the whole story of a town. The binding description of the merge is `design-ideas/product/MERGE.md`; the contract of the rows and the limits is `docs/SIMPLE.md`. A copy of the product before the merge is in `design-ideas/product/baseline/product-before-merge/`.
 
-**Head** (the shared band, `band.js homeBand`): the town name (the one h1), a facts line (kind, residents; the full level adds district and cluster), the level switch (two underlined texts in a `nav`, no capsules), the actions (share, "הדפסת דוח" = link to `brief`, the town's CSV, star). The full level adds the basis line (how many of the 41 figures have data, the years, the update date), the background line ("רקע על היישוב": growth and poverty as plain figures, link to `d/context`) and the question field.
+**Head** (the shared band, `band.js homeBand`): the town name (the one h1), a facts line (kind, residents, district and cluster), the actions (share, "הדפסת דוח" = link to `brief`, the town's CSV, star), the basis line (how many of the 41 figures have data, the years, the update date), the background line ("רקע על היישוב": growth and poverty as plain figures, link to `d/context`) and the question field. There is no level switch.
 
-**Sections, in story order** (ids are read by the tools): `n-sec-state` how things stand (the verdict sentence, the one segmented bar with its counts; the full level adds a row per category); `n-sec-good` what goes well (at most 3 rows, 6 on the full level); `n-sec-weak` what needs attention (3 rows and "עוד N" on the short level; every figure that needs treatment or follow-up, grouped by category, on the full level); `n-sec-changed` what changed and `n-sec-peers` how it compares with similar towns (full level only; peers dropped for a town with no comparable towns); `n-sec-first` what to do (the first step; the full level shows three and links to the plan page); `n-sec-missing` what has no data; then the foot (sources and date once, what "דורש טיפול" means, the report-a-mistake link). The short level prints on one A4 page.
+**Sections, in story order** (ids are read by the tools): `n-sec-state` how things stand (the verdict sentence, the one segmented bar with its counts and a row per category); `n-sec-good` what goes well (at most 6 rows); `n-sec-weak` what needs attention (every figure that needs treatment or follow-up, grouped by category); `n-sec-changed` what changed and `n-sec-peers` how it compares with similar towns (peers dropped for a town with no comparable towns); `n-sec-first` what to do (the first three steps, with a link to the plan page); `n-sec-missing` what has no data; then the foot (sources and date once, what "דורש טיפול" means, the report-a-mistake link).
 
-**Kinds of town.** A very small town (some figures on small groups, fewer than half judgeable: `isVerySmallTown`) gets a calm sentence, "אלה המספרים שיש, בלי שיפוט." and the numbers as they are (`n-sec-small`). A town the sources do not cover gets the no-data spot, no level switch and no question field.
+**Kinds of town.** A very small town (some figures on small groups, fewer than half judgeable: `isVerySmallTown`) gets a calm sentence, "אלה המספרים שיש, בלי שיפוט." and the numbers as they are (`n-sec-small`). A town the sources do not cover gets the no-data spot and no question field that works.
 
-**Which level opens** (`simple/pref.js chooseLevel`, pure): `?v=`, else the alias route or `?q=simple`, else a `?q=` that names a section (full level only), else the stored choice (`cp2-view-2`, `simple` or `full`), else the full level. The switch redraws the sections in place: no new history entry, scroll and focus stay, one polite announcement, the choice is stored. The alias and `?v=` never write the choice. There is no redirect.
+**One level.** The town page has only the full level. `?v=`, `?q=simple`, the alias route and an old stored choice (`cp2-view-2`, no longer read or written) change nothing: the page opens the same way. Until 2026-11-01 a switch in the head chose between "במבט אחד" and "הפרטים המלאים".
 
 **One town, one answer.** The verdict, the legend, the category rows, the attention lead, the briefing, the coverage page and the share preview state the same counts (`tests/product-consistency.test.mjs`, `src/tools/consistency_probe.js`). The code that makes it so: `city/data.js` (counts, weakest-first order), `city/sentence.js` (sentences for the page, the share preview and the briefing), `simple/model.js` (which rows), `city/sections.js` (the DOM of each section).
 
-**Share and print.** Share copies `/s/<key>` (`?q=simple` for the short level, `?q=weak` for the full level), a server page whose preview shows the verdict; without the server feature it copies the hash link. Every page prints without menu and bars, and the dark theme prints light.
+**Share and print.** Share copies `/s/<key>?q=weak`, a server page whose preview shows the verdict (an old `?q=simple` link still works and lands on the town page); without the server feature it copies the hash link. Every page prints without menu and bars, and the dark theme prints light.
 
 ## 3. Categories and topics
 
@@ -94,7 +94,7 @@ A card that shows on a mark must add something the page does not already say nex
 | Keyboard | `/` search, `?` help, `Esc` | `kit/helpsheet.js`; the single-key shortcuts have an off switch (WCAG 2.1.4) |
 | Theme | sun and moon button | `data-theme` light or dark |
 
-What the device keeps is exactly `KEYS` in `web/js/product/config.js` (theme, recent, last, fav, welcome, shortcuts, from, view = `cp2-theme cp2-recent cp2-last cp2-fav cp2-welcome-n cp2-keys cp2-from cp2-view-2`), and the privacy page lists the same set (`tests/product-simple.test.mjs` compares them). Nothing leaves the device except requests to this server: no cookies, no analytics, no third-party host (a test checks `n.html`).
+What the device keeps is exactly `KEYS` in `web/js/product/config.js` (theme, recent, last, fav, welcome, shortcuts, from = `cp2-theme cp2-recent cp2-last cp2-fav cp2-welcome-n cp2-keys cp2-from`), and the privacy page lists the same set (`tests/product-simple.test.mjs` compares them). Nothing leaves the device except requests to this server: no cookies, no analytics, no third-party host (a test checks `n.html`).
 
 ## 7. The honesty rules
 
@@ -141,7 +141,7 @@ Browser tools need Chrome and the server on port 8800; set `CDP_SLOT=<n>` so two
 | `npm run matrix:n -- --subset` (`src/tools/product_matrix.js`) | town x width x theme x route with a check list per load; writes `design-ideas/product/qa/matrix.md` and `.json`, so pass `--out=<path>` for a throwaway run |
 | `node src/tools/consistency_probe.js 1031,16` | the town page, the briefing and the coverage page of each town state the same count, weakest category, first step and coverage; exit code 1 on a disagreement |
 | `node src/tools/small_town_probe.js 16,7,472,935` | searches the visible text of every route for rank words and comparisons where a town is too small to have them |
-| `node src/tools/chrome_probe.js --mode=targets\|reflow\|nav\|groups` | pointer targets under 24 px; sideways scroll at 320 px with 200 percent text; every old address lands right and the level switch works (`--only=redirect\|switch\|info`); the topic groups of the category page |
+| `node src/tools/chrome_probe.js --mode=targets\|reflow\|nav\|groups` | pointer targets under 24 px; sideways scroll at 320 px with 200 percent text; every old address lands right and the town page has no level switch (`--only=redirect\|switch\|info`); the topic groups of the category page |
 | `node src/tools/first_screen_probe.js` | where the verdict sentence starts against the window height, 13 sizes |
 | `node src/tools/tips_probe.js --towns=1031,16,9000 --touch` | hovers, focuses and taps every mark; fails when a card that stays repeats what its section says |
 | `node src/tools/dialog_focus_probe.js` | the feedback dialog with real key events and a held POST (nothing reaches the server) |

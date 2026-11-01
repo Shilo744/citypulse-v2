@@ -4,7 +4,7 @@
 // Each must land on the right page (the category page of the new categories, the town page, the page of information inside the town) with the town menu, the way back and no pile of history entries. Exit code 1 on any failure.
 const { launch } = require("./cdp");
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-const base = "http://localhost:8800/n.html";
+const base = process.env.BASE || "http://localhost:8800/n.html";          // BASE=http://host/n.html runs it against another server (the live site, another port)
 const OLD = { immunization: "child", child: "child", nutrition: "child", outcomes: "outcomes", access: "outcomes", mental: "mental", welfare: "mental", safety: "safety", context: "context", env: "context" };
 const LABEL = { child: "ילדים והורים", outcomes: "בריאות ושירותי בריאות", mental: "נפש ורווחה", safety: "בטיחות", context: "רקע על היישוב" };
 function state() {

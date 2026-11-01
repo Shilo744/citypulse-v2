@@ -6,7 +6,7 @@
 //   as text next to them: the 'essential presentation' exception of 2.5.8, q1). Everything else under 24 by 24 CSS px is an offender. --towns=1031,9000,... runs the routes of each of those towns instead of the fixed list (q1).
 // reflow: 320 px wide, html{font-size:200%}: scrollWidth against clientWidth and the elements that stick out.
 // nav (m3): every old address lands where MERGE.md section 4 says and leaves no history entry behind (overview, d/<each old domain id>, ?q=simple, ?q=<each question>, the alias),
-//   and the level switch of the town page, used in a real browser both ways: the scroll position stays, the focus stays on the switch, the live region says it once.
+//   and that the town page has no level switch any more (the short level was retired on 2026-11-01): neither "במבט אחד" nor "הפרטים המלאים" is a link or a button of the page, at both widths.
 //   --only=info (u1): the glossary, the accessibility statement and the privacy page open INSIDE the town: from the town page and from a category page the menu item, the footer links and the term link of the
 //   dialog are clicked; the town menu stays (the town first, no "בחירת יישוב"), the way back and the crumbs are the town, the title names the town; the top-level form keeps the town-less menu.
 // groups (u2): the category page d/child of towns 1031, 16, 99 and 472 at 1280 and 390: the figures are in closed groups (one per topic) with a summary row, exactly one open on the first load, the counts of the
@@ -132,26 +132,12 @@ async function navMode(b) {
     await land(c + "?q=nonsense", c + "?q=weak", key + " ?q=nonsense");
     await land(c + "/simple", c + "/simple", key + " alias stays");
   }
-  // the level switch, both ways, in a real browser (the switch is built by the page of the town; here it is only used)
+  // the level switch is gone: neither of its two words is a link or a button of the town page (a real browser, both widths)
   for (const w of /redirect|info/.test(only) ? [] : [1280, 390]) {
     await b.viewport(w, w < 700);
-    await b.open(base + "#/c/1031?v=full"); await b.eval(SETTLE);
-    const SW = `(() => { const all = [...document.querySelectorAll('#view a, #view button')]; const f = (t) => all.find((e) => (e.textContent || '').trim() === t); return { simple: !!f('במבט אחד'), full: !!f('הפרטים המלאים') }; })()`;
-    const have = await b.eval(SW); say(have.simple && have.full, w + " the switch has both levels");
-    if (!(have.simple && have.full)) continue;
-    for (const [to, from] of [["במבט אחד", "הפרטים המלאים"], ["הפרטים המלאים", "במבט אחד"]]) {
-      await b.eval(`window.scrollTo(0, 90); document.getElementById('live').textContent = ''`);
-      const before = await b.eval(`({ y: Math.round(scrollY), len: history.length, hash: location.hash })`);
-      // like a person: the switch takes the focus first (a mouse click and the Enter key both leave it there), then it is activated; a bare .click() would leave the focus where the router put it (the h1)
-      await b.eval(`(() => { const e = [...document.querySelectorAll('#view a, #view button')].find((x) => (x.textContent || '').trim() === ${JSON.stringify(to)}); e.focus(); e.click(); })()`);
-      await sleep(900);
-      const after = await b.eval(`(() => { const a = document.activeElement; return { y: Math.round(scrollY), len: history.length, text: a ? (a.textContent || '').trim() : '', inSwitch: !!(a && a.closest && a.closest('#view') && (a.closest('nav') || a.closest('[role=group]') || a.closest('[class*=switch]') || a.closest('[class*=-sw]'))), live: (document.getElementById('live').textContent || '').trim(), h1: document.querySelectorAll('#view h1').length }; })()`);
-      say(Math.abs(after.y - before.y) <= 2, w + " switch to '" + to + "': scroll kept", `${before.y} -> ${after.y}`);
-      say(after.len === before.len, w + " switch to '" + to + "': no history entry", `${before.len} -> ${after.len}`);
-      say(after.inSwitch && after.text === to, w + " switch to '" + to + "': focus stays on the switch", `focus on '${after.text}'`);
-      say(after.live.length > 0, w + " switch to '" + to + "': one announcement", `'${after.live}'`);
-      say(after.h1 === 1, w + " switch to '" + to + "': one h1");
-    }
+    await b.open(base + "#/c/1031"); await b.eval(SETTLE);
+    const have = await b.eval(`(() => { const all = [...document.querySelectorAll('#view a, #view button')]; const f = (t) => all.some((e) => (e.textContent || '').trim() === t); return { simple: f('במבט אחד'), full: f('הפרטים המלאים') }; })()`);
+    say(!have.simple && !have.full, w + " the town page has no level switch");
   }
   console.log(bad.length ? "FAILED: " + bad.length : "all navigation checks passed");
 }

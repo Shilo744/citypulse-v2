@@ -169,10 +169,10 @@ test("routes: a redirect can never loop (the target is a domain of the model, or
   } finally { d.restore(); }
 });
 
-test("routes: home and simple are the same page (the alias passes the short level), the old chrome logic is gone", async () => {
+test("routes: home and simple are the same page (the alias is an old link to the retired short level), the old chrome logic is gone", async () => {
   const src = (await import("node:fs")).readFileSync(path.join(PRODUCT, "routes.js"), "utf8").replace(/\/\/.*$/gm, "");
   assert.match(src, /home: \{ load: \(ctx\) => townPage\(ctx\) \}/);
-  assert.match(src, /simple: \{ load: \(ctx\) => townPage\(ctx, \{ level: "simple" \}\) \}/);
+  assert.match(src, /simple: \{ load: \(ctx\) => townPage\(ctx\) \}/);
   assert.match(src, /active: "home"/);
   assert.ok(!/homeRedirect|KEYS\.view|pages\/overview/.test(src), "no redirect of the home by the stored choice and no overview page");
   const nav = await load("nav.js");

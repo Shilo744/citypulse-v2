@@ -1,5 +1,5 @@
-// The town page, its short level ("במבט אחד") and its full level: what the page chooses from (simple/model.js, words.js, pref.js, no DOM), its honesty on the small and uncovered towns, its words,
-// the choice of the level and the in-place switch. The page itself runs against the tiny fake document of tests/helpers/fake-dom.mjs; city/home.js and city/sections.js are the page.
+// The town page (one level, the full one; the short level "במבט אחד" and its switch were retired on 2026-11-01): what the page chooses from (simple/model.js, words.js, no DOM), its honesty on the small and uncovered towns, its words,
+// and that no address and no old choice brings the short level back. The page itself runs against the tiny fake document of tests/helpers/fake-dom.mjs; city/home.js and city/sections.js are the page.
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -11,7 +11,7 @@ import { installDom, fakeFetch } from "./helpers/fake-dom.mjs";
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SIMPLE = path.join(ROOT, "web", "js", "product", "simple");
 const load = (f) => import(pathToFileURL(path.join(ROOT, "web", "js", "product", f)).href);
-const M = await load("simple/model.js"), W = await load("simple/words.js"), P = await load("simple/pref.js"), storage = await load("storage.js"), config = await load("config.js");
+const M = await load("simple/model.js"), W = await load("simple/words.js"), storage = await load("storage.js"), config = await load("config.js");
 const skip = !haveStore && "the built store is not there";
 const TOWNS = ["1031", "9000", "3000", "5000", "4000", "1161", "2600", "2710", "6100", "2800", "7", "16", "472", "935", "99"];
 const MODELS = {};
@@ -39,43 +39,16 @@ function prose(m) {
   return out;
 }
 
-// ── the level of the page: chosen, never redirected (pure) ──
-test("pref: the level is chosen by ?v=, the alias route, ?q=, the stored choice, then the short level; there is no redirect any more", () => {
-  const L = P.chooseLevel;
-  assert.equal(L({}), "simple", "a first visit opens the short level"); assert.equal(L({ stored: "simple" }), "simple"); assert.equal(L({ stored: "full" }), "full"); assert.equal(L({ stored: "garbage" }), "simple");
-  assert.equal(L({ alias: true, stored: "full" }), "simple", "the alias route shows the short level");
-  assert.equal(L({ v: "full", alias: true }), "full", "?v= overrides for that visit, also on the alias"); assert.equal(L({ v: "simple", stored: "full" }), "simple");
-  assert.equal(L({ q: "simple", stored: "full" }), "simple", "a share link of the short level");
-  for (const q of P.SECTION_QS) assert.equal(L({ q, stored: "simple" }), "full", q + " names a section, and only the full level has the sections");
-  assert.equal(L({ q: "nonsense", stored: "simple" }), "simple", "an unknown question is ignored");
-  assert.equal(L({ v: "nonsense", stored: "simple" }), "simple");
-  assert.equal(P.homeRedirect, undefined, "homeRedirect is deleted: the same page, no redirect"); assert.equal(P.simpleHref("1031"), "#/c/1031/simple"); assert.equal(P.fullHref("1031"), "#/c/1031");
-  assert.deepEqual(P.SECTION_QS, ["weak", "changed", "peers", "first", "missing"]);
-});
-
-test("pref: the choice is kept under KEYS.view, an unknown value is ignored, blocked storage still works for the session", () => {
-  assert.equal(config.KEYS.view, "cp2-view-2");
-  const m = new Map(), backend = { getItem: (k) => (m.has(k) ? m.get(k) : null), setItem: (k, v) => m.set(k, String(v)), removeItem: (k) => m.delete(k) };
-  storage.use(backend);
-  try {
-    storage.remove(config.KEYS.view);
-    assert.equal(P.readView(), null);
-    P.writeView("simple"); assert.equal(P.readView(), "simple"); assert.equal(m.get("cp2-view-2"), "simple");
-    P.writeView("full"); assert.equal(P.readView(), "full");
-    assert.equal(P.writeView("nonsense"), false); assert.equal(P.readView(), "full");
-    m.set("cp2-view-2", "garbage"); assert.equal(P.readView(), null);
-  } finally { storage.use(undefined); }
-  const blocked = { getItem() { throw new Error("blocked"); }, setItem() { throw new Error("blocked"); }, removeItem() { throw new Error("blocked"); } };
-  storage.use(blocked);
-  try { assert.doesNotThrow(() => P.writeView("simple")); assert.equal(P.readView(), "simple", "kept in memory until the page closes"); storage.remove(config.KEYS.view); } finally { storage.use(undefined); }
-});
-
-test("the privacy page describes the key of the view choice, and the router renders the one page for both routes", () => {
+// ── the level of the page: there is one, the full one (the short level and its switch were retired on 2026-11-01 at the owner's request) ──
+test("one level: the choice of a level is gone (no pref module, no storage key, no privacy row) and the router renders the one page for both routes", () => {
+  assert.ok(!fs.existsSync(path.join(SIMPLE, "pref.js")), "simple/pref.js is deleted");
+  assert.equal(config.KEYS.view, undefined, "no storage key for a level");
   const priv = fs.readFileSync(path.join(ROOT, "web", "js", "product", "pages", "privacy.js"), "utf8");
   for (const name of Object.keys(config.KEYS)) assert.ok(new RegExp(`^\\s*${name}:\\s*\\{`, "m").test(priv), `privacy.js describes ${name}`);
+  assert.ok(!/^\s*view:\s*\{/m.test(priv), "privacy.js does not describe a view choice any more");
   const routes = fs.readFileSync(path.join(ROOT, "web", "js", "product", "routes.js"), "utf8");
-  assert.match(routes, /home: \{ load: \(ctx\) => townPage\(ctx\) \}/); assert.match(routes, /simple: \{ load: \(ctx\) => townPage\(ctx, \{ level: "simple" \}\) \}/);
-  assert.ok(!/homeRedirect/.test(routes), "no route sends a stored choice to another address");
+  assert.match(routes, /home: \{ load: \(ctx\) => townPage\(ctx\) \}/); assert.match(routes, /simple: \{ load: \(ctx\) => townPage\(ctx\) \}/);
+  assert.ok(!/homeRedirect|level: "simple"/.test(routes), "no route sends a stored choice to another address or asks for a short level");
 });
 
 test("nav: simple is a sub-route of a town and survives a town switch", async () => {
@@ -219,8 +192,8 @@ test("source files: no forbidden word in a string, no hex colour, no location.ha
 // ── the page itself, on the fake document ──
 const memory = () => { const m = new Map(); return { getItem: (k) => (m.has(k) ? m.get(k) : null), setItem: (k, v) => m.set(k, String(v)), removeItem: (k) => m.delete(k), m }; };
 const tick = (ms = 30) => new Promise((r) => setTimeout(r, ms));
-// level: "simple" renders the alias route; params: the query of the address
-async function render(key, { level, params = "", backend = memory() } = {}) {
+// params: the query of the address; backend: the fake storage
+async function render(key, { params = "", backend = memory() } = {}) {
   const d = installDom({ storage: backend }), realFetch = globalThis.fetch, said = [], titles = [];
   storage.use(backend);
   const base = fakeFetch({ "/api/meta": { domains: [], sources: {}, indicators: (MODELS[key].coverage.missing || []).map((id) => ({ id, short: "מדד חסר " + id.length, direction: "higher", importance: 2 })) }, "/api/health": { ok: true } });
@@ -228,7 +201,7 @@ async function render(key, { level, params = "", backend = memory() } = {}) {
   const restore = () => { d.restore(); storage.use(undefined); globalThis.fetch = realFetch; };
   try {
     const home = await load("city/home.js");
-    const v = await home.cityHome({ key, model: MODELS[key], params: new URLSearchParams(params), go() {}, announce: (t) => said.push(t), setTitle: (t) => titles.push(t), signal: undefined }, level ? { level } : {});
+    const v = await home.cityHome({ key, model: MODELS[key], params: new URLSearchParams(params), go() {}, announce: (t) => said.push(t), setTitle: (t) => titles.push(t), signal: undefined });
     await tick(90);          // the answers that read the catalogue finish their drawing while the fake document is still there
     const body = v.node.find((e) => e.classes.has("n-home-body"));
     return { d, v, node: v.node, band: v.band, body, backend, said, titles, text: v.node.textContent, restore,
@@ -240,31 +213,27 @@ const headingTexts = (node, tag) => node.findAll((e) => e.tagName === tag).map((
 const sec = (r, id) => r.body.find((e) => e.id === id);
 const items = (node) => node.findAll((e) => e.classes.has("n-home-item"));
 
-test("short level (the alias): the band has the one h1, then the verdict, the bar with words, good, attention, what to do, missing, the foot, in this order", { skip }, async () => {
-  const r = await render("1031", { level: "simple" });
-  try {
-    assert.equal(r.v.active, "home"); assert.equal(r.v.title, "במבט אחד"); assert.equal(r.node.getAttribute("data-level"), "simple");
-    assert.deepEqual(headingTexts(r.band, "H1"), ["שדרות"]); assert.equal(headingTexts(r.node, "H1").length, 0, "the h1 is in the band, once");
-    assert.deepEqual(r.sections(), ["n-sec-state", "n-sec-good", "n-sec-weak", "n-sec-first", "n-sec-missing"]);
-    const h2 = r.h2();
-    assert.match(h2[0], /^\d+ מתוך \d+ מדדי בריאות דורשים טיפול\.$/);
-    assert.deepEqual(h2.slice(1), ["מה הולך טוב", "מה דורש תשומת לב", "מה כדאי לעשות", "על מה אין מידע"]);
-    assert.equal(r.node.findAll((e) => e.classes.has("n-home-seg") && !e.classes.has("is-small")).length >= 3, true, "the verdict bar has its segments"); assert.ok(r.node.findAll((e) => e.classes.has("n-home-cat")).length >= 1, "the short level is the overview: the by-category rows open it");
-    assert.match(r.text, /דורשים טיפול/); assert.match(r.text, /למעקב/); assert.match(r.text, /תקינים/);
-    assert.ok(items(sec(r, "n-sec-weak")).length >= 1 && items(sec(r, "n-sec-weak")).length <= 3); assert.ok(items(sec(r, "n-sec-good")).length <= 3);
-    assert.equal(r.node.findAll((e) => e.classes.has("n-home-way")).length, items(r.body).length, "every row says which way is good");
-    assert.match(r.text, /כדאי שיהיה (גבוה|נמוך) יותר\./); assert.match(r.text, /הארץ/); assert.ok(!/הדפסה|שיתוף|הדפסת דוח/.test(r.text), "print and share live in the head only, the foot does not repeat them"); assert.match(r.band.textContent, /הדפסת דוח/); assert.match(r.band.textContent, /שיתוף/); assert.match(r.text, /לכל הנתונים החסרים/); assert.match(r.text, /עודכן 29/);
-    assert.ok(!/מקום \d|אחוזון|דירוג/.test(r.text), "no rank on the short level");
-    const links = r.node.findAll((e) => e.tagName === "A").map((e) => e.attrs.href);
-    assert.ok(links.includes("#/c/1031/coverage") && links.some((l) => /^#\/c\/1031\/i\//.test(l)), "a row opens its measure");
-    assert.equal(r.node.findAll((e) => e.classes.has("n-home-index")).length, 0, "no index on the short level"); assert.equal(r.node.find((e) => e.classes.has("n-home-welcome")), null, "no welcome lines on the short level");
-    assert.ok(r.band.find((e) => e.classes.has("n-band-ask")).hidden, "no question field on the short level"); assert.ok(!r.band.find((e) => e.classes.has("n-home-lines")).hidden, "the background line opens the short level too (its basis part is hidden by css there)");
-    assert.ok(forbidden(r.text).length === 0, forbidden(r.text).join());
-  } finally { r.restore(); }
+test("one level: ?v=simple, ?q=simple and an old stored choice change nothing; the page has no switch and writes nothing for a level", { skip }, async () => {
+  const base = await render("1031"), want = { sections: base.sections(), h2: base.h2() };
+  try { assert.equal(base.v.active, "home"); assert.equal(base.v.title, "בריאות בשדרות"); assert.deepEqual(headingTexts(base.band, "H1"), ["שדרות"]); assert.equal(headingTexts(base.node, "H1").length, 0, "the h1 is in the band, once"); } finally { base.restore(); }
+  assert.deepEqual(want.sections, ["n-sec-state", "n-sec-good", "n-sec-weak", "n-sec-changed", "n-sec-peers", "n-sec-first", "n-sec-missing"]);
+  const old = memory(); old.m.set("cp2-view-2", "simple");
+  for (const opts of [{ params: "v=simple" }, { params: "v=full" }, { params: "q=simple" }, { backend: old }]) {
+    const r = await render("1031", opts);
+    try {
+      const what = opts.params || "an old stored choice";
+      assert.equal(r.node.getAttribute("data-level"), "full", what);
+      assert.deepEqual(r.sections(), want.sections, what); assert.deepEqual(r.h2(), want.h2, what);
+      assert.equal(r.sw(), null, what + ": no level switch"); assert.equal(r.band.findAll((e) => e.tagName === "NAV").length, 0, what + ": no nav in the head");
+      assert.ok(!/במבט אחד/.test(r.text + r.band.textContent), what + ": the page does not offer a short level");
+      assert.equal(r.backend.m.get("cp2-view-2"), opts.backend ? "simple" : undefined, what + ": the page neither reads nor writes a level");
+      assert.ok(!r.band.find((e) => e.classes.has("n-band-ask")).hidden, what + ": the question field is always there");
+    } finally { r.restore(); }
+  }
 });
 
 test("full level: the same story in the same order, the by-category rows, attention under the four categories, changed, peers, what to do, the index, the head lines", { skip }, async () => {
-  const r = await render("1031", { params: "v=full" }), m = MODELS["1031"], v = M.verdictOf(m);
+  const r = await render("1031"), m = MODELS["1031"], v = M.verdictOf(m);
   try {
     assert.equal(r.v.title, "בריאות בשדרות"); assert.equal(r.node.getAttribute("data-level"), "full");
     assert.deepEqual(r.sections(), ["n-sec-state", "n-sec-good", "n-sec-weak", "n-sec-changed", "n-sec-peers", "n-sec-first", "n-sec-missing"], "the order of the story");
@@ -307,91 +276,49 @@ test("full level: the same story in the same order, the by-category rows, attent
   } finally { r.restore(); }
 });
 
-test("kinds of town: a tiny town gets the calm line and the numbers as they are, an uncovered town the no-data spot and no switch; neither has a template of empty parts", { skip }, async () => {
-  for (const k of ["16", "935"].filter(have)) for (const level of ["simple", undefined]) {
-    const r = await render(k, { level });
+test("kinds of town: a tiny town gets the calm line and the numbers as they are, an uncovered town the no-data spot; neither has a template of empty parts or a level switch", { skip }, async () => {
+  for (const k of ["16", "935"].filter(have)) {
+    const r = await render(k);
     try {
       assert.deepEqual(headingTexts(r.band, "H1"), [MODELS[k].city.name]);
       const h2 = r.h2();
       assert.ok(!h2.includes("מה דורש תשומת לב") && !h2.includes("מה הולך טוב") && !h2.includes("מה כדאי לעשות"), k + " has no judged parts");
-      if (k === "16") { assert.equal(h2[0], "יש מעט נתונים, ולכן קשה לשפוט."); assert.ok(r.sw(), "the switch is there"); assert.equal(r.node.findAll((e) => e.classes.has("n-home-seg")).length, 0, "no bar"); assert.ok(sec(r, "n-sec-small")); assert.ok(!r.sections().includes("n-sec-peers") && !r.sections().includes("n-sec-changed") && !r.sections().includes("n-sec-first")); }
-      else { assert.match(h2[0], /אין נתונים רשמיים על/); assert.ok(r.node.find((e) => e.classes.has("n-band-spot")), "the calm spot"); assert.equal(r.sw(), null, "no level switch for a town without data"); assert.deepEqual(r.sections(), ["n-sec-state"]); assert.ok(r.band.find((e) => e.classes.has("n-home-ask-in")).attrs.disabled !== undefined, "the question field is off"); }
+      if (k === "16") { assert.equal(h2[0], "יש מעט נתונים, ולכן קשה לשפוט."); assert.equal(r.node.findAll((e) => e.classes.has("n-home-seg")).length, 0, "no bar"); assert.ok(sec(r, "n-sec-small")); assert.ok(!r.sections().includes("n-sec-peers") && !r.sections().includes("n-sec-changed") && !r.sections().includes("n-sec-first")); }
+      else { assert.match(h2[0], /אין נתונים רשמיים על/); assert.ok(r.node.find((e) => e.classes.has("n-band-spot")), "the calm spot"); assert.deepEqual(r.sections(), ["n-sec-state"]); assert.ok(r.band.find((e) => e.classes.has("n-home-ask-in")).attrs.disabled !== undefined, "the question field is off"); }
+      assert.equal(r.sw(), null, k + ": no level switch");
       assert.equal(r.node.findAll((e) => e.classes.has("n-home-index")).length, 0, "too few sections for an index");
     } finally { r.restore(); }
   }
 });
 
-test("a very small town: no rank, no comparison with the nation or similar towns on either level; every figure of a small group says how many cases it rests on", { skip }, async () => {
+test("a very small town: no rank, no comparison with the nation or similar towns; the page says why a small group is not judged", { skip }, async () => {
   const strip = (t) => t.replace(/[⁦-⁩‎‏]/g, "");
-  for (const k of ["16", "7"].filter(have)) for (const params of ["v=simple", "v=full"]) {
-    const r = await render(k, { params });
+  for (const k of ["16", "7"].filter(have)) {
+    const r = await render(k);
     try {
-      assert.ok(!/מקום d|טוב מ-|חלש יותר מ|יישובים דומים/.test(strip(r.body.textContent)), k + " " + params + ": nothing is ranked or compared");
-      const rows = r.node.findAll((e) => e.classes.has("n-home-small")).map((e) => strip(e.textContent));
-      if (params === "v=simple") {
-        assert.equal(rows.length, M.smallOf(MODELS[k]).length, k); assert.ok(rows.length > 0, k);
-        for (const t of rows) assert.match(t, /\((\d+ מתוך \d+|\d+ מקרים|מקרה אחד)\) ב-\d{4}\./, k + ": " + t);
-        if (k === "16") { assert.ok(rows.some((t) => t.startsWith("100% (1 מתוך 1) ב-2024.")), "the one case of one"); assert.ok(rows.some((t) => t.startsWith("75% (3 מתוך 4) ב-2024."))); assert.ok(rows.every((t) => !/^\d+% ב-/.test(t)), "no share without its count"); }
-        assert.match(r.text, /יש עוד[^.]{1,8}מספרים/, "the rest of the numbers is counted, never hidden");
-      } else assert.match(strip(sec(r, "n-sec-small").textContent), /קבוצה קטנה/, k + ": the full level says why");
+      assert.ok(!/מקום d|טוב מ-|חלש יותר מ|יישובים דומים/.test(strip(r.body.textContent)), k + ": nothing is ranked or compared");
+      assert.match(strip(sec(r, "n-sec-small").textContent), /קבוצה קטנה/, k + ": the page says why");
       assert.ok(!r.band.find((e) => e.classes.has("n-home-lines")).hidden);
     } finally { r.restore(); }
   }
 });
 
-test("page: it renders with storage blocked, on both levels", { skip }, async () => {
+test("page: it renders with storage blocked", { skip }, async () => {
   const blocked = { getItem() { throw new Error("blocked"); }, setItem() { throw new Error("blocked"); }, removeItem() { throw new Error("blocked"); } };
   for (const params of ["v=simple", "v=full", ""]) { const r = await render("1031", { backend: blocked, params }); try { assert.deepEqual(headingTexts(r.band, "H1"), ["שדרות"]); } finally { r.restore(); } }
 });
 
-test("which level opens: ?v=, the alias, ?q=, the stored choice; the alias and ?v= never write the choice", { skip }, async () => {
-  const lv = async (opts) => { const r = await render("1031", opts); try { return { level: r.node.getAttribute("data-level"), stored: r.backend.m.get("cp2-view-2") }; } finally { r.restore(); } };
-  const be = (v) => { const b = memory(); if (v) b.m.set("cp2-view-2", v); return b; };
-  assert.deepEqual(await lv({ backend: be() }), { level: "simple", stored: undefined }, "nothing stored: the short level, nothing written");
-  assert.deepEqual(await lv({ backend: be("simple") }), { level: "simple", stored: "simple" }, "a stored short choice opens the short level at the same address, no redirect");
-  assert.deepEqual(await lv({ backend: be("simple"), params: "q=weak" }), { level: "full", stored: "simple" }, "a link that names a section shows the full level for that visit");
-  assert.deepEqual(await lv({ backend: be("full"), level: "simple" }), { level: "simple", stored: "full" }, "the alias does not write the choice");
-  assert.deepEqual(await lv({ backend: be("full"), params: "v=simple" }), { level: "simple", stored: "full" }, "?v= is for that visit only");
-  assert.deepEqual(await lv({ backend: be("simple"), params: "q=simple" }), { level: "simple", stored: "simple" });
-  assert.deepEqual(await lv({ backend: be("simple"), params: "q=nonsense" }), { level: "simple", stored: "simple" }, "an unknown q is ignored");
-});
-
-test("the level switch: two underlined texts in a nav, the current one marked, and it changes the level in place (same sections node, same focus, one announcement, the choice stored)", { skip }, async () => {
-  const r = await render("1031", { params: "v=full" });
+test("the footer's how-to-read event shows the welcome lines again, on the page that is already open", { skip }, async () => {
+  const seen = memory(); seen.m.set("cp2-welcome-n", "1");
+  const r = await render("1031", { backend: seen });
   try {
-    const sw = r.sw(), links = sw.findAll((e) => e.tagName === "A");
-    assert.equal(sw.tagName, "NAV"); assert.ok(sw.getAttribute("aria-label")); assert.ok(sw.classes.has("no-print"));
-    assert.deepEqual(links.map((a) => a.textContent), ["במבט אחד", "הפרטים המלאים"]); assert.deepEqual(links.map((a) => a.attrs.href), ["#/c/1031?v=simple", "#/c/1031?v=full"]);
-    assert.equal(links[1].attrs["aria-current"], "page"); assert.ok(!links[0].attrs["aria-current"]);
-    const before = r.body, focus = links[0]; focus.focus();
-    await links[0].click();
-    assert.equal(r.body, before, "the body is the same element, redrawn"); assert.equal(r.d.doc.activeElement, focus, "the focus stays on the switch");
-    assert.equal(r.node.getAttribute("data-level"), "simple"); assert.equal(links[0].attrs["aria-current"], "page"); assert.ok(!links[1].attrs["aria-current"]);
-    assert.deepEqual(r.sections(), ["n-sec-state", "n-sec-good", "n-sec-weak", "n-sec-first", "n-sec-missing"]);
-    assert.equal(r.backend.m.get("cp2-view-2"), "simple"); assert.deepEqual(r.said, ["שדרות: במבט אחד"], "one announcement"); assert.deepEqual(r.titles, ["במבט אחד"]);
-    assert.ok(r.band.find((e) => e.classes.has("n-band-ask")).hidden && !r.band.find((e) => e.classes.has("n-home-lines")).hidden);
-    await links[0].click(); assert.equal(r.said.length, 1, "pressing the level that is shown says nothing");
-    await links[1].click();
-    assert.equal(r.node.getAttribute("data-level"), "full"); assert.equal(r.backend.m.get("cp2-view-2"), "full"); assert.equal(r.said.length, 2); assert.ok(r.sections().includes("n-sec-peers"));
-    assert.ok(!r.band.find((e) => e.classes.has("n-band-ask")).hidden);
-    await tick(90);          // what the redrawn sections still read finishes while the fake document is there
-  } finally { r.restore(); }
-});
-
-test("the 'see all' link of the short level opens the full level at the attention section; the footer's how-to-read event opens the full level and shows the lines", { skip }, async () => {
-  const r = await render("1031", { level: "simple" });
-  try {
-    const more = sec(r, "n-sec-weak").findAll((e) => e.tagName === "A").find((a) => a.attrs.href === "#/c/1031?q=weak");
-    assert.ok(more, "עוד N: לראות את כולם"); await more.click();
-    assert.equal(r.node.getAttribute("data-level"), "full"); assert.ok(r.d.doc.activeElement && r.d.doc.activeElement.id === "n-sec-weak-h", "the section heading has the focus");
-    assert.equal(r.d.doc.activeElement.attrs.tabindex, "-1");
-    await links0(r).click(); assert.equal(r.node.getAttribute("data-level"), "simple");
+    const welcome = r.body.find((e) => e.classes.has("n-home-welcome"));
+    assert.ok(welcome.hidden, "dismissed for good on an earlier visit");
     await globalThis.window.fire("n-howto");
-    assert.equal(r.node.getAttribute("data-level"), "full"); assert.ok(!r.body.find((e) => e.classes.has("n-home-welcome")).hidden, "the welcome lines are shown again");
-    await tick(90);          // what the redrawn sections still read finishes while the fake document is there
+    assert.ok(!welcome.hidden, "the welcome lines are shown again");
+    await tick(90);          // what the sections still read finishes while the fake document is there
   } finally { r.restore(); }
 });
-const links0 = (r) => r.sw().findAll((e) => e.tagName === "A")[0];
 
 test("?q=weak|changed|peers|first|missing focuses the heading of that section after the render; a section that is not there leaves the page where it is", { skip }, async () => {
   for (const [q, id] of [["weak", "n-sec-weak"], ["changed", "n-sec-changed"], ["peers", "n-sec-peers"], ["first", "n-sec-first"], ["missing", "n-sec-missing"]]) {
@@ -405,9 +332,9 @@ test("?q=weak|changed|peers|first|missing focuses the heading of that section af
   }
 });
 
-test("counts agree on both levels: the verdict, the legend, the categories and the attention lead are the same figures, for every kind of town", { skip }, async () => {
-  for (const k of TOWNS.filter(have)) for (const params of ["v=simple", "v=full"]) {
-    const m = MODELS[k], v = M.verdictOf(m), r = await render(k, { params });
+test("counts agree: the verdict, the legend, the categories and the attention lead are the same figures, for every kind of town", { skip }, async () => {
+  for (const k of TOWNS.filter(have)) {
+    const m = MODELS[k], v = M.verdictOf(m), r = await render(k);
     try {
       if (v.kind !== "full") continue;
       assert.equal(r.h2()[0], W.plainOf(W.verdictSegs(v, m.city.name)), k);
@@ -415,13 +342,11 @@ test("counts agree on both levels: the verdict, the legend, the categories and t
       assert.equal(legend.getAttribute("aria-label"), W.legendPlain(v.counts), k);
       const segs = r.node.findAll((e) => e.classes.has("n-home-seg")).filter((e) => !e.parentNode.classes.has("is-small"));
       assert.equal(segs.length, W.legendOf(v.counts).length, k);
-      const att = M.attentionOf(m, params === "v=full" ? Infinity : 3);
-      assert.equal(items(sec(r, "n-sec-weak")).length, att.rows.length, `${k} ${params}`);
-      if (params === "v=full") {
-        const concern = att.rows.filter((x) => m.indicators.find((a) => a.id === x.id).status === "concern").length;
-        assert.ok(concern <= v.counts.concern && att.total <= v.counts.concern + v.counts.watch, k);
-        assert.equal(r.node.findAll((e) => e.classes.has("n-home-cat")).length, m.domains.filter((d) => !d.background && d.indicators.length).length, k + ": one row per category of the menu");
-      }
+      const att = M.attentionOf(m, Infinity);
+      assert.equal(items(sec(r, "n-sec-weak")).length, att.rows.length, k);
+      const concern = att.rows.filter((x) => m.indicators.find((a) => a.id === x.id).status === "concern").length;
+      assert.ok(concern <= v.counts.concern && att.total <= v.counts.concern + v.counts.watch, k);
+      assert.equal(r.node.findAll((e) => e.classes.has("n-home-cat")).length, m.domains.filter((d) => !d.background && d.indicators.length).length, k + ": one row per category of the menu");
     } finally { r.restore(); }
   }
 });
@@ -452,7 +377,14 @@ test("first step: the why line names the figure, both values and which way is go
   assert.ok(!/[A-Za-z]/.test(line));
 });
 
-test("small towns: the rest of the numbers is counted, never hidden", { skip }, async () => {
-  const r = await render("16");
-  try { assert.match(r.text, /יש עוד[^.]{1,8}מספרים/); } finally { r.restore(); }
+test("small towns: every figure of a small group is on the page, the rest behind a counted \"more\", never hidden", { skip }, async () => {
+  for (const k of ["16", "7"].filter(have)) {
+    const r = await render(k);
+    try {
+      const small = MODELS[k].indicators.filter((a) => a.last && a.last.reliable === false && typeof a.last.v === "number" && Number.isFinite(a.last.v));
+      const rows = sec(r, "n-sec-small").findAll((e) => e.tagName === "LI" && e.parentNode && e.parentNode.classes.has("n-home-sm"));
+      assert.equal(rows.length, small.length, k + ": every small figure has its row");
+      if (small.length > 6) assert.match(sec(r, "n-sec-small").textContent, new RegExp("עוד " + (small.length - 6)), k + ": the rest is counted");
+    } finally { r.restore(); }
+  }
 });

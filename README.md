@@ -15,9 +15,9 @@ CityPulse V2 turns official Israeli open data (Ministry of Health, Central Burea
 | URL | Entry file | What it is |
 |---|---|---|
 | `http://localhost:8800/` | `web/index.html` | The old app. It is never edited during the product work: `tests/product-old-untouched.test.mjs` compares the sha256 of every old file with `design-ideas/product/baseline/OLD-HASHES.json`. |
-| `http://localhost:8800/n.html` | `web/n.html` | The finished product ("mode N"), with its own code in `web/js/product/` and `web/css/product/`. A town is one page, `n.html#/c/1031`, with two levels: "הפרטים המלאים" and the short "במבט אחד" (`?v=simple`, or the alias `n.html#/c/1031/simple`). |
+| `http://localhost:8800/n.html` | `web/n.html` | The finished product ("mode N"), with its own code in `web/js/product/` and `web/css/product/`. A town is one page, `n.html#/c/1031`. The short level "במבט אחד" and its switch were retired on 2026-11-01 (the old addresses `?v=simple` and `n.html#/c/1031/simple` still open the page). |
 
-The old app's lab list (`web/js/lab/index.js`) carries one card that links to the product (and to the short level of a town); this is the only deliberate change to an old file, and the baseline was re-baselined once for it (see `docs/RELEASE.md`). Both apps share the charts and page modules under `web/js/viz/` and `web/js/pages/`, which the product imports read-only.
+The old app's lab list (`web/js/lab/index.js`) carries one card that links to the product (its second link, to the short level of a town, now opens the town page: that level was retired on 2026-11-01); this is the only deliberate change to an old file, and the baseline was re-baselined once for it (see `docs/RELEASE.md`). Both apps share the charts and page modules under `web/js/viz/` and `web/js/pages/`, which the product imports read-only.
 
 ### Run
 
@@ -63,8 +63,8 @@ The probes and the matrix (one line each, in `docs/PRODUCT.md` section 11) are `
 
 | Document | What it is for |
 |---|---|
-| `docs/PRODUCT.md` | The product as built: routes, the town page and its two levels, the categories, the official targets, the cards on marks, the honesty rules, resilience, server features, tools, known limits. |
-| `docs/SIMPLE.md` | The content contract of the town page: the sections of both levels, how rows are chosen, limits. |
+| `docs/PRODUCT.md` | The product as built: routes, the town page, the categories, the official targets, the cards on marks, the honesty rules, resilience, server features, tools, known limits. |
+| `docs/SIMPLE.md` | The content contract of the town page: the sections of the page, how rows are chosen, limits. |
 | `docs/RELEASE.md` | Server settings for a real host, the CSS bundle, the order of a deploy, the flip to the default and the way back, and the owner's open decisions (section 8, the only place they are written). |
 | `docs/QA.md` | Test total and date, results of the browser tools, the acceptance checklist, performance numbers (older), what the tools cannot test. |
 | `docs/CHANGES.md`, `docs/CREDITS.md` | What was added, by date and wave; the credit and licence of the category icons. |
@@ -114,7 +114,7 @@ The long Hebrew sections below describe the data model, the design language and 
 
 The handbook is `docs/PRODUCT.md`; this is the one-screen version.
 
-- **One town page, two levels.** `n.html#/c/<key>` tells the story of a town: how things stand, what goes well, what needs attention, what changed and how it compares with similar towns (full level), what to do first, what data is missing. "הפרטים המלאים" is the full level and the default; "במבט אחד" is the short one for a reader with no statistics background. A switch in the head changes the level in place; the choice is kept on the device (`cp2-view`); `?v=simple|full` decides for one visit and `#/c/<key>/simple` is an alias of the short level. Contract: `docs/SIMPLE.md`.
+- **One town page.** `n.html#/c/<key>` tells the story of a town: how things stand, what goes well, what needs attention, what changed and how it compares with similar towns, what to do first, what data is missing. It has one level, the full details. The short level "במבט אחד" and its switch were retired on 2026-11-01 at the owner's request; old addresses with `?v=` or `#/c/<key>/simple` still open the page. Contract: `docs/SIMPLE.md`.
 - **Four categories.** The 41 figures are shown as ילדים והורים, בריאות ושירותי בריאות, נפש ורווחה and בטיחות, plus a background line about the town. The server still groups them in nine domains; the product regroups them at the boundary (`web/js/product/city/groups.js`). A category page shows its figures in closed topic groups (13 in all), each with a one-sentence summary before it opens. An old `overview` or `d/<old domain>` address redirects.
 - **Official targets.** 13 Ministry of Health targets judge a figure's status; 2 related targets and 3 international reference points are shown for orientation and never judge; 26 figures have no verified official reference (`docs/METHOD.md`, `research/GUIDELINES.md`). A figure that meets its target and does not deteriorate is at least "תקין".
 - **Cards on marks.** What shows on hover, keyboard focus or touch adds information (the national value with its year, change, best and worst year, cases, status, source, definition, the target); a card that repeats the visible text is hidden.

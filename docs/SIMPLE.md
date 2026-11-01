@@ -1,8 +1,8 @@
 # The town page: content contract
 
-One page, `#/c/<key>`, with two levels of the same story: "במבט אחד" (short) and "הפרטים המלאים" (full). The alias `#/c/<key>/simple` shows the short level. The file keeps its old name; the old separate "simple page" no longer exists. How the page works as a whole (routes, level choice, kinds of town) is `docs/PRODUCT.md` section 2; the binding description of the merge is `design-ideas/product/MERGE.md`. This document is the contract of what each section contains and how rows are chosen.
+One page, `#/c/<key>`, with one level, the full one ("הפרטים המלאים"). **Since 2026-11-01 the short level "במבט אחד" and its switch are retired** (at the owner's request): the alias `#/c/<key>/simple`, `?v=` and `?q=simple` still open the page, which always shows the full level. The "Short level" column below describes the retired level and is kept as history; the code of its rows is still in `city/sections.js` (`c.level`) but nothing opens it. The file keeps its old name; the old separate "simple page" no longer exists. How the page works as a whole (routes, kinds of town) is `docs/PRODUCT.md` section 2; the binding description of the merge is `design-ideas/product/MERGE.md`. This document is the contract of what each section contains and how rows are chosen.
 
-The reader is a resident, a councillor or a journalist with no statistics background. The short level must answer in about ten seconds whether the town is doing well, what the main problem is and what to do first.
+The reader is a resident, a councillor or a journalist with no statistics background. The top of the page must answer in about ten seconds whether the town is doing well, what the main problem is and what to do first.
 
 ## Sections, in screen order
 
@@ -20,7 +20,7 @@ The reader is a resident, a councillor or a journalist with no statistics backgr
 
 What to do comes after the bad on purpose: it answers it. A section with nothing honest to say is dropped or becomes one quiet line, never an empty template. `?q=weak|changed|peers|first|missing` scrolls to and focuses the section; the full level has a slim text index of the sections that exist.
 
-Two other kinds of town replace the middle sections. A town whose figures all rest on groups too small to judge shows "אלה המספרים שיש, בלי שיפוט." and at most three numbers as they are, never ranked (`n-sec-small`). A town the sources do not cover shows the no-data spot and two links, and has no level switch.
+Two other kinds of town replace the middle sections. A town whose figures all rest on groups too small to judge shows "אלה המספרים שיש, בלי שיפוט." and at most three numbers as they are, never ranked (`n-sec-small`). A town the sources do not cover shows the no-data spot and two links.
 
 ## Anatomy of a row
 
@@ -57,8 +57,7 @@ A row is built by `rowOf()` in `simple/model.js` and drawn by `item()` in `city/
 |---|---|
 | `web/js/product/simple/model.js` | Pure logic, no DOM: `verdictOf`, `attentionOf`, `goodOf`, `smallOf`, `firstSteps`, `missingOf`, `rowOf`, `standing`, `valueParts`, `barWidths`. Reuses `city/data.js`, so the counts equal the rest of the product's |
 | `web/js/product/simple/words.js` | Every text of the page and the functions that assemble sentences from segments. No DOM |
-| `web/js/product/simple/pref.js` | `chooseLevel`, the stored choice `cp2-view-2`, `simpleHref`, `fullHref`. No DOM |
-| `web/js/product/city/home.js` | The page: head, level switch, in-place redraw, `?q=` |
+| `web/js/product/city/home.js` | The page: head, sections, `?q=` |
 | `web/js/product/city/sections.js` | One function per section (the DOM), the bars and rows |
 | `web/js/product/city/{data,sentence,copy,answers}.js` | Counts and order, sentences (also for the share preview and the briefing), strings, the long answers of "what changed" and "similar towns" |
 | `web/js/product/kit/guide.js` | The target line and tick of a row |
@@ -69,7 +68,7 @@ Wiring outside: `routes.js` (`home` and `simple` call `cityHome`), `nav.js` (`SU
 ## How to change a sentence safely
 
 1. Change the text in `simple/words.js` (or `city/copy.js` if other parts share it), in the voice above, with the number as a segment of its own.
-2. Find the tests that pin it: `grep -rn "<a few words of the old sentence>" tests/`. Sentences are pinned by `tests/product-simple.test.mjs` (parts, words, plain words, both levels against a fake document), `product-simple-rows.test.mjs` (reason lines) and `product-share-simple.test.mjs` (the share preview and the voice scan). Update the expected text in the same change.
+2. Find the tests that pin it: `grep -rn "<a few words of the old sentence>" tests/`. Sentences are pinned by `tests/product-simple.test.mjs` (parts, words, plain words, the page against a fake document), `product-simple-rows.test.mjs` (reason lines) and `product-share-simple.test.mjs` (the share preview and the voice scan). Update the expected text in the same change.
 3. A new section or row type needs a place in `simple/model.js` (logic), `simple/words.js` (text), `city/sections.js` (DOM) and `home.css`, plus a test for each. A test allows one class prefix per css file.
 
 ## What to check after a change
@@ -83,4 +82,4 @@ node src/tools/chrome_probe.js --mode=nav --only=switch
 node src/tools/first_screen_probe.js
 ```
 
-The browser commands need Chrome and the server on port 8800 (`CDP_SLOT=<n>`). Then look at the page: 1031 at 390 and 1280 in both themes and both levels (verdict, bar and the start of the good or bad section visible without scrolling), the tiny town 16, the uncovered town 935, and a print preview of the short level (one A4 page). If `simple/*` or `city/*` gained a static import, the preload list in `web/n.html` may change: run `node src/tools/perf_probe.js --preload` and compare (`tests/product-perf.test.mjs` fails when they differ). A change to the server's handling of `?q=` needs a server restart before a shared link is checked (`docs/RELEASE.md`).
+The browser commands need Chrome and the server on port 8800 (`CDP_SLOT=<n>`). Then look at the page: 1031 at 390 and 1280 in both themes (verdict, bar and the start of the good or bad section visible without scrolling), the tiny town 16, the uncovered town 935, and a print preview. If `simple/*` or `city/*` gained a static import, the preload list in `web/n.html` may change: run `node src/tools/perf_probe.js --preload` and compare (`tests/product-perf.test.mjs` fails when they differ). A change to the server's handling of `?q=` needs a server restart before a shared link is checked (`docs/RELEASE.md`).

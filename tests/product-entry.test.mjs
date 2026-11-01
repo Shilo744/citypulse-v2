@@ -182,13 +182,13 @@ test("text: the old ask page's link to the ranking part is said without the firs
   assert.equal(fixed, "איפה היישוב בדירוג · MMR/MMRV");
 });
 
-// ── the words of the finished product (f3): one page with two levels, official targets, no word of the pages before the merge ──
-test("entry: the copy says what the finished product is: a town, one page in two levels, what it says, the official target, the sources", async () => {
+// ── the words of the finished product (f3): one page, official targets, no word of the pages before the merge, no word of the retired short level ──
+test("entry: the copy says what the finished product is: a town, one page, what it says, the official target, the sources", async () => {
   const r = await render();          // (api.js keeps the catalogue it read first: the fixture above is the one every run reads)
   try {
     const t = r.text.replace(/[\u2060\u2066-\u2069]/g, "").replace(/\u00A0/g, " ");
-    for (const old of ["חמש שאלות פשוטות", "ככה נראית התשובה", "לתשובה המלאה", "ליעד של משרד הבריאות", "יעד של משרד הבריאות", "בעיר שלכם", "העיר"]) assert.ok(!t.includes(old), "a word of the pages before the merge: " + old);
-    for (const now of ["ביישוב שלכם", "דף אחד", "״במבט אחד״", "״הפרטים המלאים״", "מה הולך טוב", "מה דורש תשומת לב", "מה כדאי לעשות", "על מה אין מידע", "דף היישוב של שדרות", "מה בודקים ביישוב", "יעד רשמי", "שיטה ומקורות"]) assert.ok(t.includes(now), "missing: " + now);
+    for (const old of ["חמש שאלות פשוטות", "ככה נראית התשובה", "לתשובה המלאה", "ליעד של משרד הבריאות", "יעד של משרד הבריאות", "בעיר שלכם", "העיר", "״במבט אחד״", "״הפרטים המלאים״"]) assert.ok(!t.includes(old), "a word of the pages before the merge: " + old);
+    for (const now of ["ביישוב שלכם", "דף אחד", "מה הולך טוב", "מה דורש תשומת לב", "מה כדאי לעשות", "על מה אין מידע", "דף היישוב של שדרות", "מה בודקים ביישוב", "יעד רשמי", "שיטה ומקורות"]) assert.ok(t.includes(now), "missing: " + now);
     assert.ok(t.includes("ול-2 מהם יש גם יעד רשמי שפרסם משרד הבריאות"), "the count of the figures with a target that judges is counted from the catalogue (2 of 4, and the orientation one is not in it)");
     assert.ok(t.includes("ועוד מדד רקע אחד, שמתאר את היישוב ואינו נשפט"), "the background figures are counted and named as such");
     assert.equal(r.node.findAll((e) => e.classes.has("n-entry-eyebrow") && e.textContent.trim() === "מה בודקים").length, 0, "no eyebrow that says the title again");

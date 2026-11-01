@@ -15,7 +15,7 @@ export const MAX_FAV = 12;
 // names of everything the product keeps on the device (the privacy page lists exactly these)
 export const KEYS = {
   theme: "cp2-theme", recent: "cp2-recent", last: "cp2-last", fav: "cp2-fav",
-  welcome: "cp2-welcome-n", shortcuts: "cp2-keys", from: "cp2-from", view: "cp2-view-2"
+  welcome: "cp2-welcome-n", shortcuts: "cp2-keys", from: "cp2-from"
 };
 
 // feature flags: a module that is not built yet is simply probed and skipped (shell.js), these are for choices the owner may flip

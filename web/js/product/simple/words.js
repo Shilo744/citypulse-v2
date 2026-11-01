@@ -10,12 +10,9 @@ export { plainOf };
 const n = (v, tone) => ({ n: String(v), tone });
 
 export const T = {
-  title: "במבט אחד",
-  switchLabel: "סוג התצוגה",
-  views: { simple: "במבט אחד", full: "הפרטים המלאים" },
+  title: "במבט אחד",          // only the preview of an old share link (?q=simple) still says it (sentence.js)
   h: { good: "מה הולך טוב", attention: "מה דורש תשומת לב", changed: "מה השתנה", peers: "איך מול יישובים דומים", first: "מה כדאי לעשות", missing: "על מה אין מידע" },
   index: "תוכן העמוד", background: "רקע על היישוב", allSteps: "לכל ההמלצות", printReport: "הדפסת דוח",
-  announce: (name, view) => `${name}: ${view}`,
   who: { nat: "הארץ" },
   // which way is good: the attention rows say what to aim for, the good rows say what is already so
   way: { higher: "כדאי שיהיה גבוה יותר.", lower: "כדאי שיהיה נמוך יותר." },

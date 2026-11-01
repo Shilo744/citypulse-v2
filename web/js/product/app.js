@@ -124,7 +124,7 @@ async function render() {
   // redirects add no history entry: that is what keeps the Back button free
   if (c.id === "lab") { saving = true; location.replace(c.target); return; }
   if (c.id === "badsub") { saving = true; nav.go(nav.build({ key: c.key }), { replace: true }); return; }
-  if (c.id === "home" && params.get("q") === "simple") { saving = true; nav.go(nav.build({ key: c.key, sub: "simple" }), { replace: true }); return; }          // an old link that names the short page as a question lands on the alias, which shows the short level
+  if (c.id === "home" && params.get("q") === "simple") { saving = true; nav.go(nav.build({ key: c.key, sub: "simple" }), { replace: true }); return; }          // an old link that names the retired short page as a question lands on the alias, which shows the town page
   if (c.id === "home" && params.has("q") && nav.normalizeQuestion(params.get("q")) !== params.get("q")) { saving = true; const p = new URLSearchParams(params); p.set("q", "weak"); nav.go(nav.build({ key: c.key, params: p }), { replace: true }); return; }
 
   const def = ROUTES[c.id];

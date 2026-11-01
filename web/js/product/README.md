@@ -9,7 +9,7 @@ The contract below is what every page, the tests and the tools rely on. Change a
 |---|---|
 | `boot.js` | feature test, then `app.js` `start()` |
 | `app.js` | the router: hash, `ctx`, page change, scroll and focus, titles, error states, recents. It sets `document.body.dataset.route` to the route id (CSS keys on it in `shell.css`: the compact search of the town page is `body[data-route="home"]`; the alias route `simple` takes the value `home` too and `body.dataset.alias = "simple"` says which door was used), sends a View's `redirect` with `nav.go(..., { replace: true })`, arms the slow-loading line, and loads `chartfit.js` and `neutral.js` after the first paint |
-| `routes.js` | the route table `ROUTES` and the fallbacks to the old page modules; `PAGES` (title and one line per page); `available(id)`. `home` and `simple` are the same page (`townPage`: `cityHome(ctx)` / `cityHome(ctx, { level: "simple" })`, both active `home`); `overview` redirects to the town page keeping `?q=`; `d/<old domain id>` redirects to `d/<category>` |
+| `routes.js` | the route table `ROUTES` and the fallbacks to the old page modules; `PAGES` (title and one line per page); `available(id)`. `home` and `simple` are the same page (`townPage`: `cityHome(ctx)` for both, active `home`; `simple` is an old link to the retired short level); `overview` redirects to the town page keeping `?q=`; `d/<old domain id>` redirects to `d/<category>` |
 | `nav.js` | pure: `parse`, `classify`, `build`, `switchTown`; `infoHref(page, key, fragment)`, `townOf(hash)`, `hereTown()`; the lists `SUBS` (`simple brief overview d i trends compare actions ask coverage method glossary accessibility privacy`), `TOP` (`method glossary accessibility privacy`) and `QUESTIONS`; window: `go(hash, {replace})`, `replaceQuery(params)` |
 | `shell.js` | side menu (collapsible to a rail, key `cp2-side`), top bar, footer, drawer; light only since 2026-10-31 (`themeBtn()` is a remnant, not shown) |
 | `pages/asktowns.js` | the comparison block of named towns in an ask answer (`townsBlock`, built by the server in `src/agent/towns.js`); `net.js` tells it about an answer through the `cp-ask` event |
@@ -30,10 +30,9 @@ The contract below is what every page, the tests and the tools rely on. Change a
 | `kit/helpsheet.js` | `openHelp()`, `focusSearch()`, `installKeys()` (the sheet holds the page `inert` like any dialog) |
 | `kit/base.js` | `announce`, `act`, `openDialog` (one `<dialog>`, `aria-modal`, page `inert`, focus returns), `holdPage`, `safeSession` |
 | `kit/catart.js` | `catArt(id, size, cls)`: the pictogram of a category (Tabler Icons, MIT, outline, inline svg on `currentColor`, credit in `docs/CREDITS.md`) in a rounded-square tile; colours only through the `--cat-*` tokens |
-| `simple/pref.js` | the level of the town page: `chooseLevel` (`?v=`, the alias, `?q=`, the stored choice `cp2-view-2`, then full), `readView`, `writeView`, `simpleHref`, `fullHref`. No DOM |
 | `simple/model.js` | what the town page's rows and verdict show, chosen from the model: `verdictOf`, `attentionOf`, `goodOf`, `smallOf`, `firstStep`, `missingOf`, `rowOf`, `standing`. No DOM |
 | `simple/words.js` | every text of the town page's short sentences, the headings and the sentence builders. No DOM |
-| `city/home.js`, `city/sections.js` | the one town page: `cityHome(ctx, {level})` (the head with the level switch, the sections in the story order) and one function per section (`section ids n-sec-*`) |
+| `city/home.js`, `city/sections.js` | the one town page: `cityHome(ctx)` (the head, the sections in the story order) and one function per section (`section ids n-sec-*`) |
 | `city/{data,sentence,copy,answers,parts}.js` | the town page's counts and order (`data.js`: `stateOf`, `weakestFive`, `isVerySmallTown`), its sentences (`sentence.js`, also for the share preview and the briefing), its strings (`copy.js`), the long answers of "what changed" and "similar towns" (`answers.js`), small shared nodes (`parts.js`). No DOM at import except `parts.js` |
 | `city/groups.js` | the categories (`GROUPS`, `MOVES`, `regroup`, `regroupMeta`) and the topics inside a category (`TOPICS`, `topicsFor`, `topicSay`): the category page (`pages/domain.js` `groupFigures`) shows its figures as closed native `details` groups, one per topic, with a summary row (name, one sentence, a short bar), the topic that needs the most attention first and open; a topic with no figure for the town is not shown. Every figure is in exactly one topic (`tests/product-topics.test.mjs`); `node src/tools/chrome_probe.js --mode=groups` checks it in a browser. No DOM |
 
@@ -42,7 +41,7 @@ The shell loads `kit/feedback.js` lazily (`openFeedback({ key, name, route, url,
 
 ## Routes
 
-`#/` entry, `#/c/<key>` the town page (`?v=simple|full`, `?q=weak|changed|peers|first|missing`), `#/c/<key>/` + `simple (alias: the short level) | brief | overview (redirects to the town page) | d/<categoryId> (an old domain id redirects) | i/<id> | trends | compare?with=a,b | actions | ask?q= | coverage | method`,
+`#/` entry, `#/c/<key>` the town page (`?q=weak|changed|peers|first|missing`), `#/c/<key>/` + `simple (alias: an old link, the same page) | brief | overview (redirects to the town page) | d/<categoryId> (an old domain id redirects) | i/<id> | trends | compare?with=a,b | actions | ask?q= | coverage | method`,
 `glossary | accessibility | privacy` (the pages of information open inside the town: the town menu stays and the way back is the town),
 `#/method`, `#/glossary`, `#/accessibility`, `#/privacy` (the same pages without a town: the town-less menu). A link written in a town page uses `nav.infoHref(page, key)` or `glossaryHref(id)`, never a fixed `#/glossary` (a test scans the sources). `#/lab*` and `#/c/<key>/lab*` redirect with `location.replace`. An unknown sub-route under a valid town replaces itself with the town home.
 Links are relative to the hash, so an old page's `#/c/...` link stays inside `n.html`.
@@ -50,7 +49,7 @@ Links are relative to the hash, so an old page's `#/c/...` link stays inside `n.
 | route id | new module (optional, soft import) | export | fallback today |
 |---|---|---|---|
 | `entry` | `entry/entry.js` | `entryView(ctx)` | old `views-home.js` `homeView` |
-| `home` `simple` | `city/home.js` | `cityHome(ctx, opts)` | the one page of a town; the alias `simple` passes `{ level: "simple" }` |
+| `home` `simple` | `city/home.js` | `cityHome(ctx)` | the one page of a town; the alias `simple` (an old link) shows the same page |
 | `brief` | `brief/brief.js` | `briefView(ctx)` | redirect to the town home; menu link hidden until the file exists |
 | `d i trends compare actions ask coverage method gmethod` | `pages/<name>.js` | `adapt(node, ctx)` | the old page module alone (`gmethod` uses `pages/method.js`); `overview` has no page: it is a redirect |
 | `glossary accessibility privacy` | `pages/<name>.js` | `view(ctx)` | the not-found card |
@@ -63,8 +62,8 @@ Each missing optional module is a 404 in the network log; the three tools (`--n`
 `{ key, model, sub, parts, params, go(hash, {replace}), announce(text, {delay}), setTitle(text), setCrumbs(items), recents, fav, mode: "n", themeBtn(), signal }`
 
 - `go(hash, {replace:true})` for every redirect. Never write `location.hash =` (back trap; a test greps for it).
-- `setTitle(page)` gives `"<page> · <town> · CityPulse"`; call it again when the page changes in place (the level switch of the town page does). `setCrumbs([{label, href?}])`, the last item is the page. If you call neither, the router sets the defaults.
-- `announce(text, {delay: 400})` for a change that happens in place (the level switch announces the new level once).
+- `setTitle(page)` gives `"<page> · <town> · CityPulse"`; call it again when the page changes in place. `setCrumbs([{label, href?}])`, the last item is the page. If you call neither, the router sets the defaults.
+- `announce(text, {delay: 400})` for a change that happens in place.
 - `signal` aborts when the route changes: pass it to your own fetches.
 - `nav.replaceQuery(params)` changes `?q=` without a history entry and without rendering again.
 
@@ -117,7 +116,6 @@ The privacy page lists exactly these, with a reason for each (`pages/privacy.js`
 | `welcome` | `cp2-welcome-n` | the first-visit note was shown |
 | `shortcuts` | `cp2-keys` | single-key shortcuts `on` or `off` |
 | `from` | `cp2-from` | which answer sent the reader to a page (session storage, one hour) |
-| `view` | `cp2-view-2` | `simple` or `full`: which town home to open |
 
 Every access goes through `storage.js`, which never throws and keeps the value in memory when storage is blocked. The feedback draft (`cp2-feedback-draft`) is the one session-storage key outside `KEYS`; it lives in `kit/feedback.js` until a send succeeds.
 

@@ -7,7 +7,7 @@ const { launch } = require("./cdp");
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const arg = (n, d) => { const a = process.argv.find((x) => x.startsWith("--" + n + "=")); return a ? a.slice(n.length + 3) : d; };
 const towns = arg("towns", "1031,16").split(","), tabs = Number(arg("tabs", "60")), widths = arg("widths", "1280,390").split(",").map(Number);
-const base = "http://localhost:8800/n.html";
+const base = process.env.BASE || "http://localhost:8800/n.html";          // BASE=http://host/n.html runs it against another server (the live site, another port)
 
 const key = (b, k, code, vk) => b.send("Input.dispatchKeyEvent", { type: "keyDown", key: k, code, windowsVirtualKeyCode: vk, nativeVirtualKeyCode: vk, ...(k === "Enter" ? { text: "\r" } : {}) })
   .then(() => b.send("Input.dispatchKeyEvent", { type: "keyUp", key: k, code, windowsVirtualKeyCode: vk, nativeVirtualKeyCode: vk }));
@@ -47,7 +47,7 @@ const say = (ok, text, detail = "") => { console.log((ok ? "ok   " : "FAIL ") + 
     say(!noRing.length, label + ": every one of " + rows.length + " stops" + (ended ? " (the whole page)" : "") + " shows a ring of 2 px or more", noRing.slice(0, 3).map((r) => r.i + " " + r.tag + " " + r.label).join(" | "));
     say(!off.length, label + ": no stop is off the screen (a closed menu is not a place for the keyboard)", off.slice(0, 3).map((r) => r.i + " " + r.tag + " " + r.label).join(" | "));
     say(!rep.length, label + ": no stop comes twice (no trap)", rep.slice(0, 3).map((r) => r.i + " " + r.label).join(" | "));
-    say(rows.some((r) => /הפרטים המלאים/.test(r.label)) && rows.some((r) => /במבט אחד/.test(r.label)), label + ": the level switch is reachable");
+    say(!rows.some((r) => /הפרטים המלאים|במבט אחד/.test(r.label)), label + ": there is no level switch among the stops (retired on 2026-11-01)");
     // the dialog of the background line (full level): Enter opens it, the focus goes inside and stays, Escape closes it and gives the focus back to the figure
     await fresh();
     await b.eval(`document.activeElement && document.activeElement.blur && document.activeElement.blur(); window.scrollTo(0, 0)`);
