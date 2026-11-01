@@ -2,6 +2,25 @@
 
 Where each number comes from is written next to it. The test total was run by the documentation pass (`d1`) on 2026-10-30. The browser results are the last full runs written in the work reports of the final packages (mostly `design-ideas/product/DONE/b2.md`, run on the final state of that package, 2026-10-30); `q1.md`, a later full QA report, did not exist when this was written, and the documentation pass opened no browser. The performance numbers (section 2) are older: they were measured before the merge of the town page and before the official targets.
 
+## 0. The live site (Cloudflare Worker), 2026-11-01
+
+The same tools, pointed at `https://citypulse.shilo744.workers.dev` (Worker version of that night, headless Chrome from a home connection). `npm test` on the tree that was pushed: 842 tests, 842 pass.
+
+| Check | Command | Result on the live site |
+|---|---|---|
+| Smoke | `node src/tools/ui_smoke.js --n <address> 9000 1031` | 119 screens, 0 with problems |
+| Accessibility | `node src/tools/a11y_check.js --n <address> 9000` | 0 issues |
+| Motion | `node src/tools/motion_check.js --n <address> 9000` | 42 screens, 0 with problems |
+| Touch targets | `chrome_probe.js --mode=targets --base=<address>/n.html` | 0 offenders (11 chart marks exempt as essential) |
+| Reflow at 320 px | `chrome_probe.js --mode=reflow` | no screen overflows |
+| Navigation, level switch, old addresses | `chrome_probe.js --mode=nav` | all 252 checks passed |
+| Topic groups | `chrome_probe.js --mode=groups` | all group checks passed |
+| First screen | `CP_BASE=<address> node src/tools/first_screen_probe.js` | the verdict sentence starts at 556 px at 1280x900 (515 px at 1024x768, 682 px at 390x844); no sideways overflow in 13 sizes |
+| Consistency | `consistency_probe.js --base=<address>` | 8 towns, 107 checks, 0 disagreements |
+| Worker CPU time (`wrangler tail`) | 10 + 30 requests, including `/api/ask` for 31 towns | page, model, CSV, share: 0-6 ms; a warm ask 1-2 ms; the first ask in a fresh isolate 25 ms (above the 10 ms of the free plan, and still `ok`); no error 1102 |
+| Questions to the ask page | clicking a sample question on `#/c/1031/ask`, and `POST /api/ask` with and without `noModel` | answered from the figures in about 0.15 s (keyword planner); with the AI key on a local Worker (`wrangler dev --local`) two questions came back with `via: "model"` in 2.4 and 2.9 s |
+| Performance | `BASE=<address> node src/tools/perf_probe.js` | `#/c/1031` cold: 59 requests, 501 KB on the wire, LCP 1.7 s unthrottled and 4.1-4.2 s on the slow profile (budget 3.5 s: **not met**), CLS 0.008. Entry page: 62 requests, 531 KB, slow LCP 3.6 s at 1280 and 3.9 s at 390 (**not met**). The wire size is above the 450 KB budget because Cloudflare compresses on the fly at a lower brotli level than the dev server's cached one (old measurement: 401 KB). One unthrottled phone load showed 6.2 s while other probes ran on the same machine; run alone it was 1.2 s |
+
 ## 1. Automated gates
 
 | Gate | Command | Result |
