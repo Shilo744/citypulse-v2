@@ -107,6 +107,11 @@ html[data-ui="n"] .n-entry-vid-frame { position: absolute; inset: 0; width: 100%
 html[data-ui="n"] .n-entry-vid-en { max-width: 1080px; margin: var(--space-3) auto 0; color: var(--ink-3); font-size: var(--fs-small); }
 html[data-ui="n"] .n-entry-vid-note { max-width: 1080px; margin: var(--space-2) auto 0; color: var(--ink); font-size: var(--fs-small); font-weight: 700; }
 html[data-ui="n"] .n-entry-vid-note:empty { display: none; }
+html[data-ui="n"] .n-entry-vid-tx { max-width: 1080px; margin: var(--space-2) auto 0; font-size: var(--fs-small); }
+html[data-ui="n"] .n-entry-vid-tx summary { display: inline-flex; align-items: center; min-height: 32px; color: var(--teal-ink); font-weight: 700; cursor: pointer; }
+html[data-ui="n"] .n-entry-vid-tx summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+html[data-ui="n"] .n-entry-vid-txbody { max-width: 72ch; margin-block-start: var(--space-2); margin-inline: 0 auto; color: var(--ink); line-height: 1.7; }
+html[data-ui="n"] .n-entry-vid-txbody p { margin: 0 0 var(--space-3); }
 
 /* the domains: a plain list in columns, a count on the far side of each line */
 html[data-ui="n"] .n-entry-doms { columns: 3; column-gap: var(--space-7); margin: 0; padding: 0; list-style: none; }

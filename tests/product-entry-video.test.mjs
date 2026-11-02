@@ -129,3 +129,40 @@ test("video: the link under the search says how long the video is and a press mo
   assert.ok(globalThis.document.activeElement.classes.has("n-entry-vid-poster"), "the play button has the focus");
   assert.equal(playerOf(section.el), null, "pressing the link does not start the player");
 }));
+
+const VTT = "WEBVTT\n\n1\n00:00:00.400 --> 00:00:03.350\nEvery Israeli town makes health decisions.\n\n2\n00:00:03.400 --> 00:00:07.750\nThe facts are open data, scattered\nacross many institutions.\n\n3\n00:00:09.500 --> 00:00:10.800\nSo we built a room.\n";
+
+test("video: the transcript is the words of the captions, a paragraph where they pause for a second or more", () => {
+  assert.deepEqual(video.transcriptOf(VTT), ["Every Israeli town makes health decisions. The facts are open data, scattered across many institutions.", "So we built a room."]);
+  assert.deepEqual(video.transcriptOf(""), []);
+  assert.deepEqual(video.transcriptOf("WEBVTT\n\nNOTE nothing here\n"), []);
+});
+
+test("video: the transcript is a closed section: the captions are requested only when it is opened, once, and a failure can be retried", () => dom(async (d) => {
+  const realFetch = globalThis.fetch, asked = [];
+  let ok = false;
+  globalThis.fetch = async (url) => { asked.push(String(url)); return ok ? { ok: true, status: 200, text: async () => VTT } : { ok: false, status: 404, text: async () => "" }; };
+  try {
+    const p = video.preview({});
+    d.body.append(p.el);
+    const tx = p.el.find((e) => e.classes.has("n-entry-vid-tx")), body = tx.find((e) => e.classes.has("n-entry-vid-txbody"));
+    assert.equal(tx.tagName, "DETAILS");
+    assert.equal(tx.open, false);
+    assert.equal(body.getAttribute("lang"), "en");
+    assert.equal(body.getAttribute("dir"), "ltr");
+    assert.deepEqual(asked, [], "nothing is requested before it is opened");
+    tx.open = true; await tx.fire("toggle");
+    assert.deepEqual(asked, [VIDEO.captions]);
+    assert.match(body.textContent, /could not be loaded/);
+    ok = true;
+    tx.open = false; await tx.fire("toggle");
+    assert.equal(asked.length, 1, "closing it asks for nothing");
+    tx.open = true; await tx.fire("toggle");
+    assert.equal(asked.length, 2, "opening it again after a failure asks again");
+    assert.equal(body.children.length, 2);
+    assert.equal(body.children[1].textContent, "So we built a room.");
+    tx.open = false; await tx.fire("toggle");
+    tx.open = true; await tx.fire("toggle");
+    assert.equal(asked.length, 2, "once it is loaded it is not asked for again");
+  } finally { globalThis.fetch = realFetch; }
+}));

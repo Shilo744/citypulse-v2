@@ -37,6 +37,43 @@ export function videoLink() {
   }, h("span.n-entry-vidlink-i", { "aria-hidden": "true" }), `צפו בסרטון, ${mmss(VIDEO.seconds)}`);
 }
 
+// The English narration as text: the same words as the captions, a paragraph wherever the captions pause for a second or more. Read from the captions file, so it can never differ from them.
+export function transcriptOf(vtt) {
+  const out = [], sec = (m, i) => Number(m[i]) * 3600 + Number(m[i + 1]) * 60 + Number(m[i + 2]) + Number(m[i + 3]) / 1000;
+  let last = -9;
+  for (const block of String(vtt || "").replace(/\r/g, "").split(/\n\s*\n/)) {
+    const lines = block.split("\n").map((l) => l.trim()).filter(Boolean), at = lines.findIndex((l) => l.includes("-->"));
+    const m = at < 0 ? null : /(\d+):(\d\d):(\d\d)[.,](\d{3})\s*-->\s*(\d+):(\d\d):(\d\d)[.,](\d{3})/.exec(lines[at]);
+    const text = m ? lines.slice(at + 1).join(" ").replace(/\s+/g, " ").trim() : "";
+    if (!text) continue;
+    if (!out.length || sec(m, 1) - last >= 1) out.push(text); else out[out.length - 1] += " " + text;
+    last = sec(m, 5);
+  }
+  return out;
+}
+
+// a closed section under the player (a transcript for whoever cannot or does not want to watch); the captions file is requested only when it is opened
+function transcript() {
+  const body = h("div.n-entry-vid-txbody", { lang: "en", dir: "ltr" });
+  let state = "idle";
+  const load = async () => {
+    if (state !== "idle") return;
+    state = "loading";
+    try {
+      const r = await fetch(VIDEO.captions);
+      if (!r.ok) throw new Error("status " + r.status);
+      const paras = transcriptOf(await r.text());
+      if (!paras.length) throw new Error("empty");
+      body.replaceChildren(...paras.map((t) => h("p", t)));
+      state = "done";
+    } catch (e) {
+      body.replaceChildren(h("p", "The transcript could not be loaded just now."));
+      state = "idle";
+    }
+  };
+  return h("details.n-entry-vid-tx", { ontoggle: (e) => { if (e.target.open) load(); } }, h("summary", "תמלול הסרטון (באנגלית)"), body);
+}
+
 // ctx: the router's ctx (announce). Returns { el, fill } like the other parts of the page; the section has no data to wait for
 export function preview(ctx = {}) {
   const minutes = Math.max(1, Math.round(VIDEO.seconds / 60));
@@ -61,6 +98,7 @@ export function preview(ctx = {}) {
       h("p.n-entry-lead.rv", "איך נתונים רשמיים הופכים לדף אחד לכל יישוב, ואיך סוכן watsonx Orchestrate ו‑IBM Bob משתלבים בעבודה. קריינות באנגלית, עם כתוביות.")),
     h("div.rv", stage),
     h("p.n-entry-vid-en", { lang: "en", dir: "ltr" }, `Watch the ${minutes}-minute preview: English narration, with captions.`),
-    note);
+    note,
+    transcript());
   return { el, fill() {} };
 }
