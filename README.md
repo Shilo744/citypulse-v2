@@ -141,7 +141,6 @@ web/            הממשק (RTL, עמוד כניסה בלי תפריט, תפרי
   js/pages/     קובץ לכל מסך (סקירה, תחום, מדד, מגמות, השוואה, פעולות, שאלה, שיטה) וכרטיסים משותפים
   css/          app.css (טוקנים), layout.css (רכיבי הרכבה), motion.css, viz/ ו-pages/ לפי משפחה ולפי מסך
   n.html        כניסת המוצר; js/product/ (הקליפה, city/ עמוד היישוב והקטגוריות, simple/ בחירת השורות והמילים, brief/ הדוח, entry/ הכניסה, pages/ העמודים, kit/) ו-css/product/ (טוקנים וסגנונות), assets/product/ (תמונות), assets/fonts/ (Heebo)
-ops/            כלים לריצת הלילה (לא חלק מהמוצר): מדידת צריכה שבועית של Claude Code ועצירה ב-80%
 research/       הממצאים של סוכני המחקר: כרטיסי מערכי נתונים שנבדקו, מסגרת ראיות, יעדים והנחיות רשמיים (GUIDELINES.md, guidelines.json)
 docs/           תיעוד: INDICATORS ו-METHOD נוצרים מהקוד; PRODUCT, SIMPLE, QA, RELEASE, CHANGES ו-CREDITS נכתבים ביד
 tests/          בדיקות
