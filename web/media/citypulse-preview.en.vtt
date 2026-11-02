@@ -6,13 +6,13 @@ Every Israeli town makes health decisions.
 
 2
 00:00:03.400 --> 00:00:07.750
-The facts are open data, scattered
-across many institutions.
+The facts are open data,
+scattered across many institutions.
 
 3
 00:00:07.800 --> 00:00:10.848
-Ask a chatbot, and it
-may invent the number.
+Ask a chatbot,
+and it may invent the number.
 
 4
 00:00:11.300 --> 00:00:13.868
@@ -24,8 +24,8 @@ So we built a room.
 
 6
 00:00:17.400 --> 00:00:22.650
-CityPulse files the official data
-once: every locality, every indicator.
+CityPulse files the official data once:
+every locality, every indicator.
 
 7
 00:00:22.700 --> 00:00:25.360
@@ -41,18 +41,18 @@ once: every locality, every indicator.
 
 10
 00:00:29.700 --> 00:00:33.450
-Meet the orchestrator, a
-watsonx Orchestrate agent.
+Meet the orchestrator,
+a watsonx Orchestrate agent.
 
 11
 00:00:33.500 --> 00:00:38.136
-A health officer asks it, in
-Hebrew, where Sderot is weakest.
+A health officer asks it,
+in Hebrew, where Sderot is weakest.
 
 12
 00:00:38.200 --> 00:00:43.387
-It does not guess. Tool one, from
-our OpenAPI file, finds the town.
+It does not guess. Tool one,
+from our OpenAPI file, finds the town.
 
 13
 00:00:44.400 --> 00:00:46.073
@@ -78,8 +78,8 @@ Behind the room is the product.
 
 18
 00:01:03.000 --> 00:01:06.794
-Search any locality, and
-one page tells the story.
+Search any locality,
+and one page tells the story.
 
 19
 00:01:08.850 --> 00:01:12.200
@@ -139,8 +139,8 @@ Same question, same figures:
 
 32
 00:02:06.400 --> 00:02:12.788
-Every number matches the API, because the
-agent is told to copy, never to round.
+Every number matches the API, because
+the agent is told to copy, never to round.
 
 33
 00:02:15.400 --> 00:02:19.000
@@ -157,13 +157,13 @@ share pages, CSV export.
 
 36
 00:02:28.200 --> 00:02:31.854
-The data model and the
-screens: built by our team.
+The data model and the screens:
+built by our team.
 
 37
 00:02:32.800 --> 00:02:37.450
-From open data, through one
-API, to people and to AI agents.
+From open data, through one API,
+to people and to AI agents.
 
 38
 00:02:37.500 --> 00:02:39.673
@@ -180,5 +180,5 @@ The same pattern fits any open dataset.
 
 41
 00:02:47.800 --> 00:02:53.959
-CityPulse. Trustworthy public-health
-data, ready for people and for AI agents.
+CityPulse. Trustworthy public-health data,
+ready for people and for AI agents.
