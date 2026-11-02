@@ -3,6 +3,7 @@
 **Live demo: https://citypulse.shilo744.workers.dev** (no sign-in). The page the address opens is the product; the API is described for agent platforms at `/openapi.json`.
 Official Israeli open data (Ministry of Health, CBS, National Insurance) turned into a public-health picture of every locality: where it stands against the country, against similar localities and against Ministry targets; what needs attention; what changed over the years; and an ask page whose figures always come from the data, never from a model.
 It runs as one Cloudflare Worker with static assets (`docs/CLOUDFLARE.md`). How **IBM Bob** and **watsonx Orchestrate** were used, with the evidence: `docs/COMPETITION.md`.
+**Preview video** (about 3 minutes, English narration, captions and a transcript): the first section of the live page, or the file itself at https://citypulse.shilo744.workers.dev/media/citypulse-preview.mp4 (captions: `/media/citypulse-preview.en.vtt`).
 
 מודל לניהול בריאות הציבור ברמת היישוב, שנבנה מנתונים פתוחים ורשמיים. לכל יישוב בישראל שיש עליו נתונים המערכת בונה תמונת מצב, משווה אותו לארץ, ליעדי משרד הבריאות ולישובים דומים, מנתחת את ההיסטוריה (כל השנים הזמינות) ומפיקה מסקנות והמלצות לפעולה, עם מקורות. סוכן שאלות בונה דף מותאם לכל שאלה על היישוב.
 

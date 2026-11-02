@@ -2,6 +2,11 @@
 
 The project folder is not a git repository, so there is no commit log. This list is rebuilt from the work reports in `design-ideas/product/DONE/` (one per work package, named in brackets) and from the files themselves; times are when a report was written, and a report may be thin (a package that stopped says so). The first work was the seven audits in `design-ideas/product/audit/` on the evening of 2026-10-29. Nothing was deleted from the old app: it is byte-identical to its baseline (`tests/product-old-untouched.test.mjs`) except for the lab card described under "Release". Where a later change retired something, it says so; the current state is `docs/PRODUCT.md`.
 
+## 2026-11-02: the preview video on the entry page
+
+- The first section of the entry page is a preview video of about three minutes (English narration, soft English captions, a closed transcript that is read from the captions file only when it is opened). Nothing is requested for the player until the play button is pressed (`web/js/product/entry/video.js`, settings in `config.js`, files in `web/media/`, tests `tests/product-entry-video.test.mjs`). A link under the search field scrolls to it and puts the focus on the play button. With a YouTube id in `VIDEO.youtube` the player is YouTube's no-cookie frame instead; the address of the site does not change.
+- The Worker answers byte-range requests for `/media/` itself (`worker/range.js`, `tests/worker-range.test.mjs`): the static-assets service ignores `Range` and sends no `Accept-Ranges`, and Safari does not play a video without `206` answers. Everything else under `/media/` is passed on unchanged.
+
 ## 2026-11-02: Haiku for every call
 
 - At the owner's request the "reason" role (the city briefing of the older app at `/index.html`; the product never calls it) defaults to Claude Haiku 5.5 like the "search" role, which already planned and worded the whole ask page. Both roles run Haiku without reasoning; a Sonnet-class model named in `LLM_MODEL_REASON` still runs at low effort with headroom (`src/lib/llm.js`, `tests/llm.test.js`). Texts that said Sonnet words the answer were out of date and are corrected (`docs/COMPETITION.md`, `README.md`, `docs/RELEASE.md`, `.dev.vars.example`).
