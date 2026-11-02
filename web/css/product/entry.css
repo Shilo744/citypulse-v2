@@ -105,6 +105,10 @@ html[data-ui="n"] .n-entry-vid-frame { position: absolute; inset: 0; width: 100%
   html[data-ui="n"] .n-entry-vid-play::before { margin-inline-start: 4px; border-width: 11px 0 11px 18px; }
 }
 html[data-ui="n"] .n-entry-vid-en { max-width: 1080px; margin: var(--space-3) auto 0; color: var(--ink-3); font-size: var(--fs-small); }
+html[data-ui="n"] .n-entry-vid-hint { display: none; max-width: 1080px; margin: var(--space-2) auto 0; color: var(--ink-3); font-size: var(--fs-small); }
+@media (max-width: 600px) {
+  html[data-ui="n"] .n-entry-vid-hint { display: block; }
+}
 html[data-ui="n"] .n-entry-vid-note { max-width: 1080px; margin: var(--space-2) auto 0; color: var(--ink); font-size: var(--fs-small); font-weight: 700; }
 html[data-ui="n"] .n-entry-vid-note:empty { display: none; }
 html[data-ui="n"] .n-entry-vid-tx { max-width: 1080px; margin: var(--space-2) auto 0; font-size: var(--fs-small); }

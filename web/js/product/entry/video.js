@@ -5,6 +5,7 @@ import { h } from "../../ui.js";
 import { VIDEO } from "../config.js";
 
 const mmss = (s) => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, "0")}`;
+const phone = () => typeof matchMedia === "function" && matchMedia("(max-width: 600px)").matches;      // the picture is about 350 px wide: the fine print of the film needs the full screen (an iPhone plays full screen when the player is not inline)
 const YT_ID = /^[\w-]{6,20}$/;                                     // an id, never a free address: nothing else can end up in the frame
 
 export const watchUrl = (video = VIDEO) => (YT_ID.test(video.youtube || "") ? `https://www.youtube.com/watch?v=${video.youtube}` : video.file);
@@ -17,7 +18,7 @@ export function playerFor(video = VIDEO) {
       title: "CityPulse: סרטון תדמית, קריינות באנגלית עם כתוביות", allow: "autoplay; encrypted-media; picture-in-picture; fullscreen", allowfullscreen: true, referrerpolicy: "strict-origin-when-cross-origin"
     });
   }
-  return h("video.n-entry-vid-frame", { controls: true, autoplay: true, playsinline: true, preload: "auto", poster: video.poster, "aria-label": "CityPulse: סרטון תדמית, קריינות באנגלית עם כתוביות" },
+  return h("video.n-entry-vid-frame", { controls: true, autoplay: true, playsinline: !phone(), preload: "auto", poster: video.poster, "aria-label": "CityPulse: סרטון תדמית, קריינות באנגלית עם כתוביות" },
     h("source", { src: video.file, type: "video/mp4" }),
     h("track", { kind: "captions", srclang: "en", label: "English", src: video.captions, default: true }));
 }
@@ -34,7 +35,7 @@ export function videoLink() {
       const play = box.querySelector(".n-entry-vid-poster");
       if (play && typeof play.focus === "function") play.focus({ preventScroll: true });
     }
-  }, h("span.n-entry-vidlink-i", { "aria-hidden": "true" }), `צפו בסרטון, ${mmss(VIDEO.seconds)}`);
+  }, h("span.n-entry-vidlink-i", { "aria-hidden": "true" }), `צפו בסרטון, ${mmss(VIDEO.seconds)} · `, h("span.n-entry-vidlink-en", { lang: "en", dir: "ltr" }, "English video"));
 }
 
 // The English narration as text: the same words as the captions, a paragraph wherever the captions pause for a second or more. Read from the captions file, so it can never differ from them.
@@ -71,7 +72,7 @@ function transcript() {
       state = "idle";
     }
   };
-  return h("details.n-entry-vid-tx", { ontoggle: (e) => { if (e.target.open) load(); } }, h("summary", "תמלול הסרטון (באנגלית)"), body);
+  return h("details.n-entry-vid-tx", { ontoggle: (e) => { if (e.target.open) load(); } }, h("summary", "תמלול הסרטון (באנגלית) · ", h("span", { lang: "en", dir: "ltr" }, "Transcript")), body);
 }
 
 // ctx: the router's ctx (announce). Returns { el, fill } like the other parts of the page; the section has no data to wait for
@@ -98,6 +99,7 @@ export function preview(ctx = {}) {
       h("p.n-entry-lead.rv", "איך נתונים רשמיים הופכים לדף אחד לכל יישוב, ואיך סוכן watsonx Orchestrate ו‑IBM Bob משתלבים בעבודה. קריינות באנגלית, עם כתוביות.")),
     h("div.rv", stage),
     h("p.n-entry-vid-en", { lang: "en", dir: "ltr" }, `Watch the ${minutes}-minute preview: English narration, with captions.`),
+    h("p.n-entry-vid-hint", "מומלץ לצפות במסך מלא · ", h("span", { lang: "en", dir: "ltr" }, "Best in full screen")),
     note,
     transcript());
   return { el, fill() {} };
