@@ -3,7 +3,7 @@
 //   - /api/* is answered here with the SAME functions the server uses (src/api.js, src/agent/*), fed by the store the Worker carries
 //     and by the town models read from the assets; nothing is computed twice and nothing is typed by hand
 //   - what the server keeps in files (the AI ledger, the briefing cache, the feedback log) lives in KV and D1
-// A static asset request never reaches this file (wrangler.jsonc: run_worker_first lists only what needs code).
+// A static asset request never reaches this file (wrangler.jsonc: run_worker_first lists only what needs code; /media/ is there for byte ranges).
 import storeData from "../data/store/store.json";
 import * as sentence from "../web/js/product/city/sentence.js";
 import api from "../src/api.js";
@@ -16,6 +16,7 @@ import towns from "../src/agent/towns.js";
 import feedback from "../src/lib/feedback.js";
 import { Store } from "../src/model/store.js";
 import { indicators as catalogIndicators } from "../src/catalog/indicators.js";
+import { parseRange, sliceBody, withHeader } from "./range.js";
 
 const store = new Store(storeData);
 api.setStore(store);
@@ -218,6 +219,29 @@ async function share(request, env, url) {
   return text(html, "text/html; charset=utf-8", 200, { "Cache-Control": "public, max-age=300" });
 }
 
+// The preview video and its captions (/media/): the assets service answers a Range request with the whole file and no Accept-Ranges header, which Safari does not accept for a video.
+// A range is therefore cut here (range.js); every other request is passed on unchanged, with Accept-Ranges added.
+async function media(request, env, ctx, url) {
+  const range = request.headers.get("Range");
+  if (!range || request.method !== "GET") return withHeader(await env.ASSETS.fetch(request), "Accept-Ranges", "bytes");
+  const full = await env.ASSETS.fetch(new Request(url.href));                            // the whole file, without the conditional headers of the visitor
+  const total = Number(full.headers.get("Content-Length")), ifRange = request.headers.get("If-Range");
+  const r = full.status === 200 && full.body && total > 0 && (!ifRange || ifRange === full.headers.get("ETag")) ? parseRange(range, total) : "none";
+  if (r === "none") return withHeader(full, "Accept-Ranges", "bytes");
+  const h = new Headers(full.headers);
+  h.set("Accept-Ranges", "bytes");
+  if (r === "bad") {
+    full.body.cancel().catch(() => {});
+    h.set("Content-Range", `bytes */${total}`); h.delete("Content-Length");
+    return new Response(null, { status: 416, headers: h });
+  }
+  const length = r.end - r.start + 1, slice = sliceBody(full.body, r.start, r.end);
+  h.set("Content-Range", `bytes ${r.start}-${r.end}/${total}`); h.set("Content-Length", String(length));
+  let body = slice;
+  if (typeof FixedLengthStream === "function") { const fl = new FixedLengthStream(length); ctx.waitUntil(slice.pipeTo(fl.writable).catch(() => {})); body = fl.readable; }
+  return new Response(body, { status: 206, headers: h });
+}
+
 export default {
   async fetch(request, env, ctx) {
     cfg.configure(env);
@@ -235,6 +259,7 @@ export default {
       }
       if (/^\/s\/[^/]+$/.test(p)) return await share(request, env, url);
       if (p.startsWith("/api/")) return await apiRoute(request, env, ctx, url);
+      if (p.startsWith("/media/")) return await media(request, env, ctx, url);
       return env.ASSETS.fetch(request);
     } catch (e) {
       return json({ error: String(e && e.message || e) }, 500);
