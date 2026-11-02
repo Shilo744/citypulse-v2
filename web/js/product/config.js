@@ -33,7 +33,7 @@ export const VIDEO = {
   file: "/media/citypulse-preview.mp4",
   captions: "/media/citypulse-preview.en.vtt",
   poster: "/media/citypulse-preview.jpg",
-  seconds: 173
+  seconds: 174
 };
 
 // feature flags: a module that is not built yet is simply probed and skipped (shell.js), these are for choices the owner may flip
