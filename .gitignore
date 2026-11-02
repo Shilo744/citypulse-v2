@@ -11,3 +11,4 @@ dist/
 .wrangler/
 .claude/
 local-*.cmd
+web/media/*.mp4

@@ -1,11 +1,14 @@
 // The ask page in the product: the old module's answers and charts stay as they are; the opening is a title zone that holds the same question field as the rest of the
-// product (entry/askfield.js), six sample questions as hairline rows, and the words around them (AI line, privacy line, vocabulary note).
+// product (entry/askfield.js), six sample questions as hairline rows, and the words around them (AI line, privacy line, vocabulary note). The last section of the page opens the chat of
+// the watsonx Orchestrate agent (kit/orchestrate.js); IBM's script is requested only when that button is pressed.
 // The old module keeps its own form (hidden): the new field and the sample rows send through it, so one request runs at a time exactly as before.
 // Every text that appears in the page passes the token filler (no braces ever show) and the answers pass the vocabulary guard. Styles: css/product/pages/ask.css (n-pg-ask-).
 import { h } from "../../ui.js";
+import { FEATURES } from "../config.js";
 import { titleBand, demoteH1 } from "../band.js";
 import { askField, emptyMessage } from "../entry/askfield.js";
 import { glossaryHref } from "../kit/glossary.js";
+import { agentSection } from "../kit/orchestrate.js";
 import * as D from "../city/data.js";
 import { fillTokens, hasToken, vocab } from "../entry/text.js";
 import { watchAnswers } from "./asktowns.js";
@@ -76,6 +79,7 @@ export function adapt(node, ctx) {
     h("p.n-pg-ask-vocab", "בתשובות, ", h("a", { href: glossaryHref("concern") }, "דורש טיפול"), " הוא סימן לבדוק ולא פסק דין. מדד שמבוסס על קבוצה קטנה מדי מוצג כמו שהוא, בלי דירוג ובלי שיפוט."));
   if (D.hasNoPeers(model)) node.querySelectorAll(".as-facts .hero-fact").forEach((f) => { if (/יישובים דומים/.test(f.textContent)) f.remove(); });          // the count of similar towns invites to a comparison this town cannot have
   oldHero.after(rows);
+  if (FEATURES.orchestrateChat) node.append(agentSection().node);                              // last in the page, under the answers: the chat of IBM's Orchestrate agent, loaded only when pressed
   guard(node, name, model);
   watchAnswers(node);
   return { node, band };

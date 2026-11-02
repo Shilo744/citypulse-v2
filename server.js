@@ -23,7 +23,9 @@ const TYPES = {
   ".jpg":  "image/jpeg",
   ".webp": "image/webp",
   ".ico":  "image/x-icon",
-  ".woff2": "font/woff2"
+  ".woff2": "font/woff2",
+  ".mp4":  "video/mp4",                                  // the preview video of the entry page (web/media/)
+  ".vtt":  "text/vtt; charset=utf-8"                     // and its English captions
 };
 
 // Security headers added to every response (API and static).

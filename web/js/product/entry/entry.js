@@ -1,5 +1,5 @@
 // The entry page of the product (#/, SPEC 5.1): a calm front door on the pale sky. The headline, the town search, the towns this browser follows, the picture; then
-// three numbers (from /api/health), how it works in three lines (choose a town, read the one page, check what is behind a number), a live sample of one real town, what is checked
+// the preview video (a poster; the player is requested only after a press), three numbers (from /api/health), how it works in three lines (choose a town, read the one page, check what is behind a number), a live sample of one real town, what is checked
 // (the four categories, the official targets) and the sources. The menu and the top bar do not exist here (landing); the footer is the shell's.
 // The page is returned at once and works without any data: the search is there, and every part that needs the server fills itself when it answers and stays out
 // when it does not (a failed /api/health hides the numbers, nothing else). Styles: css/product/entry.css (prefix n-entry-).
@@ -9,6 +9,7 @@ import { townSearch } from "../kit/townsearch.js";
 import { cnt } from "../kit/plural.js";
 import * as net from "../net.js";
 import { trustNumbers, domainsOf, sourcesOf, sampleSentence, tracked } from "./text.js";
+import { preview } from "./video.js";
 
 export const SAMPLE_KEY = "1031";          // the live sample is Sderot: a town with a clear answer
 const narrow = () => typeof matchMedia === "function" && matchMedia("(max-width: 600px)").matches;          // the short placeholder where the long one would be cut
@@ -161,7 +162,7 @@ export function entryView(ctx) {
     ask: find, art: true
   });
   band.classList.add("n-entry-band");
-  const parts = [trust(), how(), sample(), domains(), sources()];
+  const parts = [preview(ctx), trust(), how(), sample(), domains(), sources()];
   const node = h("div.n-entry", topRow(ctx), band, h("div.n-entry-body", parts.map((p) => p.el)));
   // the numbers, the domains and the sources come from the server; each part fills itself or stays out
   const ready = Promise.all([soft(net.health()), soft(net.meta())]).then(([hl, meta]) => Promise.all(parts.map((p) => Promise.resolve().then(() => p.fill(hl, meta)).catch(warn("a part")))));

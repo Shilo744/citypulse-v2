@@ -1,9 +1,9 @@
 # LLM used for summaries and the ask-agent (any OpenAI-compatible endpoint). Never commit the real file.
 LLM_API_KEY=
 LLM_BASE_URL=https://openrouter.ai/api/v1
-# two roles: "search" finds and filters (a fast model), "reason" writes the conclusions people read (defaults shown)
+# two roles: "search" plans and words the ask page and finds datasets, "reason" writes the city briefing of the older app (defaults shown; a stronger model can be set for "reason")
 LLM_MODEL_SEARCH=anthropic/claude-haiku-5.5
-LLM_MODEL_REASON=anthropic/claude-sonnet-5.5
+LLM_MODEL_REASON=anthropic/claude-haiku-5.5
 # calls stop while the key has less than this left (USD), and never more than this many calls in an hour
 LLM_RESERVE_USD=0.3
 LLM_MAX_PER_HOUR=40

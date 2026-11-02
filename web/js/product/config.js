@@ -18,5 +18,24 @@ export const KEYS = {
   welcome: "cp2-welcome-n", shortcuts: "cp2-keys", from: "cp2-from"
 };
 
+// the watsonx Orchestrate agent "CityPulse" (the values of IBM's embed snippet: Deploy, Channels, Embedded agent). They name the instance and the agent, they are not secrets;
+// IBM's chat is requested only after a visitor presses the button on the ask page (kit/orchestrate.js)
+export const ORCHESTRATE = {
+  hostURL: "https://eu-west-2.dl.watson-orchestrate.ibm.com",
+  orchestrationID: "20261031-2355-3778-30a6-fe3740f64b54_20261101-0004-1839-1005-551cac667896",
+  agentId: "b8d2948e-15a6-4783-82de-fb04792ca7cf"
+};
+
+// the preview video of the entry page (entry/video.js). The address of the site never changes: to change the video, set the YouTube id here
+// (youtube: "abc123XYZ_-") or replace the files under web/media/. With an empty id the player is the site's own file, with English captions.
+export const VIDEO = {
+  youtube: "",
+  file: "/media/citypulse-preview.mp4",
+  captions: "/media/citypulse-preview.en.vtt",
+  poster: "/media/citypulse-preview.jpg",
+  seconds: 173
+};
+
 // feature flags: a module that is not built yet is simply probed and skipped (shell.js), these are for choices the owner may flip
-export const FEATURES = { brief: true, footerOldLink: true, shortcuts: true };
+// orchestrateChat: the button of the Orchestrate agent's chat on the ask page. Off until IBM's Embed Security is switched off for the instance (see docs/ORCHESTRATE.md, section 4).
+export const FEATURES = { brief: true, footerOldLink: true, shortcuts: true, orchestrateChat: false };

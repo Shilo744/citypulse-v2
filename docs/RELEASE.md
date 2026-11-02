@@ -14,7 +14,7 @@ Read once at start by `src/lib/config.js`. The environment comes first, then `.d
 | `PUBLIC_BASE_URL` | env, `.dev.vars` | empty | The public address, for example `https://citypulse.example.com` (a trailing slash is removed). Used for the absolute addresses in `/robots.txt`, `/sitemap.xml` and the share pages `/s/<key>`, including the preview picture. |
 | `SHARE_TARGET` | env, `.dev.vars` | `/n.html` | Where `/s/<key>` sends a person after the preview, and where an unknown key is redirected. |
 | `FEEDBACK_FILE` | env only | `data/feedback.jsonl` | Where the feedback endpoint appends. At most 5 reports per client address per hour; refuses at 5 MB. This file is the only place reports go: back it up and read it. |
-| `LLM_API_KEY`, `LLM_BASE_URL`, `LLM_MODEL_SEARCH`, `LLM_MODEL_REASON`, `LLM_RESERVE_USD`, `LLM_MAX_PER_HOUR` | `.dev.vars` only | no key; OpenRouter; Haiku-class and Sonnet-class models; 0.3; 40 | The question agent and the manager briefing. Without a key the product works and the ask page answers by keywords. |
+| `LLM_API_KEY`, `LLM_BASE_URL`, `LLM_MODEL_SEARCH`, `LLM_MODEL_REASON`, `LLM_RESERVE_USD`, `LLM_MAX_PER_HOUR` | `.dev.vars` only | no key; OpenRouter; Haiku 5.5 for both roles; 0.3; 40 | The question agent and the manager briefing. Without a key the product works and the ask page answers by keywords. |
 
 `.dev.vars.example` is stale: it lists an `LLM_MODEL` line that nothing reads. The names above are the real ones.
 

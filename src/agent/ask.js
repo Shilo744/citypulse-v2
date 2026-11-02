@@ -84,7 +84,7 @@ function townsNote(found) {
 async function planWithModel(model, question, history, found) {
   const msgs = [{ role: "system", content: SYSTEM + "\n\n" + catalogFor(model) + townsNote(found) }];
   for (const h of (history || []).slice(-3)) if (h && h.q) msgs.push({ role: "user", content: String(h.q).slice(0, 300) }, { role: "assistant", content: JSON.stringify({ title: h.title || "", answer: "" }) });
-  // choosing blocks from a menu is a small job: the cheap model (Haiku class) plans; the strong one is kept for the city briefing, whose conclusions people read
+  // choosing blocks from a menu is a small job: the cheap model (Haiku class) plans
   msgs.push({ role: "user", content: String(question).slice(0, 500) });
   const { json } = await llm.chatJson(msgs, { role: "search", maxTokens: 1500, temperature: 0.2 });
   delete json.answerResolved;                                   // only server code may set a trusted answer

@@ -42,7 +42,7 @@ All of them are read once at start by `src/lib/config.js`. A value comes from th
 | `FEEDBACK_FILE` | env only | `data/feedback.jsonl` | Where `POST /api/feedback` appends reports (one JSON object per line; 5 reports per client address per hour; the file stops accepting at 5 MB). |
 | `LLM_API_KEY` | `.dev.vars` only | empty | Key of an OpenAI-compatible service. Without it the ask page answers by keywords and everything else works as usual. |
 | `LLM_BASE_URL` | `.dev.vars` only | `https://openrouter.ai/api/v1` | The service address. |
-| `LLM_MODEL_SEARCH`, `LLM_MODEL_REASON` | `.dev.vars` only | `anthropic/claude-haiku-5.5`, `anthropic/claude-sonnet-5.5` | The cheap role (finds and filters data sets) and the role that writes what people read (answer plan, answer, the manager briefing). |
+| `LLM_MODEL_SEARCH`, `LLM_MODEL_REASON` | `.dev.vars` only | `anthropic/claude-haiku-5.5` for both | The role of the ask page (plans the answer, words the sentence, finds and filters data sets) and the role of the manager briefing of the older app at `/index.html` (the product does not call it); a stronger model can be set for the second. |
 | `LLM_RESERVE_USD`, `LLM_MAX_PER_HOUR` | `.dev.vars` only | `0.3`, `40` | Calls stop while the key has less than this left, and never exceed this many per hour. Usage is logged in `data/cache/llm-usage.json`. |
 
 `.dev.vars.example` is stale: it lists an `LLM_MODEL` line that nothing reads. Use the two role names above.

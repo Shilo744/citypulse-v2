@@ -29,15 +29,19 @@ function stub(replies, { remaining = 0.9 } = {}) {
 }
 test.after(() => { cfg.llm.key = savedKey; cfg.llm.maxPerHour = savedMax; cfg.llm.reserveUsd = savedReserve; llm._setRequest(null); });
 
-test("roles: search runs the cheap model without reasoning, reason runs the strong model with headroom, and each is billed in its own row", async () => {
-  const sent = stub(['{"a":1}', '{"b":2}']);
+test("roles: both roles run Haiku without reasoning, a Sonnet-class reason model runs at low effort with headroom, and each role is billed in its own row", async () => {
+  const sent = stub(['{"a":1}', '{"b":2}', '{"c":3}']);
   await llm.chatJson([{ role: "user", content: "x" }], { role: "search", maxTokens: 100 });
   await llm.chatJson([{ role: "user", content: "y" }], { maxTokens: 100 });
   assert.match(sent[0].model, /haiku/); assert.equal(sent[0].reasoning.effort, "none"); assert.equal(sent[0].max_tokens, 100);
-  assert.match(sent[1].model, /sonnet/); assert.equal(sent[1].reasoning.effort, "low"); assert.ok(sent[1].max_tokens > 100, "thinking headroom");
+  assert.match(sent[1].model, /haiku/); assert.equal(sent[1].reasoning.effort, "none"); assert.equal(sent[1].max_tokens, 100);
+  const kept = cfg.llm.models.reason;
+  cfg.llm.models.reason = "anthropic/claude-sonnet-5.5";                  // LLM_MODEL_REASON can still name a stronger model, and the endpoint does not let that one switch reasoning off
+  try { await llm.chatJson([{ role: "user", content: "z" }], { maxTokens: 100 }); } finally { cfg.llm.models.reason = kept; }
+  assert.match(sent[2].model, /sonnet/); assert.equal(sent[2].reasoning.effort, "low"); assert.ok(sent[2].max_tokens > 100, "thinking headroom");
   const l = JSON.parse(fs.readFileSync(ledger, "utf8"));
-  assert.equal(l.byRole.search.calls, 1); assert.equal(l.byRole.reason.calls, 1);
-  assert.ok(Math.abs(l.byRole.reason.costUsd - 0.004) < 1e-9 && Math.abs(l.byRole.search.costUsd - 0.0002) < 1e-9, "the cost reported by the API is what the ledger adds up");
+  assert.equal(l.byRole.search.calls, 1); assert.equal(l.byRole.reason.calls, 2);
+  assert.ok(Math.abs(l.byRole.reason.costUsd - 0.0042) < 1e-9 && Math.abs(l.byRole.search.costUsd - 0.0002) < 1e-9, "the cost reported by the API is what the ledger adds up");
   await assert.rejects(llm.chat([{ role: "user", content: "z" }], { role: "nonsense" }), /unknown LLM role/);
 });
 

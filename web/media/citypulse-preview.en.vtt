@@ -1,0 +1,179 @@
+WEBVTT
+
+1
+00:00:00.400 --> 00:00:03.336
+Every Israeli town makes health decisions.
+
+2
+00:00:03.400 --> 00:00:07.312
+The facts are open data, scattered across
+many institutions.
+
+3
+00:00:07.800 --> 00:00:10.806
+Ask a chatbot, and it may invent the number.
+
+4
+00:00:11.300 --> 00:00:13.749
+In public health, that is dangerous.
+
+5
+00:00:15.500 --> 00:00:17.113
+So we built a room.
+
+6
+00:00:17.400 --> 00:00:22.635
+CityPulse files the official data once:
+every locality, every indicator.
+
+7
+00:00:22.700 --> 00:00:25.450
+Fourteen hundred ninety-four localities.
+
+8
+00:00:25.500 --> 00:00:27.450
+Forty-one indicators.
+
+9
+00:00:27.500 --> 00:00:29.650
+Eleven official sources.
+
+10
+00:00:29.700 --> 00:00:33.263
+Meet the orchestrator, a watsonx Orchestrate
+agent.
+
+11
+00:00:33.500 --> 00:00:37.760
+A health officer asks it, in Hebrew, where
+Sderot is weakest.
+
+12
+00:00:38.200 --> 00:00:42.878
+It does not guess. Tool one, from our
+OpenAPI file, finds the town.
+
+13
+00:00:44.400 --> 00:00:46.361
+Tool two asks the room.
+
+14
+00:00:48.100 --> 00:00:51.454
+The folder returns sealed. Every figure is
+final.
+
+15
+00:00:52.200 --> 00:00:55.694
+The model words the answer, but cannot
+change a number.
+
+16
+00:00:56.100 --> 00:00:58.409
+If it tries, the guard rejects it.
+
+17
+00:01:00.400 --> 00:01:02.500
+Behind the room is the product.
+
+18
+00:01:03.000 --> 00:01:06.494
+Search any locality, and one page tells the
+story.
+
+19
+00:01:08.850 --> 00:01:12.200
+Fourteen of twenty-six health indicators
+need attention.
+
+20
+00:01:12.250 --> 00:01:13.793
+What is going well.
+
+21
+00:01:14.200 --> 00:01:15.395
+What changed.
+
+22
+00:01:15.950 --> 00:01:18.350
+How it compares with similar towns.
+
+23
+00:01:18.400 --> 00:01:20.013
+And what to do first.
+
+24
+00:01:21.500 --> 00:01:24.158
+Where the data is missing, it says so.
+
+25
+00:01:27.600 --> 00:01:29.631
+Ask in plain language.
+
+26
+00:01:33.000 --> 00:01:37.678
+The AI decides which evidence to show, and
+every figure comes from the data.
+
+27
+00:01:42.300 --> 00:01:44.749
+Compare two towns side by side.
+
+28
+00:01:47.300 --> 00:01:50.515
+Print a two-page report for the local
+authority.
+
+29
+00:01:50.700 --> 00:01:53.845
+And see how every indicator moved over the
+years.
+
+30
+00:01:54.000 --> 00:01:56.797
+And here is the Orchestrate agent itself.
+
+31
+00:01:57.100 --> 00:02:04.007
+Same question, same figures: fifty-one point
+nine percent, rank one sixty-seven of one
+eighty-seven.
+
+32
+00:02:06.400 --> 00:02:11.705
+Every number matches the API, because the
+agent is told to copy, never to round.
+
+33
+00:02:15.400 --> 00:02:22.725
+IBM Bob built the server layer: caching,
+security headers, validation, share pages,
+CSV export.
+
+34
+00:02:24.000 --> 00:02:26.867
+Fourteen tasks. Forty-nine Bobcoins.
+
+35
+00:02:28.200 --> 00:02:31.554
+The data model and the screens: built by our
+team.
+
+36
+00:02:32.800 --> 00:02:37.199
+From open data, through one API, to people
+and to AI agents.
+
+37
+00:02:37.500 --> 00:02:44.337
+It runs on Cloudflare's edge, with a spend
+guard on every AI call, and eight hundred
+forty-eight automated tests.
+
+38
+00:02:44.450 --> 00:02:47.247
+The same pattern fits any open dataset.
+
+39
+00:02:47.800 --> 00:02:53.035
+CityPulse. Trustworthy public-health data,
+ready for people and for AI agents.

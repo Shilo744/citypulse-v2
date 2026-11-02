@@ -1,6 +1,6 @@
 "use strict";
 /**
- * The city briefing: what a mayor or health officer reads first. A strong model (the "reason" role) connects the evidence into a
+ * The city briefing: what a mayor or health officer reads first. A model (the "reason" role: Haiku class unless LLM_MODEL_REASON names a stronger one) connects the evidence into a
  * few plain Hebrew points. It sees statuses, trends and gaps but no figures; every number in its text is a token that the server
  * resolves (the guard of the ask-agent), and a text that breaks the rules gets one repair attempt and is then dropped.
  * A call costs real money and the data changes only when the store is rebuilt, so the result is cached per locality and store version.

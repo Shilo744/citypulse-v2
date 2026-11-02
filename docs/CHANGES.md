@@ -2,6 +2,14 @@
 
 The project folder is not a git repository, so there is no commit log. This list is rebuilt from the work reports in `design-ideas/product/DONE/` (one per work package, named in brackets) and from the files themselves; times are when a report was written, and a report may be thin (a package that stopped says so). The first work was the seven audits in `design-ideas/product/audit/` on the evening of 2026-10-29. Nothing was deleted from the old app: it is byte-identical to its baseline (`tests/product-old-untouched.test.mjs`) except for the lab card described under "Release". Where a later change retired something, it says so; the current state is `docs/PRODUCT.md`.
 
+## 2026-11-02: Haiku for every call
+
+- At the owner's request the "reason" role (the city briefing of the older app at `/index.html`; the product never calls it) defaults to Claude Haiku 5.5 like the "search" role, which already planned and worded the whole ask page. Both roles run Haiku without reasoning; a Sonnet-class model named in `LLM_MODEL_REASON` still runs at low effort with headroom (`src/lib/llm.js`, `tests/llm.test.js`). Texts that said Sonnet words the answer were out of date and are corrected (`docs/COMPETITION.md`, `README.md`, `docs/RELEASE.md`, `.dev.vars.example`).
+
+## 2026-11-01 (evening): the chat of the Orchestrate agent in the ask page
+
+- At the owner's request the watsonx Orchestrate agent "CityPulse" can be talked to inside the site: the ask page ends with a section whose button opens IBM's embedded chat as a panel in the page (`kit/orchestrate.js`, the values in `config.js`, styles `n-pg-ask-agent-` in `css/product/pages/ask.css`). IBM's script is requested only when the button is pressed, once; a failure or a timeout shows one line and the question field keeps working; a second visit to the page restarts the chat in the new panel. The privacy page has a paragraph about it. The embed works only with IBM's Embed Security switched off for the instance (section 4 of `docs/ORCHESTRATE.md`). `tests/product-orchestrate.test.mjs`, 10 tests.
+
 ## 2026-11-01 (morning): the short level is retired
 
 - At the owner's request the town page has one level, the full details. The switch "במבט אחד | הפרטים המלאים" is gone from the head, `simple/pref.js` and the stored choice (`cp2-view-2`) are deleted, `?v=`, `?q=simple` and the alias `#/c/<key>/simple` still open the page (they show the full level), the share button always shares `?q=weak`, the entry page and the privacy page no longer describe two levels. The tests and the browser probes that drove the switch now check that it is absent. The code of the short rows stays in `city/sections.js` (nothing opens it).

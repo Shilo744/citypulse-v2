@@ -48,10 +48,10 @@ module.exports = {
   llm: {
     key: vars.LLM_API_KEY || "",
     baseUrl: vars.LLM_BASE_URL || "https://openrouter.ai/api/v1",
-    // two roles: "search" finds and filters things (Haiku class), "reason" writes the conclusions people read (Sonnet class)
+    // two roles: "search" plans and words the ask page and finds and filters things, "reason" writes the city briefing of the older app; both default to Haiku class, a stronger model can be set for "reason"
     models: {
       search: vars.LLM_MODEL_SEARCH || "anthropic/claude-haiku-5.5",
-      reason: vars.LLM_MODEL_REASON || "anthropic/claude-sonnet-5.5"
+      reason: vars.LLM_MODEL_REASON || "anthropic/claude-haiku-5.5"
     },
     reserveUsd: Number(vars.LLM_RESERVE_USD || 0.3),      // calls stop while the key has less than this left
     maxPerHour: Number(vars.LLM_MAX_PER_HOUR || 40)       // and never more than this many calls in an hour

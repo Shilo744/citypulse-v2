@@ -2,7 +2,7 @@
 // The list of device storage keys is generated from KEYS in config.js so the page is always accurate.
 import { h } from "../../ui.js";
 import { titleBand } from "../band.js";
-import { KEYS } from "../config.js";
+import { KEYS, VIDEO, FEATURES } from "../config.js";
 import { build } from "../nav.js";
 
 // What each key stores, in plain language (why the value is kept).
@@ -54,6 +54,16 @@ export function view(ctx) {
       h("h2", "שאלות ופניות"),
       h("p",  "שאלה בניסוח חופשי נשלחת לשירות בינה מלאכותית כדי לנסח תשובה. הטקסט המוקלד לא נשמר בשרת לאחר קבלת התשובה."),
       h("p",  "דיווח על טעות בנתון נשמר בשרת לצורך טיפול בפנייה בלבד."),
+
+      h("h2", "סרטון התדמית, רק אם תפעילו אותו"),
+      h("p",  VIDEO.youtube
+        ? "בדף הכניסה יש סרטון תדמית. עד הלחיצה על כפתור ההפעלה הדף לא פונה לשום שירות חיצוני. אחרי הלחיצה הנגן נטען מ-YouTube (בכתובת youtube-nocookie.com), והצפייה מטופלת לפי המדיניות שלהם."
+        : "בדף הכניסה יש סרטון תדמית. הוא נטען מהאתר עצמו ורק אחרי הלחיצה על כפתור ההפעלה, בלי שירות חיצוני."),
+
+      ...(FEATURES.orchestrateChat ? [
+        h("h2", "הצ'אט של IBM, רק אם תפתחו אותו"),
+        h("p",  "בדף השאלות יש כפתור שפותח שיחה עם סוכן שנבנה ב-watsonx Orchestrate של IBM. עד הלחיצה הדף לא פונה ל-IBM. אחרי הלחיצה הצ'אט נטען משירותי IBM, והשאלות שנכתבות בו נשלחות אליהם ומטופלות לפי המדיניות שלהם."),
+      ] : []),
     ),
   );
 

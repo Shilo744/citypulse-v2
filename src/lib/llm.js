@@ -1,7 +1,7 @@
 "use strict";
 // One place that talks to the language models (OpenRouter / any OpenAI-compatible endpoint). Two roles:
-//   search - cheap and fast (Haiku class): finds and filters things (dataset queries, relevance)
-//   reason - strong (Sonnet class): writes the conclusions people read (page plan, answers, the city briefing)
+//   search - cheap and fast (Haiku class): plans and words the ask page, finds and filters things (dataset queries, relevance)
+//   reason - the city briefing of the older app (/index.html), which the product (n.html) never calls; Haiku class by default, a stronger model can be set
 // - the key is read from .dev.vars and never logged; error bodies are scrubbed
 // - every call is added to data/cache/llm-usage.json (calls, tokens and dollars, per role)
 // - a call is refused while the key's remaining balance (asked from OpenRouter, cached for a minute) is under the reserve,
@@ -75,8 +75,9 @@ async function chat(messages, { role = "reason", maxTokens = 1200, temperature =
   if (!ROLES.includes(role)) throw new Error("unknown LLM role " + role);
   await guard();
   const model = modelFor(role);
-  // the strong role cannot switch reasoning off (the endpoint refuses), so it runs at low effort and gets headroom for the thinking tokens
-  const body = JSON.stringify({ model, messages, max_tokens: maxTokens + (role === "reason" ? REASON_HEADROOM : 0), temperature, usage: { include: true }, reasoning: { effort: role === "reason" ? "low" : "none" } });
+  // a Sonnet-class model set for the reason role cannot switch reasoning off (the endpoint refuses), so it runs at low effort and gets headroom for the thinking tokens; Haiku needs neither
+  const thinks = role === "reason" && !/haiku/.test(model);
+  const body = JSON.stringify({ model, messages, max_tokens: maxTokens + (thinks ? REASON_HEADROOM : 0), temperature, usage: { include: true }, reasoning: { effort: thinks ? "low" : "none" } });
   recent.push(Date.now());
   const r = await doRequest(`${cfg.llm.baseUrl}/chat/completions`, {
     method: "POST", timeout,

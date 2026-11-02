@@ -19,6 +19,19 @@ html[data-ui="n"] .n-pg-ask-vocab a { color: var(--teal-ink); text-decoration: u
 html[data-ui="n"] .n-pg-ask-msg { margin: var(--space-2) 0 0; color: var(--ink); font-size: var(--fs-small); font-weight: 700; }
 html[data-ui="n"] .n-pg-ask-msg:empty { display: none; }
 
+/* the chat of IBM's Orchestrate agent (kit/orchestrate.js): a heading, two lines, one button; the panel opens under them and holds IBM's own chat */
+html[data-ui="n"] .n-pg-ask-agent { max-width: 840px; padding: var(--space-6) 0 var(--space-5); }
+html[data-ui="n"] .n-pg-ask-agent-t { margin: 0 0 var(--space-2); font-size: var(--fs-small); font-weight: 700; color: var(--ink-3); }
+html[data-ui="n"] .n-pg-ask-agent-p { margin: 0 0 var(--space-3); max-width: 62ch; color: var(--ink-2); font-size: var(--fs-small); line-height: 1.6; }
+html[data-ui="n"] .n-pg-ask-agent-go { min-height: 44px; padding: 0 var(--space-4); border: 0; border-radius: 12px; background: var(--teal-dark); color: var(--on-primary); font: inherit; font-weight: 700; cursor: pointer; }
+html[data-ui="n"] .n-pg-ask-agent-go:hover { background: var(--nav); color: var(--on-nav-strong); }
+html[data-ui="n"] .n-pg-ask-agent-go:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+html[data-ui="n"] .n-pg-ask-agent-go:disabled { opacity: .55; cursor: progress; }
+html[data-ui="n"] .n-pg-ask-agent-msg { margin: var(--space-2) 0 0; color: var(--ink); font-size: var(--fs-small); font-weight: 700; }
+html[data-ui="n"] .n-pg-ask-agent-msg:empty { display: none; }
+html[data-ui="n"] .n-pg-ask-agent-panel { margin-top: var(--space-3); height: min(640px, 80vh); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+html[data-ui="n"] .n-pg-ask-agent-panel[hidden] { display: none; }
+
 /* the field under the newest answer (the old module's own): the surface and the button of the product */
 html[data-ui="n"] .as-field.is-compact { border-radius: 30px; border: 1px solid var(--line-strong); }
 html[data-ui="n"] .as-field.is-compact:focus-within { border-color: var(--focus); box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus) 24%, transparent); }
