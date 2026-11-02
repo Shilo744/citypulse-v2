@@ -22,6 +22,21 @@ export function playerFor(video = VIDEO) {
     h("track", { kind: "captions", srclang: "en", label: "English", src: video.captions, default: true }));
 }
 
+// a link under the search field: scrolls to the player and puts the focus on its play button (the player itself is still requested only after a press)
+export function videoLink() {
+  return h("button.n-entry-vidlink", {
+    type: "button",
+    onclick: () => {
+      const t = document.getElementById("n-entry-vid-t"), box = t && t.closest("section");
+      if (!box) return;
+      const calm = typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (typeof box.scrollIntoView === "function") box.scrollIntoView({ behavior: calm ? "auto" : "smooth", block: "start" });
+      const play = box.querySelector(".n-entry-vid-poster");
+      if (play && typeof play.focus === "function") play.focus({ preventScroll: true });
+    }
+  }, h("span.n-entry-vidlink-i", { "aria-hidden": "true" }), `צפו בסרטון, ${mmss(VIDEO.seconds)}`);
+}
+
 // ctx: the router's ctx (announce). Returns { el, fill } like the other parts of the page; the section has no data to wait for
 export function preview(ctx = {}) {
   const minutes = Math.max(1, Math.round(VIDEO.seconds / 60));
@@ -43,7 +58,7 @@ export function preview(ctx = {}) {
   stage.append(poster);
   const el = h("section.n-entry-sec.n-entry-video", { "aria-labelledby": "n-entry-vid-t" },
     h("div.n-entry-head", h("p.n-entry-eyebrow.rv", "סרטון תדמית"), h("h2.n-entry-h2.rv", { id: "n-entry-vid-t" }, `CityPulse ב-${minutes} דקות`),
-      h("p.n-entry-lead.rv", "איך נתונים רשמיים הופכים לדף אחד לכל יישוב, ואיך סוכן watsonx Orchestrate ו-IBM Bob משתלבים בעבודה. קריינות באנגלית, עם כתוביות.")),
+      h("p.n-entry-lead.rv", "איך נתונים רשמיים הופכים לדף אחד לכל יישוב, ואיך סוכן watsonx Orchestrate ו‑IBM Bob משתלבים בעבודה. קריינות באנגלית, עם כתוביות.")),
     h("div.rv", stage),
     h("p.n-entry-vid-en", { lang: "en", dir: "ltr" }, `Watch the ${minutes}-minute preview: English narration, with captions.`),
     note);

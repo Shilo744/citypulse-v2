@@ -116,3 +116,16 @@ test("video: the entry page shows the preview first, under the band and before t
     assert.equal(playerOf(view.node), null, "nothing is loaded until the press");
   } finally { storage.use(undefined); globalThis.fetch = realFetch; }
 }));
+
+test("video: the link under the search says how long the video is and a press moves the focus to the play button", () => dom(async (d) => {
+  const section = video.preview({});
+  d.body.append(section.el);
+  const link = video.videoLink();
+  d.body.append(link);
+  assert.equal(link.tagName, "BUTTON");
+  assert.equal(link.getAttribute("type"), "button");
+  assert.match(link.textContent, /צפו בסרטון, \d:\d\d/);
+  await link.click();
+  assert.ok(globalThis.document.activeElement.classes.has("n-entry-vid-poster"), "the play button has the focus");
+  assert.equal(playerOf(section.el), null, "pressing the link does not start the player");
+}));

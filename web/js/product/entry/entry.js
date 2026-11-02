@@ -9,7 +9,7 @@ import { townSearch } from "../kit/townsearch.js";
 import { cnt } from "../kit/plural.js";
 import * as net from "../net.js";
 import { trustNumbers, domainsOf, sourcesOf, sampleSentence, tracked } from "./text.js";
-import { preview } from "./video.js";
+import { preview, videoLink } from "./video.js";
 
 export const SAMPLE_KEY = "1031";          // the live sample is Sderot: a town with a clear answer
 const narrow = () => typeof matchMedia === "function" && matchMedia("(max-width: 600px)").matches;          // the short placeholder where the long one would be cut
@@ -154,7 +154,7 @@ function sources() {
 export function entryView(ctx) {
   const search = townSearch({ big: true, label: "חיפוש יישוב", placeholder: narrow() ? "חפשו יישוב…" : "חפשו יישוב, למשל: שדרות, חיפה, אום אל-פחם" });
   const input = search.querySelector("input");
-  const find = h("div.n-entry-find", h("div.n-entry-search", search), h("div.n-entry-under", followedRow(ctx, input), compareLink(ctx, input)));
+  const find = h("div.n-entry-find", h("div.n-entry-search", search), h("div.n-entry-under", followedRow(ctx, input), compareLink(ctx, input), videoLink()));
   const band = homeBand({
     eyebrow: "נתונים רשמיים · לכל יישוב בישראל", id: "n-entry-h1",
     title: ["איך מצב הבריאות ", h("span.n-entry-accent", "ביישוב שלכם?")],
