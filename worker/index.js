@@ -221,11 +221,22 @@ async function share(request, env, url) {
 
 // The preview video and its captions (/media/): the assets service answers a Range request with the whole file and no Accept-Ranges header, which Safari does not accept for a video.
 // A range is therefore cut here (range.js); every other request is passed on unchanged, with Accept-Ranges added.
+const SIZES = new Map();                                                                 // ETag of a /media/ file -> its size in bytes
+async function countBytes(body) {
+  const reader = body.getReader();
+  let n = 0;
+  for (;;) { const { done, value } = await reader.read(); if (done) return n; n += value.byteLength; }
+}
 async function media(request, env, ctx, url) {
   const range = request.headers.get("Range");
   if (!range || request.method !== "GET") return withHeader(await env.ASSETS.fetch(request), "Accept-Ranges", "bytes");
-  const full = await env.ASSETS.fetch(new Request(url.href));                            // the whole file, without the conditional headers of the visitor
-  const total = Number(full.headers.get("Content-Length")), ifRange = request.headers.get("If-Range");
+  let full = await env.ASSETS.fetch(new Request(url.href));                              // the whole file, without the conditional headers of the visitor
+  const tag = full.headers.get("ETag") || url.pathname, ifRange = request.headers.get("If-Range");
+  let total = Number(full.headers.get("Content-Length")) || SIZES.get(tag) || 0;
+  if (!total && full.status === 200 && full.body) {                                      // the assets service sends no Content-Length to the Worker: the size is counted once (a read, nothing kept) and the file is asked for again
+    SIZES.set(tag, total = await countBytes(full.body));
+    full = await env.ASSETS.fetch(new Request(url.href));
+  }
   const r = full.status === 200 && full.body && total > 0 && (!ifRange || ifRange === full.headers.get("ETag")) ? parseRange(range, total) : "none";
   if (r === "none") return withHeader(full, "Accept-Ranges", "bytes");
   const h = new Headers(full.headers);
